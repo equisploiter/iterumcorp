@@ -3,237 +3,166 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Singularity — Presskit · IterumCorp</title>
-  <meta name="description" content="Presskit oficial de Singularity, roguelike de pixel art de IterumCorp: fact sheet, descripciones, capturas, assets y contacto de prensa.">
-  <meta name="theme-color" content="#050a0c">
+  <title>Singularity — Expediente de prensa · Iterum Corporation</title>
+  <meta name="description" content="Presskit de Singularity, roguelike de pixel art de Iterum Corporation: ficha, descripciones, capturas, assets y contacto de prensa.">
+  <meta name="theme-color" content="#07090b">
   <link rel="canonical" href="https://iterumcorp.org/press.html">
   <link rel="stylesheet" href="style.css">
-
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="IterumCorp">
-  <meta property="og:title" content="Singularity — Presskit">
-  <meta property="og:description" content="Fact sheet, capturas y assets de Singularity, roguelike de pixel art.">
+  <meta property="og:site_name" content="Iterum Corporation">
+  <meta property="og:title" content="Singularity — Expediente de prensa">
+  <meta property="og:description" content="Ficha, capturas y assets de Singularity, roguelike de pixel art.">
   <meta property="og:url" content="https://iterumcorp.org/press.html">
   <meta property="og:image" content="https://iterumcorp.org/assets/img/og-1200x630.png">
   <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
+<div class="page">
 
-  <div class="statusbar" aria-hidden="true">
-    <div class="wrap statusbar__inner">
-      <span class="statusbar__item"><span class="dot"></span>SYSTEM NOMINAL</span>
-      <span class="statusbar__item">NODE: PRESS-RELAY-01</span>
-      <span class="statusbar__item">CLEARANCE: PUBLIC · MEDIA</span>
-      <span class="statusbar__item">ITR-PRS-0001</span>
-    </div>
-  </div>
-
-  <header class="site-header">
-    <div class="wrap site-header__inner">
-      <a class="brand" href="/" aria-label="IterumCorp — inicio">
-        <span class="brand__mark" aria-hidden="true"></span>
-        <span>IterumCorp <small>// press</small></span>
-      </a>
+  <header class="masthead">
+    <div class="masthead__bar">
+      <a class="wordmark" href="/"><span class="glyph">⌖</span>Iterum <small>corp.</small></a>
       <nav class="nav" aria-label="Principal">
-        <a href="/">Home</a>
-        <a href="/#singularity">Project</a>
-        <a href="press.html" aria-current="page">Press</a>
+        <a href="/">Registro</a>
+        <a href="/#singularity">Expediente</a>
+        <a href="press.html" aria-current="page">Prensa</a>
       </nav>
     </div>
+    <dl class="memo">
+      <dt>De</dt><dd>Iterum Corporation · División de Juegos</dd>
+      <dt>Para</dt><dd>Medios · creadores · curiosos</dd>
+      <dt>Ref.</dt><dd>SGL/PRS/001 · rev. 2026-08</dd>
+      <dt>Distribución</dt><dd><i>Sin restricciones</i> · puede citarse, copiarse y reproducirse</dd>
+    </dl>
   </header>
 
   <main>
 
     <!-- HERO -->
-    <section class="hero">
-      <div class="wrap">
-        <div class="hero__ref">
-          <span class="label label--cyan">Presskit · File SGL-PRS-001</span>
-          <span class="label">Last update: 2026-08 · Distribution: unrestricted</span>
+    <section class="hero row">
+      <div class="margin">
+        <div>§ 00</div>
+        <div class="vert">Expediente de prensa · Singularity</div>
+      </div>
+      <div class="hero__grid">
+        <div>
+          <h1>Singularity<br><em>expediente<br>de prensa</em></h1>
+          <p class="hero__lede">
+            Todo lo necesario para cubrir Singularity: ficha técnica, descripciones listas para pegar,
+            capturas y assets. Si falta algo, pídalo. Si sobra algo, <span class="redacted" tabindex="0">no lo mencione</span>.
+          </p>
+          <div class="hero__actions">
+            <a class="cta" href="assets/press/singularity-presskit.zip">Descargar expediente completo (.zip)</a>
+            <a class="cta cta--quiet" href="#contact">Contacto de prensa</a>
+          </div>
         </div>
-        <h1>Singularity <span class="accent">— Presskit</span></h1>
-        <p class="hero__lede">
-          Todo lo que necesitas para cubrir Singularity: datos, descripciones listas para copiar,
-          capturas y assets. Si falta algo, escríbenos.
-        </p>
-        <div class="hero__meta">
-          <span class="tag">Roguelike</span>
-          <span class="tag">Pixel art</span>
-          <span class="tag">In development</span>
-          <span class="tag">PC</span>
+        <div class="hero__aside">
+          <ul class="ledger">
+            <li><span class="k">§ 01</span><span class="dots"></span><a class="v" href="#factsheet">Ficha</a></li>
+            <li><span class="k">§ 02</span><span class="dots"></span><a class="v" href="#description">Descripciones</a></li>
+            <li><span class="k">§ 03</span><span class="dots"></span><a class="v" href="#features">Características</a></li>
+            <li><span class="k">§ 04</span><span class="dots"></span><a class="v" href="#gallery">Capturas</a></li>
+            <li><span class="k">§ 05</span><span class="dots"></span><a class="v" href="#assets">Assets</a></li>
+            <li><span class="k">§ 06</span><span class="dots"></span><a class="v" href="#studio">Estudio</a></li>
+            <li><span class="k">§ 07</span><span class="dots"></span><a class="v" href="#contact">Contacto</a></li>
+          </ul>
         </div>
-        <p style="margin-top: var(--s-6); display:flex; gap: var(--s-3); flex-wrap: wrap;">
-          <a class="btn" href="assets/press/singularity-presskit.zip">Descargar presskit .zip</a>
-          <a class="btn btn--ghost" href="#contact">Contacto de prensa</a>
-        </p>
-        <nav class="label" style="margin-top: var(--s-5); display:flex; gap: var(--s-4); flex-wrap: wrap;" aria-label="Índice del presskit">
-          <a href="#factsheet">01 Fact sheet</a>
-          <a href="#description">02 Descripción</a>
-          <a href="#features">03 Features</a>
-          <a href="#gallery">04 Galería</a>
-          <a href="#assets">05 Assets</a>
-          <a href="#studio">06 Estudio</a>
-          <a href="#contact">07 Contacto</a>
-        </nav>
       </div>
     </section>
 
-    <div class="wrap">
-      <div class="grid grid--sidebar" style="gap: var(--s-6);">
+    <div class="row">
+      <div class="margin">
+        <div>SGL/PRS/001</div>
+        <div class="vert">Iterum Corporation · División de Juegos</div>
+      </div>
+
+      <div class="split split--wide">
 
         <!-- MAIN COLUMN -->
         <div>
 
-          <!-- 02 DESCRIPTION -->
+          <!-- 02 DESCRIPCIONES -->
           <section class="section" id="description">
-            <div class="section__head">
-              <span class="label label--cyan">02 · Descriptions</span>
-              <h2>Descripción</h2>
-            </div>
+            <h2 class="section__title"><small class="folio-num">02</small>Descripciones</h2>
+            <p class="lead" style="margin-bottom: var(--sp-5);">Tres longitudes. Copie la que le convenga; no hace falta atribución más allá del nombre del estudio.</p>
 
-            <span class="label">Elevator pitch · 1 frase</span>
-            <p class="quote">Singularity es un roguelike de pixel art en el que cada partida es una iteración registrada, y ninguna se repite. Placeholder.</p>
+            <div class="copy" data-label="una frase">Singularity es un roguelike de pixel art en el que cada partida es una iteración registrada, y ninguna se repite. (Placeholder.)</div>
 
-            <span class="label">Short · ~50 palabras</span>
-            <div class="copyblock" style="margin-bottom: var(--s-5);">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Singularity es un roguelike de pixel art desarrollado por IterumCorp. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+            <div class="copy" data-label="corta · ~50 palabras">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Singularity es un roguelike de pixel art desarrollado por Iterum Corporation. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
 
-            <span class="label">Long · ~150 palabras</span>
-            <div class="copyblock">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            <div class="copy" data-label="larga · ~150 palabras">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</div>
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</div>
           </section>
 
-          <!-- 03 FEATURES -->
+          <!-- 03 CARACTERÍSTICAS -->
           <section class="section" id="features">
-            <div class="section__head">
-              <span class="label label--cyan">03 · Key features</span>
-              <h2>Features</h2>
-            </div>
-            <ul class="feat">
-              <li data-i="01"><strong>Placeholder feature one</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</li>
-              <li data-i="02"><strong>Placeholder feature two</strong> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</li>
-              <li data-i="03"><strong>Placeholder feature three</strong> Duis aute irure dolor in reprehenderit in voluptate velit esse.</li>
-              <li data-i="04"><strong>Placeholder feature four</strong> Excepteur sint occaecat cupidatat non proident, sunt in culpa.</li>
-              <li data-i="05"><strong>Placeholder feature five</strong> Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</li>
-            </ul>
+            <h2 class="section__title"><small class="folio-num">03</small>Características</h2>
+            <ol class="exhibits">
+              <li><div><h3>Placeholder: primera característica</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p></div></li>
+              <li><div><h3>Placeholder: segunda característica</h3><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p></div></li>
+              <li><div><h3>Placeholder: tercera característica</h3><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p></div></li>
+              <li><div><h3>Placeholder: cuarta característica</h3><p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p></div></li>
+              <li><div><h3><span class="redacted" tabindex="0">Quinta característica, retirada de esta revisión</span></h3><p>Se documentará cuando corresponda.</p></div></li>
+            </ol>
           </section>
 
-          <!-- 04 GALLERY -->
+          <!-- 04 CAPTURAS -->
           <section class="section" id="gallery">
-            <div class="section__head">
-              <span class="label label--cyan">04 · Screenshots · 1920×1080 PNG</span>
-              <h2>Galería</h2>
-            </div>
+            <h2 class="section__title"><small class="folio-num">04</small>Capturas</h2>
+            <p class="meta" style="margin-bottom: var(--sp-4);">Pruebas A–F · 1920 × 1080 · PNG · sin compresión</p>
             <div class="gallery">
-              <figure>
-                <div class="ph ph--16x9" data-dim="1920×1080" role="img" aria-label="Placeholder captura 01"><span>SCREENSHOT_01</span></div>
-                <figcaption>singularity_screenshot_01.png · Placeholder caption</figcaption>
-              </figure>
-              <figure>
-                <div class="ph ph--16x9" data-dim="1920×1080" role="img" aria-label="Placeholder captura 02"><span>SCREENSHOT_02</span></div>
-                <figcaption>singularity_screenshot_02.png · Placeholder caption</figcaption>
-              </figure>
-              <figure>
-                <div class="ph ph--16x9" data-dim="1920×1080" role="img" aria-label="Placeholder captura 03"><span>SCREENSHOT_03</span></div>
-                <figcaption>singularity_screenshot_03.png · Placeholder caption</figcaption>
-              </figure>
-              <figure>
-                <div class="ph ph--16x9" data-dim="1920×1080" role="img" aria-label="Placeholder captura 04"><span>SCREENSHOT_04</span></div>
-                <figcaption>singularity_screenshot_04.png · Placeholder caption</figcaption>
-              </figure>
-              <figure>
-                <div class="ph ph--16x9" data-dim="1920×1080" role="img" aria-label="Placeholder captura 05"><span>SCREENSHOT_05</span></div>
-                <figcaption>singularity_screenshot_05.png · Placeholder caption</figcaption>
-              </figure>
-              <figure>
-                <div class="ph ph--16x9" data-dim="1920×1080" role="img" aria-label="Placeholder captura 06"><span>SCREENSHOT_06</span></div>
-                <figcaption>singularity_screenshot_06.png · Placeholder caption</figcaption>
-              </figure>
+              <figure><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado captura 01"><span>Prueba A</span><i>01</i></div><figcaption><b>singularity_01.png</b> · pie de foto placeholder</figcaption></figure>
+              <figure><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado captura 02"><span>Prueba B</span><i>02</i></div><figcaption><b>singularity_02.png</b> · pie de foto placeholder</figcaption></figure>
+              <figure><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado captura 03"><span>Prueba C</span><i>03</i></div><figcaption><b>singularity_03.png</b> · pie de foto placeholder</figcaption></figure>
+              <figure><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado captura 04"><span>Prueba D</span><i>04</i></div><figcaption><b>singularity_04.png</b> · pie de foto placeholder</figcaption></figure>
+              <figure><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado captura 05"><span>Prueba E</span><i>05</i></div><figcaption><b>singularity_05.png</b> · pie de foto placeholder</figcaption></figure>
+              <figure><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado captura 06"><span>Prueba F</span><i>06</i></div><figcaption><b>singularity_06.png</b> · pie de foto placeholder</figcaption></figure>
             </div>
 
-            <div class="section__head" style="margin-top: var(--s-7);">
-              <span class="label label--cyan">Trailer</span>
-            </div>
-            <div class="ph ph--16x9" data-dim="1920×1080 · VIDEO" role="img" aria-label="Placeholder tráiler"><span>TRAILER // YouTube embed pending</span></div>
+            <p class="meta" style="margin: var(--sp-6) 0 var(--sp-3);">Tráiler · 1920 × 1080 · pendiente</p>
+            <div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado tráiler"><span>Prueba G · vídeo</span><i>embed pendiente</i></div>
           </section>
 
           <!-- 05 ASSETS -->
           <section class="section" id="assets">
-            <div class="section__head">
-              <span class="label label--cyan">05 · Downloadable assets</span>
-              <h2>Assets</h2>
-            </div>
-            <div class="grid grid--2" style="margin-bottom: var(--s-5);">
-              <figure style="margin:0;">
-                <div class="ph ph--3x1" data-dim="1200×400 · LOGO" role="img" aria-label="Placeholder logo Singularity"><span>SINGULARITY_LOGO</span></div>
-                <figcaption class="label" style="margin-top: var(--s-1);">Logo Singularity · PNG transparente + SVG</figcaption>
-              </figure>
-              <figure style="margin:0;">
-                <div class="ph ph--3x1" data-dim="1200×400 · LOGO" role="img" aria-label="Placeholder logo IterumCorp"><span>ITERUMCORP_LOGO</span></div>
-                <figcaption class="label" style="margin-top: var(--s-1);">Logo IterumCorp · PNG transparente + SVG</figcaption>
-              </figure>
-              <figure style="margin:0;">
-                <div class="ph ph--16x9" data-dim="1920×1080 · KEY ART" role="img" aria-label="Placeholder key art horizontal"><span>KEY_ART_LANDSCAPE</span></div>
-                <figcaption class="label" style="margin-top: var(--s-1);">Key art horizontal · 1920×1080</figcaption>
-              </figure>
-              <figure style="margin:0;">
-                <div class="ph ph--1x1" data-dim="1024×1024 · ICON" role="img" aria-label="Placeholder icono"><span>ICON</span></div>
-                <figcaption class="label" style="margin-top: var(--s-1);">Icono / capsule cuadrado · 1024×1024</figcaption>
-              </figure>
+            <h2 class="section__title"><small class="folio-num">05</small>Assets</h2>
+            <div class="two" style="margin-bottom: var(--sp-6);">
+              <figure style="margin:0;"><div class="slate slate--3x1" data-dim="1200 × 400" role="img" aria-label="Espacio reservado logo Singularity"><span>Logotipo · Singularity</span></div><figcaption class="meta" style="margin-top: var(--sp-2);">PNG transparente + SVG</figcaption></figure>
+              <figure style="margin:0;"><div class="slate slate--3x1" data-dim="1200 × 400" role="img" aria-label="Espacio reservado logo Iterum"><span>Logotipo · Iterum Corp.</span></div><figcaption class="meta" style="margin-top: var(--sp-2);">PNG transparente + SVG</figcaption></figure>
+              <figure style="margin:0;"><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado key art"><span>Key art · horizontal</span></div><figcaption class="meta" style="margin-top: var(--sp-2);">PNG</figcaption></figure>
+              <figure style="margin:0;"><div class="slate slate--1x1" data-dim="1024 × 1024" role="img" aria-label="Espacio reservado icono"><span>Icono</span></div><figcaption class="meta" style="margin-top: var(--sp-2);">PNG</figcaption></figure>
             </div>
 
-            <div class="panel">
-              <span class="corner"></span>
-              <div class="panel__head">
-                <span class="label">Download index</span>
-                <span class="label">assets/press/</span>
-              </div>
-              <ul class="dl">
-                <li>
-                  <div><span class="dl__name">Presskit completo</span><span class="dl__meta">singularity-presskit.zip · placeholder · ~0 MB</span></div>
-                  <a href="assets/press/singularity-presskit.zip" download>Download</a>
-                </li>
-                <li>
-                  <div><span class="dl__name">Capturas</span><span class="dl__meta">singularity-screenshots.zip · 6× PNG 1920×1080</span></div>
-                  <a href="assets/press/singularity-screenshots.zip" download>Download</a>
-                </li>
-                <li>
-                  <div><span class="dl__name">Logos</span><span class="dl__meta">singularity-logos.zip · PNG + SVG</span></div>
-                  <a href="assets/press/singularity-logos.zip" download>Download</a>
-                </li>
-                <li>
-                  <div><span class="dl__name">Key art</span><span class="dl__meta">singularity-keyart.zip · PNG</span></div>
-                  <a href="assets/press/singularity-keyart.zip" download>Download</a>
-                </li>
-                <li>
-                  <div><span class="dl__name">GIFs</span><span class="dl__meta">singularity-gifs.zip · placeholder</span></div>
-                  <a href="assets/press/singularity-gifs.zip" download>Download</a>
-                </li>
-              </ul>
-              <p class="form__note" style="margin: var(--s-4) 0 0;">USAGE: assets may be used freely for editorial coverage of Singularity. Do not alter logos.</p>
-            </div>
+            <p class="meta" style="margin-bottom: var(--sp-3);">Índice de descargas · assets/press/</p>
+            <ul class="index">
+              <li><div><span class="name">Expediente completo</span><span class="spec">singularity-presskit.zip · placeholder · ~0 MB</span></div><a class="get" href="assets/press/singularity-presskit.zip" download>Descargar</a></li>
+              <li><div><span class="name">Capturas</span><span class="spec">singularity-screenshots.zip · 6 × PNG 1920 × 1080</span></div><a class="get" href="assets/press/singularity-screenshots.zip" download>Descargar</a></li>
+              <li><div><span class="name">Logotipos</span><span class="spec">singularity-logos.zip · PNG + SVG</span></div><a class="get" href="assets/press/singularity-logos.zip" download>Descargar</a></li>
+              <li><div><span class="name">Key art</span><span class="spec">singularity-keyart.zip · PNG</span></div><a class="get" href="assets/press/singularity-keyart.zip" download>Descargar</a></li>
+              <li><div><span class="name">GIFs</span><span class="spec">singularity-gifs.zip · placeholder</span></div><a class="get" href="assets/press/singularity-gifs.zip" download>Descargar</a></li>
+            </ul>
+            <p class="note" style="margin-top: var(--sp-4);">Uso libre para cobertura editorial de Singularity. No alterar los logotipos. No preguntar por los que faltan.</p>
           </section>
 
-          <!-- 06 STUDIO -->
+          <!-- 06 ESTUDIO -->
           <section class="section" id="studio">
-            <div class="section__head">
-              <span class="label label--cyan">06 · About the studio</span>
-              <h2>IterumCorp</h2>
-            </div>
-            <div class="grid grid--2">
-              <div>
-                <p>IterumCorp es un estudio independiente fundado en 2026 por un único desarrollador. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                <p class="muted">La identidad corporativa del estudio es una broma deliberada: una megacorporación ficticia que existe para hacer juegos pequeños. Placeholder de historia del estudio.</p>
+            <h2 class="section__title"><small class="folio-num">06</small>Iterum Corporation</h2>
+            <div class="two">
+              <div class="prose">
+                <p class="lead">Estudio independiente fundado en 2026 por una sola persona, que ha decidido que la mejor manera de hacer juegos pequeños es fingir una organización enorme.</p>
+                <p>La identidad corporativa es una broma deliberada y se mantiene con la seriedad que merece. Placeholder de historia del estudio. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               </div>
-              <table class="data">
-                <tr><th>Estudio</th><td>IterumCorp</td></tr>
-                <tr><th>Fundado</th><td>2026</td></tr>
-                <tr><th>Ubicación</th><td>España (placeholder)</td></tr>
-                <tr><th>Equipo</th><td>1 persona</td></tr>
+              <table class="facts">
+                <tr><th>Estudio</th><td>Iterum Corporation</td></tr>
+                <tr><th>Fundación</th><td>2026</td></tr>
+                <tr><th>Ubicación</th><td>España</td></tr>
+                <tr><th>Plantilla</th><td>1</td></tr>
                 <tr><th>Web</th><td><a href="https://iterumcorp.org">iterumcorp.org</a></td></tr>
                 <tr><th>Proyectos</th><td>Singularity (2026–)</td></tr>
+                <tr><th>Anteriores</th><td><span class="redacted" tabindex="0">no constan</span></td></tr>
               </table>
             </div>
           </section>
@@ -242,54 +171,40 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
 
         <!-- SIDEBAR -->
         <aside>
-          <div class="sticky stack">
+          <div class="sticky">
 
-            <!-- 01 FACT SHEET -->
-            <div class="panel" id="factsheet">
-              <span class="corner"></span>
-              <div class="panel__head">
-                <span class="label">01 · Fact sheet</span>
-                <span class="label">SGL-001</span>
-              </div>
-              <table class="data">
+            <section class="section" id="factsheet" style="padding-top: var(--sp-7);">
+              <p class="meta"><span class="folio-num">01</span> · Ficha</p>
+              <table class="facts" style="margin-top: var(--sp-3);">
                 <tr><th>Título</th><td>Singularity</td></tr>
-                <tr><th>Desarrollador</th><td>IterumCorp</td></tr>
+                <tr><th>Desarrollador</th><td>Iterum Corporation</td></tr>
                 <tr><th>Editor</th><td>Autopublicado</td></tr>
-                <tr><th>Género</th><td>Roguelike · Acción · Pixel art</td></tr>
-                <tr><th>Plataformas</th><td>PC (Windows) · TBA</td></tr>
-                <tr><th>Lanzamiento</th><td>TBA</td></tr>
-                <tr><th>Precio</th><td>TBA</td></tr>
+                <tr><th>Género</th><td>Roguelike · acción · pixel art</td></tr>
+                <tr><th>Plataformas</th><td>PC (Windows) · otras sin determinar</td></tr>
+                <tr><th>Lanzamiento</th><td>Sin determinar</td></tr>
+                <tr><th>Precio</th><td>Sin determinar</td></tr>
                 <tr><th>Idiomas</th><td>Español · English</td></tr>
                 <tr><th>Motor</th><td>Placeholder</td></tr>
                 <tr><th>Jugadores</th><td>1</td></tr>
-                <tr><th>Steam</th><td><a href="#">Wishlist (placeholder)</a></td></tr>
-                <tr><th>itch.io</th><td><a href="#">Placeholder</a></td></tr>
+                <tr><th>Steam</th><td><a href="#">Wishlist · placeholder</a></td></tr>
+                <tr><th>itch.io</th><td><a href="#">placeholder</a></td></tr>
                 <tr><th>Web</th><td><a href="https://iterumcorp.org">iterumcorp.org</a></td></tr>
               </table>
-            </div>
+            </section>
 
-            <!-- 07 CONTACT -->
-            <div class="panel" id="contact">
-              <span class="corner"></span>
-              <div class="panel__head">
-                <span class="label">07 · Press contact</span>
-                <span class="label blink">● OPEN</span>
-              </div>
-              <ul class="contact">
-                <li><span class="label">Email</span><a href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
-                <li><span class="label">Contacto</span><span>Nombre placeholder · Founder / Developer</span></li>
-                <li><span class="label">Bluesky</span><a href="#">@placeholder</a></li>
-                <li><span class="label">X / Twitter</span><a href="#">@placeholder</a></li>
-                <li><span class="label">Discord</span><a href="#">Placeholder invite</a></li>
+            <section class="card" id="contact">
+              <p class="meta"><span class="rec" aria-hidden="true"></span><span class="folio-num">07</span> · Contacto de prensa</p>
+              <ul class="ledger">
+                <li><span class="k">Correo</span><a class="v" href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
+                <li><span class="k">Persona</span><span class="v">Nombre placeholder · fundador / desarrollador</span></li>
+                <li><span class="k">Bluesky</span><a class="v" href="#">@placeholder</a></li>
+                <li><span class="k">X</span><a class="v" href="#">@placeholder</a></li>
+                <li><span class="k">Discord</span><a class="v" href="#">invitación placeholder</a></li>
               </ul>
-              <p class="form__note" style="margin: var(--s-4) 0 0;">Review keys available on request. Response time: 24–48h.</p>
-            </div>
+              <p class="note">Claves de prensa bajo petición. Respuesta en 24–48 h. Los mensajes se conservan.</p>
+            </section>
 
-            <div class="panel">
-              <span class="corner"></span>
-              <span class="label label--cyan">Monetization notice</span>
-              <p style="margin: var(--s-2) 0 0; font-size: var(--fs-sm);">Streamers y creadores de contenido pueden monetizar vídeos de Singularity sin restricciones. Placeholder de política.</p>
-            </div>
+            <p class="note" style="margin-top: var(--sp-5);">Los creadores de contenido pueden monetizar vídeos de Singularity sin restricción. Placeholder de política.</p>
 
           </div>
         </aside>
@@ -299,43 +214,46 @@ Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium dolor
 
   </main>
 
-  <footer class="site-footer">
-    <div class="wrap">
-      <div class="site-footer__grid">
+  <footer class="colophon row">
+    <div class="margin"><div>§ ∞</div></div>
+    <div>
+      <div class="colophon__grid">
         <div>
-          <a class="brand" href="/"><span class="brand__mark" aria-hidden="true"></span><span>IterumCorp</span></a>
-          <p style="margin-top: var(--s-3);">Independent game studio.</p>
+          <a class="wordmark" href="/"><span class="glyph">⌖</span>Iterum <small>corp.</small></a>
+          <p class="small dim" style="margin-top: var(--sp-3);">Estudio independiente de videojuegos. La corporación es ficticia. El juego no.</p>
         </div>
         <div>
-          <span class="label">Index</span>
+          <span class="meta">Índice</span>
           <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/#singularity">Singularity</a></li>
-            <li><a href="/#access">Solicitar acceso</a></li>
+            <li><a href="/">Registro</a></li>
+            <li><a href="/#singularity">§ 01 Singularity</a></li>
+            <li><a href="/#access">§ 02 Solicitud de acceso</a></li>
           </ul>
         </div>
         <div>
-          <span class="label">Presskit</span>
+          <span class="meta">Expediente</span>
           <ul>
-            <li><a href="#factsheet">Fact sheet</a></li>
-            <li><a href="#gallery">Galería</a></li>
+            <li><a href="#factsheet">Ficha</a></li>
+            <li><a href="#gallery">Capturas</a></li>
             <li><a href="#assets">Assets</a></li>
           </ul>
         </div>
         <div>
-          <span class="label">Contact</span>
+          <span class="meta">Contacto</span>
           <ul>
             <li><a href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
             <li><a href="mailto:hello@iterumcorp.org">hello@iterumcorp.org</a></li>
           </ul>
         </div>
       </div>
-      <div class="legal">
-        © 2026 ITERUMCORP. ALL RIGHTS RESERVED. SINGULARITY™ IS A TRADEMARK OF ITERUMCORP.<br>
-        DOCUMENT ITR-PRS-0001 · REV 2026.08 · CLEARANCE LEVEL: PUBLIC · MEDIA USE PERMITTED.
+      <div class="colophon__legal">
+        © 2026 Iterum Corporation. Todos los derechos reservados. Singularity es una marca de Iterum Corporation.<br>
+        Doc. SGL/PRS/001 · rev. 2026-08 · distribución sin restricciones · uso editorial permitido.<br>
+        <span class="checksum">Suma de control: 9d2b 7f41 3f9a 1c02 e7d4 5b6f 88a1 0c3e · verificada</span>
       </div>
     </div>
   </footer>
 
+</div>
 </body>
 </html>
