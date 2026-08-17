@@ -52,7 +52,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; background: var(--bg); scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-top) + 1rem); }
 body {
-  margin: 0; min-height: 100dvh;
+  margin: 0; min-height: 100dvh; padding-top: var(--nav-top); /* room for the fixed nav */
   color: var(--ink); background: var(--bg);
   font-family: var(--sans); font-size: var(--step-0); line-height: 1.55;
   -webkit-font-smoothing: antialiased; overflow-x: hidden;
@@ -251,8 +251,8 @@ table { border-collapse: collapse; }
    4. NAV
    -------------------------------------------------------------------------- */
 .nav {
-  position: sticky; top: 0; z-index: 50; height: var(--nav-top); padding-top: var(--sat);
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50; height: var(--nav-top); padding-top: var(--sat);
+  background: linear-gradient(180deg, var(--bg) 0, var(--bg) var(--sat), color-mix(in srgb, var(--bg) 82%, transparent) var(--sat));
   backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
   border-bottom: 1px solid var(--rule);
 }
@@ -323,7 +323,7 @@ table { border-collapse: collapse; }
     linear-gradient(90deg, var(--bg) 0%, rgba(7,11,12,.85) 45%, rgba(7,11,12,.15) 100%);
 }
 .hero__media picture { display: contents; }
-.hero__in { position: relative; z-index: 1; min-height: calc(100dvh - var(--nav-h)); display: grid; align-content: end; padding-block: var(--sp-8) var(--sp-7); }
+.hero__in { position: relative; z-index: 1; min-height: calc(100dvh - var(--nav-top)); display: grid; align-content: end; padding-block: var(--sp-8) var(--sp-7); }
 .hero__kicker { margin-bottom: var(--sp-4); }
 .hero h1 { font-size: var(--step-4); font-weight: 700; letter-spacing: -0.035em; line-height: .96; max-width: 12ch; }
 .hero h1 em { font-style: italic; color: var(--cy); font-weight: 500; }
@@ -771,7 +771,7 @@ body.is-purpose .purpose { border-top: 0; }
    16. PRINT
    -------------------------------------------------------------------------- */
 @media print {
-  body { background: #fff; color: #000; }
+  body { background: #fff; color: #000; padding-top: 0; }
   body::before, .nav, .hero__media, .world__img, .corp__emblem, .pin--img, .plate__img, .bosses__plate, .orn { display: none !important; }
   .redacted { color: #000; background: none; box-shadow: none; }
   .copy, .contact, .gallery figure { border-color: #999; background: none; }
