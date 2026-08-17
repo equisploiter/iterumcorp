@@ -174,12 +174,26 @@ table { border-collapse: collapse; }
     var(--tk) 100% 100% / 1.25rem 1px, var(--tk) 100% 100% / 1px 1.25rem;
   background-repeat: no-repeat; opacity: .7;
 }
-/* Phones: image is texture, never competition for the copy. */
+/* Phones: the engraving never sits under copy. It becomes its own strip at the top of the
+   section (a framed plate), full opacity, then the text follows on plain ground. */
 @media (max-width: 47.99em) {
-  .plate { --plate-op: .26; }
-  .plate__img::after, .plate--left .plate__img::after {
-    background: linear-gradient(180deg, var(--plate-bg) 0%, color-mix(in srgb, var(--plate-bg) 60%, transparent) 25%, color-mix(in srgb, var(--plate-bg) 60%, transparent) 75%, var(--plate-bg) 100%);
+  .plate { --plate-op: .85; }
+  .plate__img { position: relative !important; inset: auto; height: clamp(11rem, 46vw, 16rem); margin: 0 0 var(--sp-6); border-bottom: 1px solid var(--rule); }
+  .plate--pin .plate__img { display: none; } /* body wrappers: the page hero already carries a strip */
+  .plate__img img, .plate--pin .plate__img img { position: static; height: 100%; transform: none !important; }
+  .plate__img::before { display: none; }
+  .plate__img::after, .plate--left .plate__img::after, .plate--full .plate__img::after {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--plate-bg) 35%, transparent) 0%, transparent 35%, transparent 60%, var(--plate-bg) 100%);
   }
+  /* The strip bleeds to the section's top edge. */
+  .section.plate, .page-hero.plate, .press-hero.plate, .access.plate { padding-top: 0; }
+  .plate--framed::before, .plate--framed::after { display: none; }
+  /* Footer: strip → ticker → columns */
+  .footer.plate .plate__img { margin-bottom: 0; }
+  .footer .ticker { border-top: 0; }
+  .footer .wrap { padding-top: var(--sp-6); }
+  /* Corp watermark under text is fine on desktop; on phones it just muddies the copy. */
+  .corp__emblem { display: none; }
 }
 
 /* Engraved rule: hairline + small diamond. Used above section heads and in the footer. */
@@ -304,6 +318,14 @@ table { border-collapse: collapse; }
     linear-gradient(180deg, rgba(7,11,12,.35) 0%, rgba(7,11,12,.75) 60%, var(--bg) 100%),
     linear-gradient(90deg, var(--bg) 0%, rgba(7,11,12,.85) 45%, rgba(7,11,12,.15) 100%);
 }
+.hero__media picture { display: contents; }
+/* Phones: portrait key art, Ari full-figure and centred, face clear at the top; copy sits on the dark lower third. */
+@media (max-width: 47.99em) {
+  .hero__media img { object-position: 50% 12%; }
+  .hero__media::after { background: linear-gradient(180deg, rgba(7,11,12,.35) 0%, rgba(7,11,12,.05) 20%, rgba(7,11,12,.55) 36%, rgba(7,11,12,.9) 55%, var(--bg) 100%); }
+  .hero h1, .hero__sub, .hero__kicker { text-shadow: 0 1px 2px rgba(0,0,0,.7), 0 0 24px rgba(7,11,12,.9); }
+  .hero__in { min-height: calc(100dvh - var(--nav-h)); }
+}
 .hero__in { position: relative; z-index: 1; min-height: calc(100dvh - var(--nav-h)); display: grid; align-content: end; padding-block: var(--sp-8) var(--sp-7); }
 .hero__kicker { margin-bottom: var(--sp-4); }
 .hero h1 { font-size: var(--step-4); font-weight: 700; letter-spacing: -0.035em; line-height: .96; max-width: 12ch; }
@@ -344,7 +366,7 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-h) + 3.5rem); }
    6c. HOME · FEATURED PROJECT + PURPOSE TEASER
    -------------------------------------------------------------------------- */
 .feature__card { position: relative; display: block; border: 1px solid var(--rule-2); background: var(--bg-2); overflow: hidden; color: var(--ink); }
-.feature__card img { width: 100%; aspect-ratio: 21/9; object-fit: cover; object-position: 50% 40%; transition: transform 1.4s var(--ease), opacity .6s var(--ease); opacity: .85; }
+.feature__card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: 50% 40%; transition: transform 1.4s var(--ease), opacity .6s var(--ease); opacity: .85; }
 .feature__card:hover img { transform: scale(1.02); opacity: 1; }
 .feature__card:hover { color: var(--ink); }
 .feature__overlay {
@@ -359,6 +381,10 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-h) + 3.5rem); }
 .feature__links a:hover { color: var(--cy); background: var(--bg-2); }
 .feature__links .arr { transition: transform .25s var(--ease); }
 .feature__links a:hover .arr { transform: translateX(4px); }
+@media (max-width: 47.99em) {
+  .feature__tags { display: none; }
+  .feature__overlay { padding: var(--sp-4); background: linear-gradient(180deg, rgba(7,11,12,0) 55%, rgba(7,11,12,.85) 100%); }
+}
 @media (min-width: 48em) {
   .feature__links { grid-template-columns: repeat(2, 1fr); }
   .feature__card img { aspect-ratio: 21/9; }
@@ -555,6 +581,7 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-h) + 3.5rem); }
 .pin--tall { grid-row: span 2; }
 /* Mobile: text cards take the full width on their own row (auto height). Desktop restores the 1-col × 2-row slot. */
 .pin--text { grid-column: 1 / -1; grid-row: auto; }
+@media (max-width: 61.99em) { .pin--text { order: -1; } }
 @media (min-width: 62em) {
   .pin--text { grid-column: auto; grid-row: span 2; }
   .band--right .pin--text { grid-column: -2 / -1; grid-row: 1 / span 2; }
@@ -625,6 +652,7 @@ body.is-purpose .purpose { border-top: 0; }
    -------------------------------------------------------------------------- */
 .footer { padding-block: var(--sp-8) var(--sp-7); border-top: 1px solid var(--rule); --plate-bg: #000; --plate-op: .3; --plate-pos: 50% 55%; }
 .footer.plate { padding-top: var(--sp-9); }
+@media (max-width: 47.99em) { .footer.plate { padding-top: 0; } }
 .footer .orn { margin-bottom: var(--sp-7); }
 .footer__grid { display: grid; gap: var(--sp-6); }
 .footer .meta { display: block; margin-bottom: var(--sp-3); }

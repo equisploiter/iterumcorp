@@ -13,7 +13,8 @@
   <link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/singularity.html">
   <link rel="icon" href="assets/img/emblem.png" type="image/png">
   <link rel="preload" href="assets/fonts/SpaceGrotesk-700-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/img/ari-keyart-wide.jpg" as="image">
+  <link rel="preload" href="assets/img/ari-keyart-wide.jpg" as="image" media="(min-width: 48em)">
+  <link rel="preload" href="assets/img/ari-keyart.jpg" as="image" media="(max-width: 47.99em)">
   <link rel="stylesheet" href="style.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Iterum Corporation">
@@ -76,7 +77,10 @@
   <!-- HERO -->
   <section class="hero" aria-labelledby="h1">
     <div class="hero__media" aria-hidden="true">
-      <img src="assets/img/ari-keyart-wide.jpg" alt="" width="1847" height="1039" fetchpriority="high">
+      <picture>
+        <source media="(max-width: 47.99em)" srcset="assets/img/ari-keyart.jpg" width="1400" height="1483">
+        <img src="assets/img/ari-keyart-wide.jpg" alt="" width="1847" height="1039" fetchpriority="high">
+      </picture>
     </div>
     <div class="wrap hero__in">
       <div>
