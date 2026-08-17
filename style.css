@@ -319,13 +319,6 @@ table { border-collapse: collapse; }
     linear-gradient(90deg, var(--bg) 0%, rgba(7,11,12,.85) 45%, rgba(7,11,12,.15) 100%);
 }
 .hero__media picture { display: contents; }
-/* Phones: portrait key art, Ari full-figure and centred, face clear at the top; copy sits on the dark lower third. */
-@media (max-width: 47.99em) {
-  .hero__media img { object-position: 50% 12%; }
-  .hero__media::after { background: linear-gradient(180deg, rgba(7,11,12,.35) 0%, rgba(7,11,12,.05) 20%, rgba(7,11,12,.55) 36%, rgba(7,11,12,.9) 55%, var(--bg) 100%); }
-  .hero h1, .hero__sub, .hero__kicker { text-shadow: 0 1px 2px rgba(0,0,0,.7), 0 0 24px rgba(7,11,12,.9); }
-  .hero__in { min-height: calc(100dvh - var(--nav-h)); }
-}
 .hero__in { position: relative; z-index: 1; min-height: calc(100dvh - var(--nav-h)); display: grid; align-content: end; padding-block: var(--sp-8) var(--sp-7); }
 .hero__kicker { margin-bottom: var(--sp-4); }
 .hero h1 { font-size: var(--step-4); font-weight: 700; letter-spacing: -0.035em; line-height: .96; max-width: 12ch; }
@@ -334,6 +327,16 @@ table { border-collapse: collapse; }
 .hero__sub { margin-top: var(--sp-5); font-size: var(--step-1); color: var(--ink-2); max-width: 36ch; }
 .hero__sub strong { color: var(--ink); font-weight: 500; }
 .hero__actions { margin-top: var(--sp-6); display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+/* Phones: portrait key art pinned to the top of the hero (Ari full-figure, face clear), and the copy
+   starts at a fixed height below the face whatever the phone's viewport is. The image fades into the
+   ground under the text, so long copy simply continues on plain background instead of over the art. */
+@media (max-width: 47.99em) {
+  .hero__media { bottom: auto; height: min(78vh, 40rem); overflow: hidden; }
+  .hero__media img { object-position: 50% 8%; transform: none !important; }
+  .hero__media::after { background: linear-gradient(180deg, rgba(7,11,12,.3) 0%, rgba(7,11,12,0) 18%, rgba(7,11,12,.1) 40%, rgba(7,11,12,.82) 62%, var(--bg) 82%, var(--bg) 100%); }
+  .hero__in { min-height: 0; padding-top: min(46vh, 24rem); padding-bottom: var(--sp-8); }
+  .hero h1, .hero__sub, .hero__kicker { text-shadow: 0 1px 2px rgba(0,0,0,.7), 0 0 24px rgba(7,11,12,.9); }
+}
 @media (min-width: 62em) {
   .hero__in { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-content: center; padding-block: var(--sp-9) var(--sp-8); }
   .hero__media img { object-position: 82% 25%; }

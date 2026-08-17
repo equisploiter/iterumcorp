@@ -23,7 +23,7 @@ En el navegador: selector `EN`/`ES` en la cabecera (guarda la preferencia en `lo
 - `index.html` — portada del estudio (hero, proyecto destacado, corporación, teaser de propósito)
 - `singularity.html` — página del juego: combate, jefes, mundo, historia y formulario de acceso (Formspree)
 - `proposito.html` — manifiesto / propósito (moodboard de Doré)
-- `press.html` — presskit de Singularity
+- `press.html` — presskit de Singular
 - `contacto.html` — formulario de contacto (Formspree) + correos, personas, canales y puesto abierto
 - `site.js` — JS compartido: menú móvil, scroll reveal, subnav activo
 - `style.css` — única hoja de estilos; tokens en `:root`
