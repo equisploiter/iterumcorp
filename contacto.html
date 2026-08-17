@@ -3,15 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>(function(){try{var p=location.pathname;if(/\/en\//.test(p))return;var l=localStorage.getItem('lang');if(l==='es')return;var n=((navigator.languages&&navigator.languages[0])||navigator.language||'');if(l==='en'||/^en\b/i.test(n)){location.replace('en/'+(p.split('/').pop()||'index.html')+location.hash)}}catch(e){}})()</script>
   <title>Contacto · Iterum Corporation</title>
   <meta name="description" content="Contacto de Iterum Corporation: consultas generales, prensa, colaboraciones y candidaturas. Respuesta en 24-48 h.">
   <meta name="theme-color" content="#070b0c">
   <link rel="canonical" href="https://iterumcorp.org/contacto.html">
+  <link rel="alternate" hreflang="es" href="https://iterumcorp.org/contacto.html">
+  <link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/contacto.html">
+  <link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/contacto.html">
   <link rel="icon" href="assets/img/emblem.png" type="image/png">
   <link rel="preload" href="assets/fonts/SpaceGrotesk-700-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Iterum Corporation">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:locale:alternate" content="en_US">
   <meta property="og:title" content="Contacto · Iterum Corporation">
   <meta property="og:description" content="Consultas generales, prensa, colaboraciones y candidaturas.">
   <meta property="og:url" content="https://iterumcorp.org/contacto.html">
@@ -32,8 +38,11 @@
       <a href="press.html">Prensa</a>
       <a href="contacto.html" aria-current="page">Contacto</a>
     </nav>
-    <a class="btn btn--primary btn--sm nav__cta" href="singularity.html#acceso">Solicitar acceso</a>
-    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+    <div class="nav__end">
+      <a class="nav__lang" href="en/contacto.html" hreflang="en" lang="en" data-lang-switch aria-label="Read this site in English">EN</a>
+      <a class="btn btn--primary btn--sm nav__cta" href="singularity.html#acceso">Solicitar acceso</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+    </div>
     <div class="nav__menu" id="menu">
       <a href="singularity.html">Singularity</a>
       <a href="proposito.html">Propósito</a>
@@ -46,7 +55,8 @@
 
 <main>
 
-  <section class="page-hero">
+  <section class="page-hero plate plate--right plate--framed" style="--plate-pos: 60% 30%">
+    <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-abraham.webp" alt="" width="639" height="800" fetchpriority="high" decoding="async"></div>
     <div class="wrap">
       <p class="meta"><b>Contacto</b> · canal abierto</p>
       <h1>Hablar con la corporación.</h1>
@@ -54,6 +64,8 @@
     </div>
   </section>
 
+  <div class="plate plate--pin plate--right plate--soft" style="--plate-pos: 80% 40%; --plate-op: .28">
+  <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-light.webp" alt="" width="634" height="800" loading="lazy" decoding="async"></div>
   <div class="wrap contact-page">
 
     <!-- FORMSPREE: sustituye YOUR_FORM_ID por el ID real -->
@@ -84,7 +96,7 @@
       </div>
       <label class="check">
         <input type="checkbox" name="consent" value="yes" required>
-        <span>Consiento que Iterum Corporation use estos datos únicamente para responder a este mensaje.</span>
+        <span>Consiento que Iterum Corporation use estos datos únicamente para responder a este mensaje. <a href="legal.html#privacidad">Política de privacidad</a>.</span>
       </label>
       <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
       <input type="hidden" name="_subject" value="[iterumcorp.org] Contacto">
@@ -110,16 +122,6 @@
         </ul>
       </div>
 
-      <div class="contact">
-        <p class="meta">Canales</p>
-        <ul class="ledger">
-          <li><span class="k">Steam</span><span class="v mute">Próximamente</span></li>
-          <li><span class="k">Bluesky</span><a class="v" href="#">@placeholder</a></li>
-          <li><span class="k">X</span><a class="v" href="#">@placeholder</a></li>
-          <li><span class="k">Discord</span><a class="v" href="#">invitación placeholder</a></li>
-        </ul>
-      </div>
-
       <div class="contact contact--open">
         <p class="meta"><b>Puesto abierto</b></p>
         <p class="contact__title">Compositor / compositora</p>
@@ -128,11 +130,15 @@
     </aside>
 
   </div>
+  </div>
 
 </main>
 
-<footer class="footer">
+<footer class="footer plate plate--full">
+  <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-flood.webp" alt="" width="642" height="800" loading="lazy" decoding="async"></div>
+  <div class="ticker" aria-hidden="true"><div class="ticker__in"><span><b>Iterum Corporation</b> · expediente 0001 · Singularity · en desarrollo · la <span class="blood">sangre</span> es tu único recurso · la corporación es ficticia · el juego no · iterum: otra vez · desconectar para volver a conectar</span><span><b>Iterum Corporation</b> · expediente 0001 · Singularity · en desarrollo · la <span class="blood">sangre</span> es tu único recurso · la corporación es ficticia · el juego no · iterum: otra vez · desconectar para volver a conectar</span></div></div>
   <div class="wrap">
+    <div class="orn" aria-hidden="true"><i></i></div>
     <div class="footer__grid">
       <div class="footer__brand">
         <a class="brand" href="/"><img src="assets/img/emblem.png" alt="" width="30" height="30"><span>Iterum</span><small>Corporation</small></a>
@@ -164,7 +170,7 @@
       </div>
     </div>
     <div class="footer__legal">
-      © 2026 Iterum Corporation. Todos los derechos reservados. Singularity es una marca de Iterum Corporation.<br>
+      © 2026 Iterum Corporation. Todos los derechos reservados. Singularity es una marca de Iterum Corporation. <a href="legal.html">Aviso legal y privacidad</a>.<br>
       Las iteraciones anteriores de este sitio <span class="redacted" tabindex="0">no están disponibles</span>.
     </div>
   </div>

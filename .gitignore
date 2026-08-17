@@ -13,3 +13,6 @@ desktop.ini
 *.log
 .env
 node_modules/
+
+# Claude Code (local)
+.claude/settings.local.json

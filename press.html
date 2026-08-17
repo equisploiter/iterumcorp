@@ -3,20 +3,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>(function(){try{var p=location.pathname;if(/\/en\//.test(p))return;var l=localStorage.getItem('lang');if(l==='es')return;var n=((navigator.languages&&navigator.languages[0])||navigator.language||'');if(l==='en'||/^en\b/i.test(n)){location.replace('en/'+(p.split('/').pop()||'index.html')+location.hash)}}catch(e){}})()</script>
   <title>Singularity · Expediente de prensa</title>
   <meta name="description" content="Presskit de Singularity, roguelike de acción top-down en pixel art de Iterum Corporation: ficha, descripciones, mecánicas, capturas, assets y contacto de prensa.">
   <meta name="theme-color" content="#070b0c">
   <link rel="canonical" href="https://iterumcorp.org/press.html">
+  <link rel="alternate" hreflang="es" href="https://iterumcorp.org/press.html">
+  <link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/press.html">
+  <link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/press.html">
   <link rel="icon" href="assets/img/emblem.png" type="image/png">
   <link rel="preload" href="assets/fonts/SpaceGrotesk-700-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Iterum Corporation">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:locale:alternate" content="en_US">
   <meta property="og:title" content="Singularity · Expediente de prensa">
   <meta property="og:description" content="Roguelike de acción top-down en pixel art. La sangre es tu único recurso. Ficha, capturas y assets.">
   <meta property="og:url" content="https://iterumcorp.org/press.html">
   <meta property="og:image" content="https://iterumcorp.org/assets/img/og-1200x630.jpg">
   <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Singularity",
+    "url": "https://iterumcorp.org/singularity.html",
+    "image": "https://iterumcorp.org/assets/img/og-1200x630.jpg",
+    "description": "Roguelike de acción top-down en pixel art donde la sangre es tu único recurso.",
+    "genre": ["Roguelike", "Action"],
+    "gamePlatform": ["PC", "Steam Deck"],
+    "operatingSystem": "Windows",
+    "applicationCategory": "Game",
+    "inLanguage": ["es", "en"],
+    "author": { "@type": "Organization", "name": "Iterum Corporation", "url": "https://iterumcorp.org/" },
+    "publisher": { "@type": "Organization", "name": "Iterum Corporation" }
+  }
+  </script>
 </head>
 <body>
 
@@ -32,36 +55,43 @@
       <a href="press.html" aria-current="page">Prensa</a>
       <a href="contacto.html">Contacto</a>
     </nav>
-    <a class="btn btn--primary btn--sm nav__cta" href="assets/press/singularity-presskit.zip">Descargar presskit</a>
-    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+    <div class="nav__end">
+      <a class="nav__lang" href="en/press.html" hreflang="en" lang="en" data-lang-switch aria-label="Read this site in English">EN</a>
+      <a class="btn btn--primary btn--sm nav__cta" href="#contacto">Contacto de prensa</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+    </div>
     <div class="nav__menu" id="menu">
       <a href="singularity.html">Singularity</a>
       <a href="proposito.html">Propósito</a>
       <a href="press.html">Prensa</a>
       <a href="contacto.html">Contacto</a>
-      <a href="assets/press/singularity-presskit.zip" class="cy">Descargar presskit</a>
+      <a href="#contacto" class="cy">Contacto de prensa</a>
     </div>
   </div>
 </header>
 
 <main>
 
-  <section class="press-hero">
+  <section class="press-hero plate plate--full plate--framed" style="--plate-pos: 50% 20%">
+    <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-ezra.webp" alt="" width="633" height="800" fetchpriority="high" decoding="async"></div>
     <div class="wrap press-hero__grid">
       <div>
+        <p class="meta" style="margin-bottom: var(--sp-4)"><b>Expediente de prensa</b> · actualizado 17 de agosto de 2026</p>
         <h1>Singularity <span>Expediente de prensa</span></h1>
         <p>Roguelike de acción top-down en pixel art. Aquí está todo lo necesario para cubrirlo: ficha, descripciones listas para pegar, mecánicas, capturas y assets.</p>
         <div class="press-hero__actions">
-          <a class="btn btn--primary" href="assets/press/singularity-presskit.zip">Descargar presskit <span class="arr" aria-hidden="true">→</span></a>
-          <a class="btn btn--ghost" href="#contacto">Contacto de prensa</a>
+          <a class="btn btn--primary" href="#contacto">Contacto de prensa <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="#capturas">Ver capturas y arte</a>
         </div>
       </div>
-      <div class="press-hero__art">
+      <div class="press-hero__art tilt">
         <img class="pixel" src="assets/img/gameplay-combat.jpg" alt="Captura de Singularity: combate en el nivel 1" width="1920" height="1080" fetchpriority="high">
       </div>
     </div>
   </section>
 
+  <div class="plate plate--pin plate--right plate--soft" style="--plate-pos: 85% 30%; --plate-op: .26">
+  <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-daniel.webp" alt="" width="640" height="800" loading="lazy" decoding="async"></div>
   <div class="wrap press">
 
     <!-- MAIN -->
@@ -70,7 +100,7 @@
       <section class="section" id="descripciones">
         <div class="section__head">
           <h2>Descripciones</h2>
-          <p>Tres longitudes, en español e inglés. Copie la que le convenga; basta con citar al estudio.</p>
+          <p>Tres longitudes, en español e inglés. Copie la que le convenga; sólo se pide citar al estudio.</p>
         </div>
 
         <div class="copy" data-label="Una frase · ES">Singularity es un roguelike de acción top-down, rápido, en el que la <span class="blood">SANGRE</span> es tu único recurso. Te curas y recargas bañándote en la que derramas. Dudar te mata. ¿Por qué entonces es la única forma de romper el bucle?</div>
@@ -155,7 +185,7 @@ And between fights, without ever breaking flow, a cryptic, reactive story. You p
       <section class="section" id="capturas">
         <div class="section__head">
           <h2>Capturas y arte</h2>
-          <p>Uso libre para cobertura editorial de Singularity. Versiones a resolución completa en el zip.</p>
+          <p>Uso libre para cobertura editorial de Singularity. Versiones a resolución completa bajo petición mientras se preparan los paquetes.</p>
         </div>
         <div class="gallery">
           <figure class="is-wide"><img class="pixel" src="assets/img/gameplay-combat.jpg" alt="Combate en el nivel 1" width="1920" height="1080" loading="lazy"><figcaption><b>singularity_01.png</b> · combate en el nivel 1, barra de OverClock y munición</figcaption></figure>
@@ -176,13 +206,14 @@ And between fights, without ever breaking flow, a cryptic, reactive story. You p
           <h2>Descargas</h2>
         </div>
         <ul class="dl">
-          <li><div><span class="name">Expediente completo</span><span class="spec">singularity-presskit.zip · todo lo de abajo</span></div><a class="btn btn--ghost btn--sm" href="assets/press/singularity-presskit.zip" download>Descargar</a></li>
-          <li><div><span class="name">Capturas</span><span class="spec">singularity-screenshots.zip · PNG 1920 × 1080</span></div><a class="btn btn--ghost btn--sm" href="assets/press/singularity-screenshots.zip" download>Descargar</a></li>
-          <li><div><span class="name">Logotipos y emblema</span><span class="spec">singularity-logos.zip · PNG + SVG</span></div><a class="btn btn--ghost btn--sm" href="assets/press/singularity-logos.zip" download>Descargar</a></li>
-          <li><div><span class="name">Key art y concept</span><span class="spec">singularity-keyart.zip · PNG</span></div><a class="btn btn--ghost btn--sm" href="assets/press/singularity-keyart.zip" download>Descargar</a></li>
-          <li><div><span class="name">Sprites y GIFs</span><span class="spec">singularity-sprites.zip · PNG · GIF</span></div><a class="btn btn--ghost btn--sm" href="assets/press/singularity-sprites.zip" download>Descargar</a></li>
+          <li><div><span class="name">Expediente completo</span><span class="spec">singularity-presskit.zip · todo lo de abajo</span></div><span class="btn btn--ghost btn--sm is-disabled" aria-disabled="true">Próximamente</span></li>
+          <li><div><span class="name">Capturas</span><span class="spec">singularity-screenshots.zip · PNG 1920 × 1080</span></div><span class="btn btn--ghost btn--sm is-disabled" aria-disabled="true">Próximamente</span></li>
+          <li><div><span class="name">Logotipos y emblema</span><span class="spec">singularity-logos.zip · PNG + SVG</span></div><span class="btn btn--ghost btn--sm is-disabled" aria-disabled="true">Próximamente</span></li>
+          <li><div><span class="name">Key art y concept</span><span class="spec">singularity-keyart.zip · PNG</span></div><span class="btn btn--ghost btn--sm is-disabled" aria-disabled="true">Próximamente</span></li>
+          <li><div><span class="name">Sprites y GIFs</span><span class="spec">singularity-sprites.zip · PNG · GIF</span></div><span class="btn btn--ghost btn--sm is-disabled" aria-disabled="true">Próximamente</span></li>
         </ul>
-        <p class="note" style="margin-top: var(--sp-5)">No alterar los logotipos ni el emblema. Los creadores de contenido pueden monetizar vídeos de Singularity sin restricción.</p>
+        <p class="note" style="margin-top: var(--sp-5)">Los paquetes se están preparando. Hasta entonces, cualquier asset a resolución completa se envía bajo petición a <a href="mailto:press@iterumcorp.org">press@iterumcorp.org</a>.</p>
+        <p class="note" style="margin-top: var(--sp-4)">No alterar los logotipos ni el emblema. Los creadores de contenido pueden monetizar vídeos de Singularity sin restricción.</p>
       </section>
 
       <section class="section" id="estudio">
@@ -237,7 +268,7 @@ And between fights, without ever breaking flow, a cryptic, reactive story. You p
         <table class="facts">
           <tr><th>Título</th><td>Singularity</td></tr>
           <tr><th>Desarrollador</th><td>Iterum Corporation</td></tr>
-          <tr><th>Editor</th><td>Autopublicado</td></tr>
+          <tr><th>Editor</th><td>Por determinar</td></tr>
           <tr><th>Género</th><td>Roguelike de acción top-down, pixel art</td></tr>
           <tr><th>Plataformas</th><td>PC (Steam), Steam Deck</td></tr>
           <tr><th>Mando</th><td>Integración completa</td></tr>
@@ -247,7 +278,7 @@ And between fights, without ever breaking flow, a cryptic, reactive story. You p
           <tr><th>Motor</th><td>Unity, FMOD</td></tr>
           <tr><th>Jugadores</th><td>1</td></tr>
           <tr><th>Estado</th><td>Sistemas centrales y nivel 1 completos</td></tr>
-          <tr><th>Steam</th><td><a href="#">Wishlist, próximamente</a></td></tr>
+          <tr><th>Steam</th><td>Página próximamente</td></tr>
         </table>
       </div>
 
@@ -257,19 +288,21 @@ And between fights, without ever breaking flow, a cryptic, reactive story. You p
           <li><span class="k">Correo</span><a class="v" href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
           <li><span class="k">Persona</span><span class="v">Diego de la Peña, fundador</span></li>
           <li><span class="k">Comunidad</span><span class="v">Anastasiya</span></li>
-          <li><span class="k">Bluesky</span><a class="v" href="#">@placeholder</a></li>
-          <li><span class="k">Discord</span><a class="v" href="#">invitación placeholder</a></li>
         </ul>
         <p class="note">Claves de prensa y builds bajo petición. Respuesta en 24-48 h.</p>
       </div>
     </aside>
 
   </div>
+  </div>
 
 </main>
 
-<footer class="footer">
+<footer class="footer plate plate--full">
+  <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-flood.webp" alt="" width="642" height="800" loading="lazy" decoding="async"></div>
+  <div class="ticker" aria-hidden="true"><div class="ticker__in"><span><b>Iterum Corporation</b> · expediente 0001 · Singularity · en desarrollo · la <span class="blood">sangre</span> es tu único recurso · la corporación es ficticia · el juego no · iterum: otra vez · desconectar para volver a conectar</span><span><b>Iterum Corporation</b> · expediente 0001 · Singularity · en desarrollo · la <span class="blood">sangre</span> es tu único recurso · la corporación es ficticia · el juego no · iterum: otra vez · desconectar para volver a conectar</span></div></div>
   <div class="wrap">
+    <div class="orn" aria-hidden="true"><i></i></div>
     <div class="footer__grid">
       <div class="footer__brand">
         <a class="brand" href="/"><img src="assets/img/emblem.png" alt="" width="30" height="30"><span>Iterum</span><small>Corporation</small></a>
@@ -302,7 +335,7 @@ And between fights, without ever breaking flow, a cryptic, reactive story. You p
       </div>
     </div>
     <div class="footer__legal">
-      © 2026 Iterum Corporation. Todos los derechos reservados. Singularity es una marca de Iterum Corporation.<br>
+      © 2026 Iterum Corporation. Todos los derechos reservados. Singularity es una marca de Iterum Corporation. <a href="legal.html">Aviso legal y privacidad</a>.<br>
       Distribución sin restricciones. Uso editorial permitido.
     </div>
   </div>

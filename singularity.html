@@ -3,21 +3,44 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>(function(){try{var p=location.pathname;if(/\/en\//.test(p))return;var l=localStorage.getItem('lang');if(l==='es')return;var n=((navigator.languages&&navigator.languages[0])||navigator.language||'');if(l==='en'||/^en\b/i.test(n)){location.replace('en/'+(p.split('/').pop()||'index.html')+location.hash)}}catch(e){}})()</script>
   <title>Singularity · Iterum Corporation</title>
   <meta name="description" content="Singularity es un roguelike de acción top-down en pixel art donde la sangre es tu único recurso. Combate, jefes, mundo y acceso anticipado.">
   <meta name="theme-color" content="#070b0c">
   <link rel="canonical" href="https://iterumcorp.org/singularity.html">
+  <link rel="alternate" hreflang="es" href="https://iterumcorp.org/singularity.html">
+  <link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/singularity.html">
+  <link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/singularity.html">
   <link rel="icon" href="assets/img/emblem.png" type="image/png">
   <link rel="preload" href="assets/fonts/SpaceGrotesk-700-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/img/ari-keyart-wide.jpg" as="image">
   <link rel="stylesheet" href="style.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Iterum Corporation">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:locale:alternate" content="en_US">
   <meta property="og:title" content="Singularity · Iterum Corporation">
   <meta property="og:description" content="Roguelike de acción top-down en pixel art. La sangre es tu único recurso. Dudar te mata. Y es la única forma de romper el bucle.">
   <meta property="og:url" content="https://iterumcorp.org/singularity.html">
   <meta property="og:image" content="https://iterumcorp.org/assets/img/og-1200x630.jpg">
   <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Singularity",
+    "url": "https://iterumcorp.org/singularity.html",
+    "image": "https://iterumcorp.org/assets/img/og-1200x630.jpg",
+    "description": "Roguelike de acción top-down en pixel art donde la sangre es tu único recurso.",
+    "genre": ["Roguelike", "Action"],
+    "gamePlatform": ["PC", "Steam Deck"],
+    "operatingSystem": "Windows",
+    "applicationCategory": "Game",
+    "inLanguage": ["es", "en"],
+    "author": { "@type": "Organization", "name": "Iterum Corporation", "url": "https://iterumcorp.org/" },
+    "publisher": { "@type": "Organization", "name": "Iterum Corporation" }
+  }
+  </script>
 </head>
 <body>
 
@@ -33,8 +56,11 @@
       <a href="press.html">Prensa</a>
       <a href="contacto.html">Contacto</a>
     </nav>
-    <a class="btn btn--primary btn--sm nav__cta" href="#acceso">Solicitar acceso</a>
-    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+    <div class="nav__end">
+      <a class="nav__lang" href="en/singularity.html" hreflang="en" lang="en" data-lang-switch aria-label="Read this site in English">EN</a>
+      <a class="btn btn--primary btn--sm nav__cta" href="#acceso">Solicitar acceso</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+    </div>
     <div class="nav__menu" id="menu">
       <a href="singularity.html">Singularity</a>
       <a href="proposito.html">Propósito</a>
@@ -78,14 +104,15 @@
   </nav>
 
   <!-- GAMEPLAY BAND -->
-  <section class="section band" id="juego">
+  <section class="section band plate plate--left" id="juego" style="--plate-pos: 30% 30%; --plate-op: .3">
+    <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-egypt.webp" alt="" width="631" height="800" loading="lazy" decoding="async"></div>
     <div class="wrap band__grid">
       <div class="reveal">
         <p class="band__quote">Te curas y recargas bañándote en la <span class="blood">sangre</span> que derramas.</p>
         <p class="dim">Quedarte quieto te mata. Los enemigos aparecen según tu posición, acampar invoca hordas y casi todas las paredes se rompen. No hay esquinas seguras: velocidad es supervivencia.</p>
       </div>
       <figure class="reveal" data-delay="1" style="margin:0">
-        <div class="band__frame">
+        <div class="band__frame tilt">
           <img class="pixel" src="assets/img/gameplay-combat.jpg" alt="Captura de Singularity: Ari en una sala roja, barra de OverClock arriba a la izquierda y contador de munición 10/30" width="1920" height="1080" loading="lazy">
         </div>
         <figcaption class="band__caption">
@@ -138,7 +165,8 @@
   </section>
 
   <!-- MECHANICS STRIP -->
-  <section class="section" id="combate">
+  <section class="section plate plate--right" id="combate" style="--plate-pos: 70% 10%; --plate-op: .28">
+    <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-sermon.webp" alt="" width="623" height="800" loading="lazy" decoding="async"></div>
     <div class="wrap">
       <div class="section__head reveal">
         <h2>Leer el combate, no aporrear botones.</h2>
@@ -169,7 +197,8 @@
   <!-- BOSSES -->
   <section class="section" id="jefes">
     <div class="wrap bosses">
-      <div class="bosses__art reveal" aria-hidden="true">
+      <div class="bosses__art tilt reveal" aria-hidden="true">
+        <img class="bosses__plate" src="assets/img/dore-beasts.webp" alt="" width="800" height="632" loading="lazy" decoding="async">
         <img class="b1 pixel" src="assets/img/sprite-boss-skull.png" alt="" width="793" height="490" loading="lazy">
         <img class="b2 pixel" src="assets/img/sprite-entity.png" alt="" width="418" height="498" loading="lazy">
         <img class="b3 pixel" src="assets/img/sprite-entity.png" alt="" width="418" height="498" loading="lazy" style="transform: scaleX(-1)">
@@ -206,7 +235,8 @@
   </section>
 
   <!-- NARRATIVE + ARI -->
-  <section class="section" id="historia">
+  <section class="section plate plate--right" id="historia" style="--plate-pos: 60% 25%; --plate-op: .3">
+    <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-gleaners.webp" alt="" width="635" height="800" loading="lazy" decoding="async"></div>
     <div class="wrap two">
       <div class="prose reveal">
         <h2 style="font-size: var(--step-3); margin-bottom: var(--sp-5)">Ari, una chatarrera en una ciudad que olvidó su propio nombre.</h2>
@@ -236,7 +266,8 @@
   </section>
 
   <!-- ACCESS -->
-  <section class="section access" id="acceso">
+  <section class="section access plate plate--right" id="acceso" style="--plate-pos: 65% 15%">
+    <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-jacob.webp" alt="" width="651" height="800" loading="lazy" decoding="async"></div>
     <div class="wrap access__grid">
       <div class="reveal">
         <h2>Solicitar acceso</h2>
@@ -257,7 +288,7 @@
         </div>
         <label class="check">
           <input type="checkbox" name="consent" value="yes" required>
-          <span>Consiento recibir comunicaciones de Iterum Corporation sobre Singularity y proyectos posteriores.</span>
+          <span>Consiento recibir comunicaciones de Iterum Corporation sobre Singularity y proyectos posteriores. <a href="legal.html#privacidad">Política de privacidad</a>.</span>
         </label>
         <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
         <input type="hidden" name="_subject" value="[iterumcorp.org] Solicitud de acceso">
@@ -269,8 +300,11 @@
 
 </main>
 
-<footer class="footer">
+<footer class="footer plate plate--full">
+  <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-flood.webp" alt="" width="642" height="800" loading="lazy" decoding="async"></div>
+  <div class="ticker" aria-hidden="true"><div class="ticker__in"><span><b>Iterum Corporation</b> · expediente 0001 · Singularity · en desarrollo · la <span class="blood">sangre</span> es tu único recurso · la corporación es ficticia · el juego no · iterum: otra vez · desconectar para volver a conectar</span><span><b>Iterum Corporation</b> · expediente 0001 · Singularity · en desarrollo · la <span class="blood">sangre</span> es tu único recurso · la corporación es ficticia · el juego no · iterum: otra vez · desconectar para volver a conectar</span></div></div>
   <div class="wrap">
+    <div class="orn" aria-hidden="true"><i></i></div>
     <div class="footer__grid">
       <div class="footer__brand">
         <a class="brand" href="/"><img src="assets/img/emblem.png" alt="" width="30" height="30"><span>Iterum</span><small>Corporation</small></a>
@@ -295,17 +329,16 @@
         </ul>
       </div>
       <div>
-        <span class="meta">Canales</span>
+        <span class="meta">Contacto</span>
         <ul>
-          <li><a href="#" rel="me">Steam · próximamente</a></li>
-          <li><a href="#" rel="me">Bluesky</a></li>
-          <li><a href="#" rel="me">X</a></li>
-          <li><a href="#" rel="me">Discord</a></li>
+          <li><a href="mailto:hello@iterumcorp.org">hello@iterumcorp.org</a></li>
+          <li><a href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
+          <li><span class="dim">Steam · página próximamente</span></li>
         </ul>
       </div>
     </div>
     <div class="footer__legal">
-      © 2026 Iterum Corporation. Todos los derechos reservados. Singularity es una marca de Iterum Corporation.<br>
+      © 2026 Iterum Corporation. Todos los derechos reservados. Singularity es una marca de Iterum Corporation. <a href="legal.html">Aviso legal y privacidad</a>.<br>
       Las iteraciones anteriores de este sitio <span class="redacted" tabindex="0">no están disponibles</span>.
     </div>
   </div>

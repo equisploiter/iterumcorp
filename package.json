@@ -1,0 +1,12 @@
+{
+  "name": "iterumcorp.org",
+  "private": true,
+  "description": "Iterum Corporation static site. No dependencies; Node is only used to generate the English pages.",
+  "scripts": {
+    "i18n:extract": "node scripts/i18n.js extract",
+    "build": "node scripts/i18n.js build",
+    "i18n:check": "node scripts/i18n.js check",
+    "serve": "python -m http.server 8080"
+  },
+  "engines": { "node": ">=18" }
+}

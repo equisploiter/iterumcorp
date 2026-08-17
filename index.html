@@ -3,21 +3,41 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>(function(){try{var p=location.pathname;if(/\/en\//.test(p))return;var l=localStorage.getItem('lang');if(l==='es')return;var n=((navigator.languages&&navigator.languages[0])||navigator.language||'');if(l==='en'||/^en\b/i.test(n)){location.replace('en/'+(p.split('/').pop()||'index.html')+location.hash)}}catch(e){}})()</script>
   <title>Iterum Corporation</title>
   <meta name="description" content="Iterum Corporation es un estudio independiente español de videojuegos que opera bajo la apariencia de una corporación que no existe. Su primer título es Singularity.">
   <meta name="theme-color" content="#070b0c">
   <link rel="canonical" href="https://iterumcorp.org/">
+  <link rel="alternate" hreflang="es" href="https://iterumcorp.org/">
+  <link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/">
+  <link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/">
   <link rel="icon" href="assets/img/emblem.png" type="image/png">
   <link rel="preload" href="assets/fonts/SpaceGrotesk-700-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/img/concept-tower-blue.jpg" as="image">
+  <link rel="preload" href="assets/img/ari-keyart-wide.jpg" as="image">
   <link rel="stylesheet" href="style.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Iterum Corporation">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:locale:alternate" content="en_US">
   <meta property="og:title" content="Iterum Corporation">
   <meta property="og:description" content="Estudio independiente de videojuegos. La corporación es ficticia. El juego no. Primer título: Singularity.">
   <meta property="og:url" content="https://iterumcorp.org/">
   <meta property="og:image" content="https://iterumcorp.org/assets/img/og-1200x630.jpg">
   <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Iterum Corporation",
+    "url": "https://iterumcorp.org/",
+    "logo": "https://iterumcorp.org/assets/img/emblem.png",
+    "email": "hello@iterumcorp.org",
+    "foundingDate": "2026",
+    "address": { "@type": "PostalAddress", "addressCountry": "ES" },
+    "founder": { "@type": "Person", "name": "Diego de la Peña" },
+    "description": "Estudio independiente español de videojuegos. Primer título: Singularity."
+  }
+  </script>
 </head>
 <body>
 
@@ -33,8 +53,11 @@
       <a href="press.html">Prensa</a>
       <a href="contacto.html">Contacto</a>
     </nav>
-    <a class="btn btn--primary btn--sm nav__cta" href="singularity.html#acceso">Solicitar acceso</a>
-    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+    <div class="nav__end">
+      <a class="nav__lang" href="en/index.html" hreflang="en" lang="en" data-lang-switch aria-label="Read this site in English">EN</a>
+      <a class="btn btn--primary btn--sm nav__cta" href="singularity.html#acceso">Solicitar acceso</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+    </div>
     <div class="nav__menu" id="menu">
       <a href="singularity.html">Singularity</a>
       <a href="proposito.html">Propósito</a>
@@ -48,15 +71,15 @@
 <main>
 
   <!-- HERO -->
-  <section class="hero hero--corp" aria-labelledby="h1">
+  <section class="hero" aria-labelledby="h1">
     <div class="hero__media" aria-hidden="true">
-      <img src="assets/img/concept-tower-blue.jpg" alt="" width="1920" height="1079" fetchpriority="high">
+      <img src="assets/img/ari-keyart-wide.jpg" alt="" width="1847" height="1039" fetchpriority="high">
     </div>
     <div class="wrap hero__in">
       <div>
-        <p class="meta hero__kicker"><b>Iterum Corporation</b> · estudio independiente · España</p>
-        <h1 id="h1">Iterum significa <em>otra vez</em>.</h1>
-        <p class="hero__sub">Un estudio deliberadamente pequeño que opera bajo la apariencia de una corporación que no existe. Hacemos juegos densos, repetibles y que terminan.</p>
+        <p class="meta hero__kicker"><b>Iterum Corporation</b> · estudio independiente de videojuegos · España</p>
+        <h1 id="h1">Un roguelike donde la <span class="blood">sangre</span> es tu único recurso.</h1>
+        <p class="hero__sub"><strong>Singularity</strong>, en desarrollo. Iterum significa <em>otra vez</em>: un estudio deliberadamente pequeño que opera bajo la apariencia de una corporación que no existe.</p>
         <div class="hero__actions">
           <a class="btn btn--primary" href="singularity.html">Ver Singularity <span class="arr" aria-hidden="true">→</span></a>
           <a class="btn btn--ghost" href="proposito.html">Nuestro propósito</a>
@@ -66,14 +89,16 @@
   </section>
 
   <!-- FEATURED: SINGULARITY -->
-  <section class="section feature" id="singularity">
+  <section class="section feature plate plate--right" id="singularity" style="--plate-pos: 70% 15%; --plate-op: .36">
+    <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-light.webp" alt="" width="634" height="800" loading="lazy" decoding="async"></div>
     <div class="wrap">
       <div class="section__head reveal">
+        <div class="orn orn--start" aria-hidden="true"><i></i></div>
         <p class="meta" style="margin-bottom: var(--sp-3)"><b>Proyecto actual</b> · en desarrollo</p>
         <h2>Singularity</h2>
         <p>Roguelike de acción top-down en pixel art. La <span class="blood">sangre</span> es tu único recurso: te curas y recargas bañándote en la que derramas. Dudar te mata. Y es la única forma de romper el bucle.</p>
       </div>
-      <a class="feature__card reveal" data-delay="1" href="singularity.html" aria-label="Ir a la página de Singularity">
+      <a class="feature__card tilt reveal" data-delay="1" href="singularity.html" aria-label="Ir a la página de Singularity">
         <img class="pixel" src="assets/img/gameplay-combat.jpg" alt="" width="1920" height="1080" loading="lazy">
         <div class="feature__overlay">
           <div class="feature__tags">
@@ -92,10 +117,12 @@
   </section>
 
   <!-- CORPORATION -->
-  <section class="section corp" id="corporacion">
+  <section class="section corp plate plate--left plate--soft" id="corporacion" style="--plate-pos: 40% 20%; --plate-op: .38">
+    <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-sinai.webp" alt="" width="629" height="800" loading="lazy" decoding="async"></div>
     <img class="corp__emblem" src="assets/img/emblem.png" alt="" width="1000" height="1000" loading="lazy" aria-hidden="true">
     <div class="wrap corp__grid">
       <div class="prose reveal">
+        <div class="orn orn--start" aria-hidden="true"><i></i></div>
         <h2>La corporación es ficticia. El juego no.</h2>
         <p class="lead">Iterum Corporation es un estudio independiente español que opera bajo la apariencia de una corporación que no existe.</p>
         <p>No tiene sede, ni consejo, ni accionistas. Tiene un equipo deliberadamente pequeño que ha decidido que la mejor manera de hacer un juego denso y repetible es fingir una organización enorme. El emblema, una serpiente que se muerde la cola atravesada por una espada, se toma en serio. El resto, según convenga.</p>
@@ -123,7 +150,7 @@
   <!-- PURPOSE TEASER -->
   <section class="teaser" id="proposito">
     <div class="teaser__img" aria-hidden="true">
-      <img src="assets/img/dore-babel.jpg" alt="" width="883" height="1100" loading="lazy">
+      <img src="assets/img/dore-babel.webp" alt="" width="642" height="800" loading="lazy">
     </div>
     <div class="wrap teaser__in">
       <p class="meta reveal"><b>Propósito</b> · por qué existe Iterum</p>
@@ -135,8 +162,11 @@
 
 </main>
 
-<footer class="footer">
+<footer class="footer plate plate--full">
+  <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-flood.webp" alt="" width="642" height="800" loading="lazy" decoding="async"></div>
+  <div class="ticker" aria-hidden="true"><div class="ticker__in"><span><b>Iterum Corporation</b> · expediente 0001 · Singularity · en desarrollo · la <span class="blood">sangre</span> es tu único recurso · la corporación es ficticia · el juego no · iterum: otra vez · desconectar para volver a conectar</span><span><b>Iterum Corporation</b> · expediente 0001 · Singularity · en desarrollo · la <span class="blood">sangre</span> es tu único recurso · la corporación es ficticia · el juego no · iterum: otra vez · desconectar para volver a conectar</span></div></div>
   <div class="wrap">
+    <div class="orn" aria-hidden="true"><i></i></div>
     <div class="footer__grid">
       <div class="footer__brand">
         <a class="brand" href="/"><img src="assets/img/emblem.png" alt="" width="30" height="30"><span>Iterum</span><small>Corporation</small></a>
@@ -160,17 +190,16 @@
         </ul>
       </div>
       <div>
-        <span class="meta">Canales</span>
+        <span class="meta">Contacto</span>
         <ul>
-          <li><a href="#" rel="me">Steam · próximamente</a></li>
-          <li><a href="#" rel="me">Bluesky</a></li>
-          <li><a href="#" rel="me">X</a></li>
-          <li><a href="#" rel="me">Discord</a></li>
+          <li><a href="mailto:hello@iterumcorp.org">hello@iterumcorp.org</a></li>
+          <li><a href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
+          <li><span class="dim">Steam · página próximamente</span></li>
         </ul>
       </div>
     </div>
     <div class="footer__legal">
-      © 2026 Iterum Corporation. Todos los derechos reservados. Singularity es una marca de Iterum Corporation.<br>
+      © 2026 Iterum Corporation. Todos los derechos reservados. Singularity es una marca de Iterum Corporation. <a href="legal.html">Aviso legal y privacidad</a>.<br>
       Las iteraciones anteriores de este sitio <span class="redacted" tabindex="0">no están disponibles</span>.
     </div>
   </div>

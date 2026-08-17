@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://iterumcorp.org/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://iterumcorp.org/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/"/>
+  </url>
+  <url>
+    <loc>https://iterumcorp.org/en/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://iterumcorp.org/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/"/>
+  </url>
+  <url>
+    <loc>https://iterumcorp.org/singularity.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://iterumcorp.org/singularity.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/singularity.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/singularity.html"/>
+  </url>
+  <url>
+    <loc>https://iterumcorp.org/en/singularity.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://iterumcorp.org/singularity.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/singularity.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/singularity.html"/>
+  </url>
+  <url>
+    <loc>https://iterumcorp.org/proposito.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://iterumcorp.org/proposito.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/proposito.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/proposito.html"/>
+  </url>
+  <url>
+    <loc>https://iterumcorp.org/en/proposito.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://iterumcorp.org/proposito.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/proposito.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/proposito.html"/>
+  </url>
+  <url>
+    <loc>https://iterumcorp.org/press.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://iterumcorp.org/press.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/press.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/press.html"/>
+  </url>
+  <url>
+    <loc>https://iterumcorp.org/en/press.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://iterumcorp.org/press.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/press.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/press.html"/>
+  </url>
+  <url>
+    <loc>https://iterumcorp.org/contacto.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://iterumcorp.org/contacto.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/contacto.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/contacto.html"/>
+  </url>
+  <url>
+    <loc>https://iterumcorp.org/en/contacto.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://iterumcorp.org/contacto.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/contacto.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/contacto.html"/>
+  </url>
+  <url>
+    <loc>https://iterumcorp.org/legal.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://iterumcorp.org/legal.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/legal.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/legal.html"/>
+  </url>
+  <url>
+    <loc>https://iterumcorp.org/en/legal.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://iterumcorp.org/legal.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/legal.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/legal.html"/>
+  </url>
+</urlset>

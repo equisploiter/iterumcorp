@@ -1,4 +1,15 @@
 (function () {
+  // Language: remember an explicit choice so the head redirect (see <head>) respects it.
+  document.querySelectorAll('[data-lang-switch]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      try { localStorage.setItem('lang', a.getAttribute('hreflang') || 'es'); } catch (e) {}
+    });
+  });
+  try {
+    // Landing directly on /en/ (search, shared link) counts as a preference too.
+    if (/\/en\//.test(location.pathname) && !localStorage.getItem('lang')) localStorage.setItem('lang', 'en');
+  } catch (e) {}
+
   // Mobile nav
   var nav = document.querySelector('.nav');
   var btn = document.querySelector('.nav__toggle');
@@ -23,6 +34,126 @@
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
       els.forEach(function (e) { io.observe(e); });
     }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Reactive layer. Everything below is decorative and skipped when the user
+  // prefers reduced motion or the device has no fine pointer where relevant.
+  // ---------------------------------------------------------------------------
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var raf = window.requestAnimationFrame || function (f) { return setTimeout(f, 16); };
+
+  // Scroll progress hairline
+  if (!reduce) {
+    var bar = document.createElement('div');
+    bar.className = 'progress'; bar.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(bar);
+    var pTick = false;
+    var onScrollP = function () {
+      if (pTick) return; pTick = true;
+      raf(function () {
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        bar.style.setProperty('--p', max > 0 ? Math.min(1, h.scrollTop / max).toFixed(4) : 0);
+        pTick = false;
+      });
+    };
+    addEventListener('scroll', onScrollP, { passive: true }); onScrollP();
+  }
+
+  // Plates: parallax on scroll + torch under the pointer
+  var plates = Array.prototype.slice.call(document.querySelectorAll('.plate:not(.plate--pin)'));
+  if (plates.length && !reduce) {
+    var pl = plates.map(function (p) { return { el: p, img: p.querySelector('.plate__img img') }; }).filter(function (o) { return o.img; });
+    var plTick = false;
+    var onScrollPl = function () {
+      if (plTick) return; plTick = true;
+      raf(function () {
+        var vh = innerHeight;
+        pl.forEach(function (o) {
+          var r = o.el.getBoundingClientRect();
+          if (r.bottom < -200 || r.top > vh + 200) return;
+          // -1 (below viewport) → 1 (above). Range ±6% of the plate height, clamped.
+          var t = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
+          o.img.style.setProperty('--py', (t * Math.min(r.height * .06, 60)).toFixed(1) + 'px');
+        });
+        plTick = false;
+      });
+    };
+    addEventListener('scroll', onScrollPl, { passive: true }); addEventListener('resize', onScrollPl); onScrollPl();
+  }
+  if (fine) {
+    document.querySelectorAll('.plate').forEach(function (p) {
+      var im = p.querySelector('.plate__img'); if (!im) return;
+      p.addEventListener('pointermove', function (e) {
+        var r = p.getBoundingClientRect();
+        im.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        im.style.setProperty('--my', (e.clientY - r.top) + 'px');
+        im.style.setProperty('--torch', 1);
+      });
+      p.addEventListener('pointerleave', function () { im.style.setProperty('--torch', 0); });
+    });
+  }
+
+  // Tilt: cards lean toward the pointer
+  if (fine && !reduce) {
+    document.querySelectorAll('.tilt').forEach(function (c) {
+      c.addEventListener('pointermove', function (e) {
+        var r = c.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        c.classList.add('is-tilting');
+        c.style.setProperty('--ry', ((x - .5) * 6).toFixed(2) + 'deg');
+        c.style.setProperty('--rx', ((.5 - y) * 6).toFixed(2) + 'deg');
+        c.style.setProperty('--gx', (x * 100).toFixed(1) + '%');
+        c.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+      });
+      c.addEventListener('pointerleave', function () {
+        c.classList.remove('is-tilting');
+        c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg');
+      });
+    });
+    // Hero key art drifts with the pointer
+    var hero = document.querySelector('.hero'), hImg = hero && hero.querySelector('.hero__media img');
+    if (hImg) {
+      hero.addEventListener('pointermove', function (e) {
+        var r = hero.getBoundingClientRect();
+        hImg.style.setProperty('--hx', (((e.clientX - r.left) / r.width - .5) * -18).toFixed(1) + 'px');
+        hImg.style.setProperty('--hy', (((e.clientY - r.top) / r.height - .5) * -12).toFixed(1) + 'px');
+      });
+      hero.addEventListener('pointerleave', function () { hImg.style.setProperty('--hx', '0px'); hImg.style.setProperty('--hy', '0px'); });
+    }
+  }
+
+  // Decode: mono kickers resolve from noise into text the first time they enter view
+  if (!reduce && 'IntersectionObserver' in window) {
+    var GLYPHS = '▓▒░#%&/<>[]{}=+*·:;0123456789ABCDEFXYZ';
+    var kick = document.querySelectorAll('main p.meta, .purpose__credit');
+    var dio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        dio.unobserve(en.target);
+        var walker = document.createTreeWalker(en.target, NodeFilter.SHOW_TEXT);
+        var nodes = [], n;
+        while ((n = walker.nextNode())) if (n.nodeValue.trim()) nodes.push({ node: n, text: n.nodeValue });
+        var t0 = null, dur = 900;
+        var step = function (ts) {
+          if (t0 === null) t0 = ts;
+          var k = Math.min(1, (ts - t0) / dur);
+          nodes.forEach(function (o) {
+            var out = '', L = o.text.length, cut = Math.floor(L * k * 1.15);
+            for (var i = 0; i < L; i++) {
+              var ch = o.text[i];
+              out += (i < cut || ch === ' ' || ch === '·') ? ch : GLYPHS[(i * 7 + Math.floor(ts / 40)) % GLYPHS.length];
+            }
+            o.node.nodeValue = out;
+          });
+          if (k < 1) raf(step); else nodes.forEach(function (o) { o.node.nodeValue = o.text; });
+        };
+        raf(step);
+      });
+    }, { threshold: .4 });
+    kick.forEach(function (k) { dio.observe(k); });
   }
 
   // Subnav: highlight current section

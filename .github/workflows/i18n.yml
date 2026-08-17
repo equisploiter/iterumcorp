@@ -1,0 +1,55 @@
+# Regenerates the English pages (en/) and sitemap.xml whenever the Spanish
+# sources or the dictionary change, and commits the result back to main.
+#
+#  · New Spanish strings are added to i18n/en.json with an empty value and the
+#    job is marked as failed (annotations list them) until they are translated.
+#    The site still deploys: untranslated strings fall back to Spanish.
+#  · Nothing to install — scripts/i18n.js has zero dependencies.
+name: i18n
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*.html'
+      - 'i18n/**'
+      - 'scripts/i18n.js'
+      - '.github/workflows/i18n.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: i18n-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Extract new strings
+        run: node scripts/i18n.js extract
+
+      - name: Build English pages + sitemap
+        run: node scripts/i18n.js build
+
+      - name: Commit generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add en sitemap.xml i18n
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+          else
+            git commit -m "i18n: regenerate English pages"
+            git push
+          fi
+
+      - name: Report untranslated strings
+        run: node scripts/i18n.js check

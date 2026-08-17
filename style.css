@@ -79,7 +79,9 @@ table { border-collapse: collapse; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
-  .reveal { opacity: 1 !important; transform: none !important; }
+  .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
+  .ticker__in { animation: none !important; }
+  .plate__img img, .hero__media img, .tilt { transform: none !important; }
 }
 
 /* --------------------------------------------------------------------------
@@ -115,9 +117,114 @@ table { border-collapse: collapse; }
 .section__head h2 { font-size: var(--step-3); }
 .section__head p { margin-top: var(--sp-4); color: var(--ink-2); }
 
-/* Scroll reveal (JS adds .is-in) */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
-.reveal.is-in { opacity: 1; transform: none; }
+/* --------------------------------------------------------------------------
+   3b. PLATES  (Doré engraving as section backdrop: digital dossier × old-master maximalism)
+   Usage:
+     <section class="section plate plate--right" style="--plate-pos: 60% 20%">
+       <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-x.webp" alt="" loading="lazy"></div>
+       ...content...
+     </section>
+   Modifiers: --left / --right (image sits on that side, fades to bg on the other),
+              --full (fades top + bottom only), --soft (quieter), --framed (inner engraved mat).
+   Tokens: --plate-bg (section ground), --plate-op (image opacity), --plate-pos (object-position).
+   -------------------------------------------------------------------------- */
+.plate { position: relative; overflow: hidden; overflow: clip; isolation: isolate; --plate-bg: var(--bg); --plate-op: .38; --plate-pos: 50% 30%; background: var(--plate-bg); }
+.plate > * { position: relative; z-index: 1; }
+.plate__img { position: absolute !important; inset: 0; z-index: 0 !important; pointer-events: none; }
+.plate__img img { width: 100%; height: 100%; object-fit: cover; object-position: var(--plate-pos); opacity: var(--plate-op); filter: saturate(1.2) contrast(1.05); }
+.plate__img::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, var(--plate-bg) 0%, transparent 28%, transparent 70%, var(--plate-bg) 100%),
+    linear-gradient(90deg, var(--plate-bg) 0%, color-mix(in srgb, var(--plate-bg) 82%, transparent) 40%, color-mix(in srgb, var(--plate-bg) 25%, transparent) 100%);
+}
+.plate--left .plate__img::after {
+  background:
+    linear-gradient(180deg, var(--plate-bg) 0%, transparent 28%, transparent 70%, var(--plate-bg) 100%),
+    linear-gradient(270deg, var(--plate-bg) 0%, color-mix(in srgb, var(--plate-bg) 82%, transparent) 40%, color-mix(in srgb, var(--plate-bg) 25%, transparent) 100%);
+}
+.plate--full .plate__img::after {
+  background:
+    linear-gradient(180deg, var(--plate-bg) 0%, color-mix(in srgb, var(--plate-bg) 55%, transparent) 30%, color-mix(in srgb, var(--plate-bg) 55%, transparent) 70%, var(--plate-bg) 100%);
+}
+.plate--soft { --plate-op: .22; }
+/* Tall wrappers (press / legal / contact bodies): the engraving pins to the viewport instead of stretching. */
+.plate--pin .plate__img img { position: sticky; top: 0; height: 100vh; height: 100dvh; }
+/* Parallax: JS writes --py (px) per plate. Slight over-scale hides the edges. */
+.plate__img img { will-change: transform; transform: translate3d(0, var(--py, 0px), 0) scale(1.08); }
+.plate--pin .plate__img img { transform: none; }
+/* Torch: the engraving wakes up under the pointer. JS writes --mx/--my; --torch 0→1 while hovering. */
+.plate__img::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: var(--torch, 0);
+  background: radial-gradient(22rem circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--cy) 22%, transparent), transparent 70%);
+  mix-blend-mode: screen; transition: opacity .6s var(--ease);
+}
+.plate--framed::before {
+  content: ""; position: absolute; z-index: 1; inset: .75rem; pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--cy) 22%, transparent);
+}
+/* Corner ticks (registration marks): the "declassified plate" detail. */
+.plate--framed::after {
+  content: ""; position: absolute; z-index: 1; inset: .75rem; pointer-events: none;
+  --tk: linear-gradient(var(--cy), var(--cy));
+  background:
+    var(--tk) 0 0 / 1.25rem 1px, var(--tk) 0 0 / 1px 1.25rem,
+    var(--tk) 100% 0 / 1.25rem 1px, var(--tk) 100% 0 / 1px 1.25rem,
+    var(--tk) 0 100% / 1.25rem 1px, var(--tk) 0 100% / 1px 1.25rem,
+    var(--tk) 100% 100% / 1.25rem 1px, var(--tk) 100% 100% / 1px 1.25rem;
+  background-repeat: no-repeat; opacity: .7;
+}
+/* Phones: image is texture, never competition for the copy. */
+@media (max-width: 47.99em) {
+  .plate { --plate-op: .26; }
+  .plate__img::after, .plate--left .plate__img::after {
+    background: linear-gradient(180deg, var(--plate-bg) 0%, color-mix(in srgb, var(--plate-bg) 60%, transparent) 25%, color-mix(in srgb, var(--plate-bg) 60%, transparent) 75%, var(--plate-bg) 100%);
+  }
+}
+
+/* Engraved rule: hairline + small diamond. Used above section heads and in the footer. */
+.orn { position: relative; display: flex; align-items: center; gap: var(--sp-3); height: 1px; margin-bottom: var(--sp-5); color: var(--cy); }
+.orn::before, .orn::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--rule-2), color-mix(in srgb, var(--cy) 45%, transparent)); }
+.orn::after { background: linear-gradient(270deg, var(--rule-2), color-mix(in srgb, var(--cy) 45%, transparent)); }
+.orn i { display: block; width: 6px; height: 6px; transform: rotate(45deg); background: var(--cy); box-shadow: 0 0 0 3px var(--plate-bg, var(--bg)), 0 0 0 4px color-mix(in srgb, var(--cy) 40%, transparent); }
+.orn--start::before { display: none; }
+.orn--start::after { flex: 0 0 4rem; }
+.section__head .orn { margin-bottom: var(--sp-4); }
+/* Every section head gets a short engraved tick unless it carries an explicit .orn */
+.section__head:not(:has(.orn))::before { content: ""; display: block; width: 4rem; height: 1px; margin-bottom: var(--sp-4); background: linear-gradient(90deg, var(--cy), color-mix(in srgb, var(--cy) 30%, transparent) 60%, transparent); }
+
+/* --------------------------------------------------------------------------
+   3c. REACTIVE LAYER  (all progressive: nothing here is required for reading)
+   -------------------------------------------------------------------------- */
+/* Scroll progress: hairline under the nav. JS creates the element and writes --p. */
+.progress { position: fixed; top: 0; left: 0; z-index: 60; width: 100%; height: 2px; pointer-events: none; transform-origin: left; transform: scaleX(var(--p, 0)); background: linear-gradient(90deg, var(--cy-2), var(--cy)); box-shadow: 0 0 12px color-mix(in srgb, var(--cy) 60%, transparent); }
+/* Tilt: cards lean toward the pointer. JS writes --rx/--ry. */
+.tilt { transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .5s var(--ease); transform-style: preserve-3d; will-change: transform; }
+.tilt.is-tilting { transition: transform .08s linear; }
+.tilt::after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: 0; transition: opacity .4s var(--ease);
+  background: radial-gradient(60% 60% at var(--gx, 50%) var(--gy, 50%), color-mix(in srgb, var(--cy) 14%, transparent), transparent 70%); mix-blend-mode: screen; }
+.tilt.is-tilting::after { opacity: 1; }
+/* Hero key art follows the pointer, barely. */
+.hero__media img { transform: translate3d(var(--hx, 0px), var(--hy, 0px), 0) scale(1.04); transition: transform .9s var(--ease); }
+/* Decode: mono kickers resolve from noise into text on entry. */
+.decode { color: var(--cy); }
+/* Ticker: a status line that never stops (footer). */
+.ticker { overflow: hidden; border-block: 1px solid var(--rule); background: color-mix(in srgb, var(--bg) 60%, transparent); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); font-family: var(--mono); font-size: var(--step--2); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.ticker__in { display: flex; width: max-content; animation: ticker 48s linear infinite; }
+.ticker:hover .ticker__in { animation-play-state: paused; }
+.ticker__in span { display: inline-block; padding: .8rem 0; white-space: nowrap; }
+.ticker__in span::after { content: "◆"; color: var(--cy); font-size: .6em; vertical-align: .2em; margin-inline: 2.5em; }
+.ticker b { color: var(--cy); font-weight: 400; }
+.ticker .blood { font-weight: 400; }
+@keyframes ticker { to { transform: translateX(-50%); } }
+/* Magnetic-ish primary buttons: the arrow leads, the box follows. */
+.btn--primary { position: relative; overflow: hidden; }
+.btn--primary::before { content: ""; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%); transform: translateX(-120%); transition: transform .7s var(--ease); }
+.btn--primary:hover::before { transform: translateX(120%); }
+
+/* Scroll reveal (JS adds .is-in). Now with a soft focus pull. */
+.reveal { opacity: 0; transform: translateY(18px); filter: blur(6px); transition: opacity .8s var(--ease), transform .8s var(--ease), filter .8s var(--ease); }
+.reveal.is-in { opacity: 1; transform: none; filter: none; }
 .reveal[data-delay="1"] { transition-delay: .08s; }
 .reveal[data-delay="2"] { transition-delay: .16s; }
 .reveal[data-delay="3"] { transition-delay: .24s; }
@@ -141,7 +248,17 @@ table { border-collapse: collapse; }
 .nav__links a { color: var(--ink-2); }
 .nav__links a:hover, .nav__links a[aria-current="page"] { color: var(--ink); }
 .nav .nav__cta { display: none; }
-.nav__toggle { appearance: none; background: none; border: 1px solid var(--rule-2); color: var(--ink); padding: .5rem .8rem; font-family: var(--mono); font-size: var(--step--2); letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
+.nav__end { display: flex; align-items: center; gap: var(--sp-2); flex: none; }
+.nav__lang {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 2.2rem; padding: .5rem .7rem;
+  border: 1px solid var(--rule-2); color: var(--ink-2);
+  font-family: var(--mono); font-size: var(--step--2); letter-spacing: .12em; text-transform: uppercase;
+  transition: color .25s var(--ease), border-color .25s var(--ease);
+}
+.nav__lang:hover, .nav__lang:focus-visible { color: var(--cy); border-color: var(--cy); }
+.nav__toggle { appearance: none; background: none; border: 1px solid var(--rule-2); color: var(--ink); padding: .5rem .8rem; min-height: 2.2rem; font-family: var(--mono); font-size: var(--step--2); letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
+/* Very narrow phones: drop the "Corporation" tag so brand + EN + Menu always fit on one line. */
+@media (max-width: 22.5em) { .brand small { display: none; } }
 .nav__menu {
   display: none; position: absolute; top: var(--nav-h); left: 0; right: 0;
   background: var(--bg-2); border-bottom: 1px solid var(--rule); padding: var(--sp-5) var(--gutter);
@@ -151,6 +268,7 @@ table { border-collapse: collapse; }
 .nav.is-open .nav__menu { display: flex; }
 @media (min-width: 62em) {
   .nav__links, .nav .nav__cta { display: inline-flex; }
+  .nav__end { gap: var(--sp-3); }
   .nav__toggle, .nav__menu { display: none !important; }
 }
 
@@ -262,13 +380,14 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-h) + 3.5rem); }
 /* --------------------------------------------------------------------------
    6d. PAGE HERO (generic interior page header) + CONTACT PAGE
    -------------------------------------------------------------------------- */
-.page-hero { padding-block: var(--sp-8) var(--sp-7); border-bottom: 1px solid var(--rule); background: linear-gradient(180deg, var(--bg-2), var(--bg)); }
+.page-hero { padding-block: var(--sp-8) var(--sp-7); border-bottom: 1px solid var(--rule); --plate-bg: var(--bg-2); --plate-op: .42; }
+.page-hero:not(.plate) { background: linear-gradient(180deg, var(--bg-2), var(--bg)); }
 .page-hero .meta { margin-bottom: var(--sp-4); }
 .page-hero h1 { font-size: var(--step-4); font-weight: 700; letter-spacing: -0.035em; line-height: .96; max-width: 14ch; }
 .page-hero p:not(.meta) { margin-top: var(--sp-5); color: var(--ink-2); max-width: 46ch; }
-@media (min-width: 62em) { .page-hero { padding-block: var(--sp-9) var(--sp-8); } }
+@media (min-width: 62em) { .page-hero { padding-block: var(--sp-9) var(--sp-8); min-height: clamp(20rem, 52vh, 34rem); display: grid; align-content: center; } }
 
-.contact-page { display: grid; gap: var(--sp-8); padding-block: var(--sp-8); }
+.contact-page { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-8); padding-block: var(--sp-8); }
 .contact-page__form { max-width: 40rem; }
 .contact-page__side { display: grid; gap: var(--sp-4); align-content: start; }
 .contact--open { border-color: var(--cy-2); }
@@ -362,6 +481,11 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-h) + 3.5rem); }
 .bosses { display: grid; gap: var(--sp-7); }
 .bosses__art { position: relative; min-height: 20rem; border: 1px solid var(--rule); background: radial-gradient(60% 55% at 50% 45%, #1a0b0e, var(--bg-2) 70%); overflow: hidden; }
 .bosses__art img { position: absolute; }
+/* Engraving behind the sprites: Doré's beasts under pixel-art bosses. */
+.bosses__art .bosses__plate { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; opacity: .32; filter: saturate(1.2); }
+.bosses__art::before { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(70% 65% at 50% 50%, rgba(26,11,14,.35), rgba(11,17,19,.85) 100%); pointer-events: none; }
+.bosses__art img:not(.bosses__plate) { z-index: 2; }
+.bosses__art::after { content: ""; position: absolute; inset: .6rem; z-index: 3; border: 1px solid color-mix(in srgb, var(--cy) 18%, transparent); pointer-events: none; }
 .bosses__art .b1 { width: 58%; left: 21%; top: 10%; }
 .bosses__art .b2 { width: 16%; left: 7%; bottom: 12%; opacity: .85; }
 .bosses__art .b3 { width: 16%; right: 7%; bottom: 16%; opacity: .85; }
@@ -425,12 +549,17 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-h) + 3.5rem); }
 /* Board: three bands, each an explicit grid (2 cols mobile / 5 cols desktop, 2 rows).
    The text card has a fixed slot per band (left · right · left) so I → II → III read in order. */
 .purpose__board { --gap: .5rem; --row: 40vw; display: grid; gap: var(--gap); padding-inline: var(--gap); }
-.purpose__board .band { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: var(--row); grid-auto-flow: dense; gap: var(--gap); }
+/* Rows have a minimum height but may grow: text cards are never clipped, whatever the language or viewport. */
+.purpose__board .band { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: minmax(var(--row), auto); grid-auto-flow: dense; gap: var(--gap); }
 .pin { position: relative; overflow: hidden; background: #000; border: 1px solid var(--rule); margin: 0; }
 .pin--tall { grid-row: span 2; }
-.pin--text { grid-row: span 2; }
-.band--right .pin--text { grid-column: -2 / -1; grid-row: 1 / span 2; }
-.band--widecard .pin--text { grid-column: span 2; }
+/* Mobile: text cards take the full width on their own row (auto height). Desktop restores the 1-col × 2-row slot. */
+.pin--text { grid-column: 1 / -1; grid-row: auto; }
+@media (min-width: 62em) {
+  .pin--text { grid-column: auto; grid-row: span 2; }
+  .band--right .pin--text { grid-column: -2 / -1; grid-row: 1 / span 2; }
+  .band--widecard .pin--text { grid-column: span 2; }
+}
 .pin--img img { display: block; width: 100%; height: 100%; object-fit: cover; opacity: .9; filter: saturate(1.15) contrast(1.05); transition: opacity .5s var(--ease), filter .5s var(--ease), transform 1.4s var(--ease); transform: scale(1.02); }
 .pin--img:hover img { opacity: 1; filter: saturate(1.35) contrast(1.1) brightness(1.15); transform: scale(1); }
 .pin--img figcaption {
@@ -465,7 +594,9 @@ body.is-purpose .purpose { border-top: 0; }
 /* --------------------------------------------------------------------------
    13. ACCESS  (text + form)
    -------------------------------------------------------------------------- */
-.access { background: var(--bg-2); border-block: 1px solid var(--rule); }
+.access { background: var(--bg-2); border-block: 1px solid var(--rule); --plate-bg: var(--bg-2); --plate-op: .34; --plate-pos: 50% 20%; }
+.access .form { background: color-mix(in srgb, var(--bg) 70%, transparent); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid var(--rule-2); padding: var(--sp-6); }
+.access .form .field input { background: var(--bg); }
 .access__grid { display: grid; gap: var(--sp-7); }
 .access h2 { font-size: var(--step-3); }
 .access .prose { margin-top: var(--sp-5); }
@@ -483,6 +614,8 @@ body.is-purpose .purpose { border-top: 0; }
 .field small { font-family: var(--mono); font-size: var(--step--2); color: var(--ink-3); }
 .check { display: flex; gap: var(--sp-3); align-items: flex-start; font-size: var(--step--1); color: var(--ink-2); }
 .check input { accent-color: var(--cy); margin-top: .3em; flex: none; width: 1rem; height: 1rem; }
+.check a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.check a:hover { color: var(--cy); }
 .honeypot { position: absolute; left: -9999px; }
 .form__foot { font-family: var(--mono); font-size: var(--step--2); letter-spacing: .08em; color: var(--ink-3); }
 @media (min-width: 62em) { .access__grid { grid-template-columns: 1fr 1fr; gap: var(--sp-9); align-items: start; } }
@@ -490,7 +623,9 @@ body.is-purpose .purpose { border-top: 0; }
 /* --------------------------------------------------------------------------
    14. FOOTER
    -------------------------------------------------------------------------- */
-.footer { padding-block: var(--sp-8) var(--sp-7); }
+.footer { padding-block: var(--sp-8) var(--sp-7); border-top: 1px solid var(--rule); --plate-bg: #000; --plate-op: .3; --plate-pos: 50% 55%; }
+.footer.plate { padding-top: var(--sp-9); }
+.footer .orn { margin-bottom: var(--sp-7); }
 .footer__grid { display: grid; gap: var(--sp-6); }
 .footer .meta { display: block; margin-bottom: var(--sp-3); }
 .footer ul { display: grid; gap: var(--sp-2); font-family: var(--mono); font-size: var(--step--1); }
@@ -504,7 +639,9 @@ body.is-purpose .purpose { border-top: 0; }
 /* --------------------------------------------------------------------------
    15. PRESS KIT
    -------------------------------------------------------------------------- */
-.press-hero { padding-block: var(--sp-8) var(--sp-7); border-bottom: 1px solid var(--rule); background: linear-gradient(180deg, var(--bg-2), var(--bg)); }
+.press-hero { padding-block: var(--sp-8) var(--sp-7); border-bottom: 1px solid var(--rule); --plate-bg: var(--bg-2); --plate-op: .34; }
+.press-hero:not(.plate) { background: linear-gradient(180deg, var(--bg-2), var(--bg)); }
+.press-hero__art { box-shadow: 0 0 0 1px var(--bg-2), 0 0 0 2px var(--rule-2), 0 30px 60px -30px rgba(0,0,0,.9); }
 .press-hero h1 { font-size: var(--step-4); font-weight: 700; letter-spacing: -0.035em; line-height: .96; }
 .press-hero h1 span { display: block; color: var(--ink-3); font-weight: 400; font-size: .5em; letter-spacing: -0.01em; margin-top: .3em; }
 .press-hero p { margin-top: var(--sp-5); color: var(--ink-2); max-width: 44ch; }
@@ -514,7 +651,8 @@ body.is-purpose .purpose { border-top: 0; }
 .press-hero__art img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
 @media (min-width: 62em) { .press-hero__grid { grid-template-columns: 1fr 1.2fr; gap: var(--sp-9); align-items: center; } }
 
-.press { display: grid; gap: var(--sp-8); padding-block: var(--sp-8); }
+.press { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-8); padding-block: var(--sp-8); }
+.press__main, .press__side { min-width: 0; }
 .press__main > .section:first-child { padding-top: 0; }
 .press__side { display: grid; gap: var(--sp-6); align-content: start; }
 .toc { font-family: var(--mono); font-size: var(--step--1); }
@@ -568,12 +706,38 @@ body.is-purpose .purpose { border-top: 0; }
 .two { display: grid; gap: var(--sp-6); }
 @media (min-width: 48em) { .two { grid-template-columns: 1fr 1fr; } }
 
+/* Disabled button (e.g. downloads not yet available). Rendered as <span aria-disabled="true">. */
+.btn.is-disabled { color: var(--ink-3); border-color: var(--rule); background: transparent; cursor: not-allowed; pointer-events: none; }
+
+/* --------------------------------------------------------------------------
+   15b. LEGAL
+   -------------------------------------------------------------------------- */
+.legal { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-7); padding-block: var(--sp-8); }
+.legal__main { min-width: 0; }
+.legal__side { align-content: start; }
+.legal__main { max-width: 46rem; }
+.legal__block + .legal__block { margin-top: var(--sp-7); padding-top: var(--sp-6); border-top: 1px solid var(--rule); }
+.legal__block h2 { font-size: var(--step-2); margin-bottom: var(--sp-4); }
+.legal__block h3 { font-family: var(--mono); font-size: var(--step--1); letter-spacing: .12em; text-transform: uppercase; color: var(--cy); font-weight: 500; margin: var(--sp-6) 0 var(--sp-3); }
+.legal__block p + p { margin-top: var(--sp-4); }
+.legal__block .facts { margin-top: var(--sp-3); }
+.legal__block .facts th { width: 30%; }
+.legal__block .facts td { color: var(--ink-2); }
+.legal__block a:not(.btn) { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.legal__block a:not(.btn):hover { color: var(--cy); }
+.legal__block code { font-family: var(--mono); font-size: .9em; color: var(--cy); }
+.legal__block .note { margin-top: var(--sp-4); }
+@media (min-width: 62em) {
+  .legal { grid-template-columns: 16rem minmax(0, 1fr); gap: var(--sp-9); padding-block: var(--sp-9); }
+  .legal__side { position: sticky; top: calc(var(--nav-h) + var(--sp-5)); }
+}
+
 /* --------------------------------------------------------------------------
    16. PRINT
    -------------------------------------------------------------------------- */
 @media print {
   body { background: #fff; color: #000; }
-  body::before, .nav, .hero__media, .world__img, .corp__emblem, .pin--img { display: none !important; }
+  body::before, .nav, .hero__media, .world__img, .corp__emblem, .pin--img, .plate__img, .bosses__plate, .orn { display: none !important; }
   .redacted { color: #000; background: none; box-shadow: none; }
   .copy, .contact, .gallery figure { border-color: #999; background: none; }
 }
