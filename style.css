@@ -40,6 +40,8 @@
   --wrap: 84rem;
   --gutter: clamp(1.25rem, 5vw, 4rem);
   --nav-h: 4rem;
+  --sat: env(safe-area-inset-top, 0px);   /* iOS status-bar strip when Safari's bar collapses */
+  --nav-top: calc(var(--nav-h) + var(--sat)); /* where content may start under the sticky nav */
 
   --ease: cubic-bezier(.16, 1, .3, 1);
 }
@@ -48,13 +50,15 @@
    1. BASE
    -------------------------------------------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; background: var(--bg); scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 1rem); }
+html { -webkit-text-size-adjust: 100%; background: var(--bg); scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-top) + 1rem); }
 body {
   margin: 0; min-height: 100dvh;
   color: var(--ink); background: var(--bg);
   font-family: var(--sans); font-size: var(--step-0); line-height: 1.55;
   -webkit-font-smoothing: antialiased; overflow-x: hidden;
 }
+/* Opaque cap over the iOS status-bar strip: nothing scrolls visibly above the nav. */
+body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: var(--sat); z-index: 55; background: var(--bg); pointer-events: none; }
 /* Fixed film grain. pointer-events none, fixed layer, cheap. */
 body::before {
   content: ""; position: fixed; inset: -50%; z-index: 90; pointer-events: none;
@@ -211,7 +215,7 @@ table { border-collapse: collapse; }
    3c. REACTIVE LAYER  (all progressive: nothing here is required for reading)
    -------------------------------------------------------------------------- */
 /* Scroll progress: hairline under the nav. JS creates the element and writes --p. */
-.progress { position: fixed; top: 0; left: 0; z-index: 60; width: 100%; height: 2px; pointer-events: none; transform-origin: left; transform: scaleX(var(--p, 0)); background: linear-gradient(90deg, var(--cy-2), var(--cy)); box-shadow: 0 0 12px color-mix(in srgb, var(--cy) 60%, transparent); }
+.progress { position: fixed; top: var(--sat); left: 0; z-index: 60; width: 100%; height: 2px; pointer-events: none; transform-origin: left; transform: scaleX(var(--p, 0)); background: linear-gradient(90deg, var(--cy-2), var(--cy)); box-shadow: 0 0 12px color-mix(in srgb, var(--cy) 60%, transparent); }
 /* Tilt: cards lean toward the pointer. JS writes --rx/--ry. */
 .tilt { transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .5s var(--ease); transform-style: preserve-3d; will-change: transform; }
 .tilt.is-tilting { transition: transform .08s linear; }
@@ -247,7 +251,7 @@ table { border-collapse: collapse; }
    4. NAV
    -------------------------------------------------------------------------- */
 .nav {
-  position: sticky; top: 0; z-index: 50; height: var(--nav-h);
+  position: sticky; top: 0; z-index: 50; height: var(--nav-top); padding-top: var(--sat);
   background: color-mix(in srgb, var(--bg) 82%, transparent);
   backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
   border-bottom: 1px solid var(--rule);
@@ -274,7 +278,7 @@ table { border-collapse: collapse; }
 /* Very narrow phones: drop the "Corporation" tag so brand + EN + Menu always fit on one line. */
 @media (max-width: 22.5em) { .brand small { display: none; } }
 .nav__menu {
-  display: none; position: absolute; top: var(--nav-h); left: 0; right: 0;
+  display: none; position: absolute; top: var(--nav-top); left: 0; right: 0;
   background: var(--bg-2); border-bottom: 1px solid var(--rule); padding: var(--sp-5) var(--gutter);
   flex-direction: column; gap: var(--sp-4);
   font-family: var(--mono); font-size: var(--step--1); letter-spacing: .1em; text-transform: uppercase;
@@ -351,7 +355,7 @@ table { border-collapse: collapse; }
    6b. SUBNAV  (sticky section index on the game page)
    -------------------------------------------------------------------------- */
 .subnav {
-  position: sticky; top: var(--nav-h); z-index: 40;
+  position: sticky; top: var(--nav-top); z-index: 40;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--rule);
@@ -363,7 +367,7 @@ table { border-collapse: collapse; }
 .subnav__in a:hover { color: var(--ink); }
 .subnav__in a[aria-current="true"] { color: var(--cy); }
 .subnav__in a[aria-current="true"]::after { transform: scaleX(1); }
-html:has(.subnav) { scroll-padding-top: calc(var(--nav-h) + 3.5rem); }
+html:has(.subnav) { scroll-padding-top: calc(var(--nav-top) + 3.5rem); }
 
 /* --------------------------------------------------------------------------
    6c. HOME · FEATURED PROJECT + PURPOSE TEASER
@@ -438,7 +442,7 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-h) + 3.5rem); }
 .field select:focus, .field textarea:focus { outline: none; border-color: var(--cy); box-shadow: 0 0 0 3px var(--cy-ink); }
 @media (min-width: 62em) {
   .contact-page { grid-template-columns: minmax(0, 1fr) 22rem; gap: var(--sp-9); padding-block: var(--sp-9); }
-  .contact-page__side { position: sticky; top: calc(var(--nav-h) + var(--sp-5)); }
+  .contact-page__side { position: sticky; top: calc(var(--nav-top) + var(--sp-5)); }
 }
 
 /* --------------------------------------------------------------------------
@@ -693,7 +697,7 @@ body.is-purpose .purpose { border-top: 0; }
 .toc a:hover { color: var(--cy); padding-left: var(--sp-2); transition: padding .25s var(--ease), color .25s var(--ease); }
 @media (min-width: 62em) {
   .press { grid-template-columns: minmax(0, 1fr) 20rem; gap: var(--sp-9); }
-  .press__side { position: sticky; top: calc(var(--nav-h) + var(--sp-5)); max-height: calc(100dvh - var(--nav-h) - var(--sp-6)); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--rule-2) transparent; padding-right: var(--sp-2); }
+  .press__side { position: sticky; top: calc(var(--nav-top) + var(--sp-5)); max-height: calc(100dvh - var(--nav-top) - var(--sp-6)); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--rule-2) transparent; padding-right: var(--sp-2); }
 }
 
 .facts { width: 100%; font-family: var(--mono); font-size: var(--step--1); }
@@ -760,7 +764,7 @@ body.is-purpose .purpose { border-top: 0; }
 .legal__block .note { margin-top: var(--sp-4); }
 @media (min-width: 62em) {
   .legal { grid-template-columns: 16rem minmax(0, 1fr); gap: var(--sp-9); padding-block: var(--sp-9); }
-  .legal__side { position: sticky; top: calc(var(--nav-h) + var(--sp-5)); }
+  .legal__side { position: sticky; top: calc(var(--nav-top) + var(--sp-5)); }
 }
 
 /* --------------------------------------------------------------------------
