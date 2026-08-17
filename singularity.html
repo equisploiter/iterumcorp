@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Singularity · Iterum Corporation</title>
+  <meta name="description" content="Singularity es un roguelike de acción top-down en pixel art donde la sangre es tu único recurso. Combate, jefes, mundo y acceso anticipado.">
+  <meta name="theme-color" content="#070b0c">
+  <link rel="canonical" href="https://iterumcorp.org/singularity.html">
+  <link rel="icon" href="assets/img/emblem.png" type="image/png">
+  <link rel="preload" href="assets/fonts/SpaceGrotesk-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/img/ari-keyart-wide.jpg" as="image">
+  <link rel="stylesheet" href="style.css">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Iterum Corporation">
+  <meta property="og:title" content="Singularity · Iterum Corporation">
+  <meta property="og:description" content="Roguelike de acción top-down en pixel art. La sangre es tu único recurso. Dudar te mata. Y es la única forma de romper el bucle.">
+  <meta property="og:url" content="https://iterumcorp.org/singularity.html">
+  <meta property="og:image" content="https://iterumcorp.org/assets/img/og-1200x630.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<header class="nav" id="top">
+  <div class="wrap nav__in">
+    <a class="brand" href="/" aria-label="Iterum Corporation, inicio">
+      <img src="assets/img/emblem.png" alt="" width="30" height="30">
+      <span>Iterum</span><small>Corporation</small>
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="singularity.html" aria-current="page">Singularity</a>
+      <a href="proposito.html">Propósito</a>
+      <a href="press.html">Prensa</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <a class="btn btn--primary btn--sm nav__cta" href="#acceso">Solicitar acceso</a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+    <div class="nav__menu" id="menu">
+      <a href="singularity.html">Singularity</a>
+      <a href="proposito.html">Propósito</a>
+      <a href="press.html">Prensa</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="#acceso" class="cy">Solicitar acceso</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="h1">
+    <div class="hero__media" aria-hidden="true">
+      <img src="assets/img/ari-keyart-wide.jpg" alt="" width="1847" height="1039" fetchpriority="high">
+    </div>
+    <div class="wrap hero__in">
+      <div>
+        <p class="meta hero__kicker"><b>Singularity</b> · en desarrollo</p>
+        <h1 id="h1">La <span class="blood">sangre</span> es tu único recurso.</h1>
+        <p class="hero__sub">Roguelike de acción top-down en pixel art. Dudar te mata. Y es la única forma de romper el bucle.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#acceso">Solicitar acceso <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="press.html">Expediente de prensa</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBNAV -->
+  <nav class="subnav" aria-label="Secciones de Singularity">
+    <div class="wrap subnav__in">
+      <a href="#juego">El juego</a>
+      <a href="#pilares">Pilares</a>
+      <a href="#combate">Combate</a>
+      <a href="#jefes">Jefes</a>
+      <a href="#mundo">Mundo</a>
+      <a href="#acceso">Acceso</a>
+    </div>
+  </nav>
+
+  <!-- GAMEPLAY BAND -->
+  <section class="section band" id="juego">
+    <div class="wrap band__grid">
+      <div class="reveal">
+        <p class="band__quote">Te curas y recargas bañándote en la <span class="blood">sangre</span> que derramas.</p>
+        <p class="dim">Quedarte quieto te mata. Los enemigos aparecen según tu posición, acampar invoca hordas y casi todas las paredes se rompen. No hay esquinas seguras: velocidad es supervivencia.</p>
+      </div>
+      <figure class="reveal" data-delay="1" style="margin:0">
+        <div class="band__frame">
+          <img class="pixel" src="assets/img/gameplay-combat.jpg" alt="Captura de Singularity: Ari en una sala roja, barra de OverClock arriba a la izquierda y contador de munición 10/30" width="1920" height="1080" loading="lazy">
+        </div>
+        <figcaption class="band__caption">
+          <span><b>Nivel 1</b> · build interna</span>
+          <span>Pixel art artesanal · UI mínima</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- PILLARS BENTO -->
+  <section class="section" id="pilares">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <h2>Cuatro sistemas, una idea.</h2>
+        <p>Todo empuja a atacar. Todo lo que haces deja marca.</p>
+      </div>
+      <div class="bento">
+        <article class="tile tile--tall reveal">
+          <div class="tile__img"><img src="assets/img/concept-red-tree.jpg" alt="" width="1400" height="1272" loading="lazy"></div>
+          <h3>Combate agresivo</h3>
+          <p>Curarte y recargar sólo derramando sangre. Dash y OverClock encadenan ataques en un impulso hacia delante que no se detiene.</p>
+        </article>
+        <article class="tile reveal" data-delay="1">
+          <img class="sprite pixel" src="assets/img/sprite-ari-dash.png" alt="" width="375" height="475" loading="lazy">
+          <h3>Maestría</h3>
+          <p>Overheat, Trauma y esquiva perfecta: tres sistemas que se cruzan. Fácil de sobrevivir, brutal de dominar.</p>
+        </article>
+        <article class="tile tile--sprite reveal" data-delay="2">
+          <img class="sprite pixel" src="assets/img/sprite-boss-skull.png" alt="" width="793" height="490" loading="lazy">
+          <h3>Cazar jefes</h3>
+          <p>Entidades Persistentes que te acechan entre partidas. Skip&amp;Kill para saltarte un jefe o ganarte lo único que puede matarlo para siempre.</p>
+        </article>
+        <article class="tile reveal" data-delay="1">
+          <div class="tile__img"><img src="assets/img/ari-keyart.jpg" alt="" width="1400" height="1483" loading="lazy" style="object-position: 50% 20%"></div>
+          <h3>Narrativa en movimiento</h3>
+          <p>Historia críptica y reactiva contada entre combates, sin romper el ritmo. Muchas preguntas. Responderlas es trabajo del jugador.</p>
+        </article>
+        <article class="tile reveal" data-delay="2">
+          <div class="tile__img"><img src="assets/img/concept-teal-valley.jpg" alt="" width="992" height="848" loading="lazy"></div>
+          <h3>Tiempo, espacio y cambio</h3>
+          <p>Ciclos de luz, personajes que aparecen y desaparecen, combates especiales. El tiempo pasa y el mundo lo nota.</p>
+        </article>
+        <div class="tile tile--bar reveal">
+          <h3>Crecimiento</h3>
+          <p>Tú, tu habilidad y Ari crecéis fallando, muriendo y empujando hacia delante. Es la única mecánica que no se puede desactivar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MECHANICS STRIP -->
+  <section class="section" id="combate">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <h2>Leer el combate, no aporrear botones.</h2>
+        <p>Cada decisión en mitad del combate tiene consecuencias. Riesgo alto, recompensa alta.</p>
+      </div>
+      <div class="strip reveal">
+        <figure>
+          <img class="pixel" src="assets/img/mech-attack.jpg" alt="Ataque cuerpo a cuerpo y a distancia: el suelo cubierto de sangre tras un combate" width="720" height="480" loading="lazy">
+          <figcaption>Ataque <span>melee y a distancia</span></figcaption>
+        </figure>
+        <figure>
+          <img class="pixel" src="assets/img/mech-dash.jpg" alt="Ari atravesando una horda con un dash" width="720" height="480" loading="lazy">
+          <figcaption>Dash <span>frame perfecto</span></figcaption>
+        </figure>
+        <figure>
+          <img class="pixel" src="assets/img/mech-heal.jpg" alt="Ari curándose sobre un charco de sangre con la barra de OverClock activa" width="624" height="422" loading="lazy">
+          <figcaption>Curación <span>y OverClock</span></figcaption>
+        </figure>
+      </div>
+      <div class="defs">
+        <div class="reveal"><h3>Overheat</h3><p>Demasiado tiempo en OverClock daña y aturde a Ari. Obliga a decidir en mitad del combate.</p></div>
+        <div class="reveal" data-delay="1"><h3>Trauma</h3><p>Un porcentaje del daño recibido no se cura durante unos segundos. Los fallos importan. Esquivas perfectas y muertes cuerpo a cuerpo lo reducen.</p></div>
+        <div class="reveal" data-delay="2"><h3>Esquiva perfecta</h3><p>Un dash en el frame exacto encadenado con OverClock abre una ventana de combo. Reduce Trauma y Overheat. Riesgo alto, recompensa alta.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOSSES -->
+  <section class="section" id="jefes">
+    <div class="wrap bosses">
+      <div class="bosses__art reveal" aria-hidden="true">
+        <img class="b1 pixel" src="assets/img/sprite-boss-skull.png" alt="" width="793" height="490" loading="lazy">
+        <img class="b2 pixel" src="assets/img/sprite-entity.png" alt="" width="418" height="498" loading="lazy">
+        <img class="b3 pixel" src="assets/img/sprite-entity.png" alt="" width="418" height="498" loading="lazy" style="transform: scaleX(-1)">
+        <img class="b4 pixel" src="assets/img/sprite-ari.png" alt="" width="275" height="475" loading="lazy">
+      </div>
+      <div class="bosses__copy">
+        <h2 class="reveal">Los jefes no te esperan en su sala.</h2>
+        <div class="item reveal" data-delay="1">
+          <h3>Entidades Persistentes</h3>
+          <p>Superjefes errantes que pueden entrar en cualquier habitación. Vida enorme; se marchan a los pocos segundos. Los encuentras una y otra vez a lo largo de las partidas, desgastándolos poco a poco.</p>
+        </div>
+        <div class="item reveal" data-delay="2">
+          <h3>Skip&amp;Kill</h3>
+          <p>Cuando aparece una sala de jefe, puedes saltártela para llegar a salas más duras y mejor botín. Llega lo bastante hondo, gana un combate especial y obtén un <span class="redacted" tabindex="0">Oxidante</span>: la única forma de matar permanentemente al jefe de ese nivel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORLD -->
+  <section class="world" id="mundo">
+    <div class="world__img" aria-hidden="true">
+      <img src="assets/img/concept-tower-red.jpg" alt="" width="1920" height="1079" loading="lazy">
+    </div>
+    <div class="wrap world__in">
+      <h2 class="reveal">Un mundo que se siente antes de entenderse.</h2>
+      <div class="world__pillars">
+        <div class="reveal"><h3>Mundo y tono</h3><p>Vasto, vacío, abandonado. Melancolía, biología y mecánica. Tecnología antigua que ya no sirve a nadie.</p></div>
+        <div class="reveal" data-delay="1"><h3>Escala</h3><p>Jefes enormes. Escenarios enormes. Cantidades enormes de tiempo.</p></div>
+        <div class="reveal" data-delay="2"><h3>Estilo</h3><p>Pixel art artesanal. Lo vivo y lo muerto, lo físico y lo etéreo.</p></div>
+        <div class="reveal" data-delay="3"><h3>Interfaz mínima</h3><p>Sin paneles ensuciando la pantalla. Lo que ves es el mundo.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NARRATIVE + ARI -->
+  <section class="section" id="historia">
+    <div class="wrap two">
+      <div class="prose reveal">
+        <h2 style="font-size: var(--step-3); margin-bottom: var(--sp-5)">Ari, una chatarrera en una ciudad que olvidó su propio nombre.</h2>
+        <p class="lead">La historia avanza por coincidencias y por exploración. Diálogos rápidos y pequeñas escenas en momentos concretos; nada de paradas constantes.</p>
+        <p>Todo es críptico. Encajar las piezas es trabajo del jugador. Cada personaje y cada jefe tiene un defecto y una historia detrás, y la narrativa responde a las decisiones, a menudo de forma no lineal.</p>
+        <p>Es una historia sobre significado y crecimiento a través de fallar, lograr, morir y vivir. Ari aprende a ser humana: de seguir órdenes a madurar y decidir por sí misma. Porque el bucle sólo se rompe cuando empiezas a dudar de él.</p>
+      </div>
+      <div class="reveal" data-delay="1">
+        <p class="meta ledger__title">Ficha</p>
+        <ul class="ledger">
+          <li><span class="k">Género</span><span class="v">Roguelike de acción top-down</span></li>
+          <li><span class="k">Plataformas</span><span class="v">PC (Steam) · Steam Deck</span></li>
+          <li><span class="k">Mando</span><span class="v">Integración completa</span></li>
+          <li><span class="k">Idiomas</span><span class="v">Español · English</span></li>
+          <li><span class="k">Motor</span><span class="v">Unity · FMOD</span></li>
+          <li><span class="k">Jugadores</span><span class="v">1</span></li>
+          <li><span class="k">Lanzamiento</span><span class="v mute">Sin determinar</span></li>
+        </ul>
+        <p class="meta ledger__title" style="margin-top: var(--sp-6)">Estado</p>
+        <ul class="ledger">
+          <li><span class="k">Sistemas centrales</span><span class="v">Integrados</span></li>
+          <li><span class="k">Nivel 1</span><span class="v">Arte y contenido hechos</span></li>
+          <li><span class="k">Mando y Steam Deck</span><span class="v">Verificado</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCESS -->
+  <section class="section access" id="acceso">
+    <div class="wrap access__grid">
+      <div class="reveal">
+        <h2>Solicitar acceso</h2>
+        <div class="prose">
+          <p class="lead">Deje su dirección y será notificado cuando haya algo que notificar: página de Steam, demo, pruebas externas, fecha de lanzamiento.</p>
+          <p>No hay boletín ni periodicidad. Sólo se le escribirá cuando una iteración lo justifique. Los datos se procesan mediante Formspree y no se ceden a nadie. Puede darse de baja cuando quiera.</p>
+        </div>
+      </div>
+      <!-- FORMSPREE: sustituye YOUR_FORM_ID por el ID real -->
+      <form class="form reveal" data-delay="1" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="field">
+          <label for="email">Dirección de correo</label>
+          <input id="email" type="email" name="email" placeholder="usuario@dominio" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="name">Nombre o alias</label>
+          <input id="name" type="text" name="name" placeholder="Opcional" autocomplete="name">
+        </div>
+        <label class="check">
+          <input type="checkbox" name="consent" value="yes" required>
+          <span>Consiento recibir comunicaciones de Iterum Corporation sobre Singularity y proyectos posteriores.</span>
+        </label>
+        <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="hidden" name="_subject" value="[iterumcorp.org] Solicitud de acceso">
+        <div><button class="btn btn--primary" type="submit">Registrar solicitud <span class="arr" aria-hidden="true">→</span></button></div>
+        <p class="form__foot">El envío tarda unos segundos en confirmar.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="brand" href="/"><img src="assets/img/emblem.png" alt="" width="30" height="30"><span>Iterum</span><small>Corporation</small></a>
+        <p>Estudio independiente de videojuegos. La corporación es ficticia. El juego no.</p>
+      </div>
+      <div>
+        <span class="meta">Singularity</span>
+        <ul>
+          <li><a href="#juego">El juego</a></li>
+          <li><a href="#combate">Combate</a></li>
+          <li><a href="#mundo">Mundo</a></li>
+          <li><a href="#acceso">Solicitar acceso</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="meta">Sitio</span>
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="proposito.html">Propósito</a></li>
+          <li><a href="press.html">Expediente de prensa</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="meta">Canales</span>
+        <ul>
+          <li><a href="#" rel="me">Steam · próximamente</a></li>
+          <li><a href="#" rel="me">Bluesky</a></li>
+          <li><a href="#" rel="me">X</a></li>
+          <li><a href="#" rel="me">Discord</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__legal">
+      © 2026 Iterum Corporation. Todos los derechos reservados. Singularity es una marca de Iterum Corporation.<br>
+      Las iteraciones anteriores de este sitio <span class="redacted" tabindex="0">no están disponibles</span>.
+    </div>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>

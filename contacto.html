@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacto · Iterum Corporation</title>
+  <meta name="description" content="Contacto de Iterum Corporation: consultas generales, prensa, colaboraciones y candidaturas. Respuesta en 24-48 h.">
+  <meta name="theme-color" content="#070b0c">
+  <link rel="canonical" href="https://iterumcorp.org/contacto.html">
+  <link rel="icon" href="assets/img/emblem.png" type="image/png">
+  <link rel="preload" href="assets/fonts/SpaceGrotesk-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Iterum Corporation">
+  <meta property="og:title" content="Contacto · Iterum Corporation">
+  <meta property="og:description" content="Consultas generales, prensa, colaboraciones y candidaturas.">
+  <meta property="og:url" content="https://iterumcorp.org/contacto.html">
+  <meta property="og:image" content="https://iterumcorp.org/assets/img/og-1200x630.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<header class="nav" id="top">
+  <div class="wrap nav__in">
+    <a class="brand" href="/" aria-label="Iterum Corporation, inicio">
+      <img src="assets/img/emblem.png" alt="" width="30" height="30">
+      <span>Iterum</span><small>Corporation</small>
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="singularity.html">Singularity</a>
+      <a href="proposito.html">Propósito</a>
+      <a href="press.html">Prensa</a>
+      <a href="contacto.html" aria-current="page">Contacto</a>
+    </nav>
+    <a class="btn btn--primary btn--sm nav__cta" href="singularity.html#acceso">Solicitar acceso</a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+    <div class="nav__menu" id="menu">
+      <a href="singularity.html">Singularity</a>
+      <a href="proposito.html">Propósito</a>
+      <a href="press.html">Prensa</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="singularity.html#acceso" class="cy">Solicitar acceso</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="meta"><b>Contacto</b> · canal abierto</p>
+      <h1>Hablar con la corporación.</h1>
+      <p>Consultas, prensa, colaboraciones y candidaturas. Detrás del formulario hay dos personas; la respuesta suele llegar en 24-48 h.</p>
+    </div>
+  </section>
+
+  <div class="wrap contact-page">
+
+    <!-- FORMSPREE: sustituye YOUR_FORM_ID por el ID real -->
+    <form class="form contact-page__form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="field">
+        <label for="c-name">Nombre</label>
+        <input id="c-name" type="text" name="name" placeholder="Nombre o alias" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="c-email">Dirección de correo</label>
+        <input id="c-email" type="email" name="email" placeholder="usuario@dominio" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="c-topic">Asunto</label>
+        <select id="c-topic" name="topic" required>
+          <option value="" disabled selected>Seleccione uno</option>
+          <option value="general">Consulta general</option>
+          <option value="prensa">Prensa · claves y builds</option>
+          <option value="colaboracion">Colaboración · freelance</option>
+          <option value="compositor">Candidatura · compositor</option>
+          <option value="negocio">Publishing · plataformas · eventos</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="c-msg">Mensaje</label>
+        <textarea id="c-msg" name="message" rows="7" placeholder="Cuanto más concreto, mejor." required></textarea>
+      </div>
+      <label class="check">
+        <input type="checkbox" name="consent" value="yes" required>
+        <span>Consiento que Iterum Corporation use estos datos únicamente para responder a este mensaje.</span>
+      </label>
+      <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="hidden" name="_subject" value="[iterumcorp.org] Contacto">
+      <div><button class="btn btn--primary" type="submit">Enviar mensaje <span class="arr" aria-hidden="true">→</span></button></div>
+      <p class="form__foot">Los datos se procesan mediante Formspree y no se ceden a nadie.</p>
+    </form>
+
+    <aside class="contact-page__side">
+      <div class="contact">
+        <p class="meta">Correo directo</p>
+        <ul class="ledger">
+          <li><span class="k">General</span><a class="v" href="mailto:hello@iterumcorp.org">hello@iterumcorp.org</a></li>
+          <li><span class="k">Prensa</span><a class="v" href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
+        </ul>
+        <p class="note">Claves de prensa y builds bajo petición. Si escribe por prensa, el <a href="press.html">expediente</a> ya tiene ficha, descripciones y assets.</p>
+      </div>
+
+      <div class="contact">
+        <p class="meta">Personas</p>
+        <ul class="ledger">
+          <li><span class="k">Diego de la Peña</span><span class="v">Fundador · dirección, diseño y código</span></li>
+          <li><span class="k">Anastasiya</span><span class="v">Comunidad · marketing · ilustración</span></li>
+        </ul>
+      </div>
+
+      <div class="contact">
+        <p class="meta">Canales</p>
+        <ul class="ledger">
+          <li><span class="k">Steam</span><span class="v mute">Próximamente</span></li>
+          <li><span class="k">Bluesky</span><a class="v" href="#">@placeholder</a></li>
+          <li><span class="k">X</span><a class="v" href="#">@placeholder</a></li>
+          <li><span class="k">Discord</span><a class="v" href="#">invitación placeholder</a></li>
+        </ul>
+      </div>
+
+      <div class="contact contact--open">
+        <p class="meta"><b>Puesto abierto</b></p>
+        <p class="contact__title">Compositor / compositora</p>
+        <p class="note">Banda sonora original para Singularity. Melancolía, biología y mecánica; FMOD. Envíe portfolio con el asunto «Candidatura · compositor».</p>
+      </div>
+    </aside>
+
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="brand" href="/"><img src="assets/img/emblem.png" alt="" width="30" height="30"><span>Iterum</span><small>Corporation</small></a>
+        <p>Estudio independiente de videojuegos. La corporación es ficticia. El juego no.</p>
+      </div>
+      <div>
+        <span class="meta">Singularity</span>
+        <ul>
+          <li><a href="singularity.html">El juego</a></li>
+          <li><a href="singularity.html#combate">Combate</a></li>
+          <li><a href="singularity.html#mundo">Mundo</a></li>
+          <li><a href="singularity.html#acceso">Solicitar acceso</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="meta">Sitio</span>
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="proposito.html">Propósito</a></li>
+          <li><a href="press.html">Expediente de prensa</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="meta">Contacto</span>
+        <ul>
+          <li><a href="mailto:hello@iterumcorp.org">hello@iterumcorp.org</a></li>
+          <li><a href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__legal">
+      © 2026 Iterum Corporation. Todos los derechos reservados. Singularity es una marca de Iterum Corporation.<br>
+      Las iteraciones anteriores de este sitio <span class="redacted" tabindex="0">no están disponibles</span>.
+    </div>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>

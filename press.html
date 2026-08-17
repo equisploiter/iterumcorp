@@ -3,317 +3,311 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Singularity — Expediente de prensa · Iterum Corporation</title>
-  <meta name="description" content="Presskit de Singularity, roguelike de acción top-down y pixel art de Iterum Corporation: ficha, descripciones, mecánicas, capturas, assets y contacto de prensa.">
-  <meta name="theme-color" content="#07090b">
+  <title>Singularity · Expediente de prensa</title>
+  <meta name="description" content="Presskit de Singularity, roguelike de acción top-down en pixel art de Iterum Corporation: ficha, descripciones, mecánicas, capturas, assets y contacto de prensa.">
+  <meta name="theme-color" content="#070b0c">
   <link rel="canonical" href="https://iterumcorp.org/press.html">
+  <link rel="icon" href="assets/img/emblem.png" type="image/png">
+  <link rel="preload" href="assets/fonts/SpaceGrotesk-700-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Iterum Corporation">
-  <meta property="og:title" content="Singularity — Expediente de prensa">
-  <meta property="og:description" content="Roguelike de acción y pixel art. La sangre es tu único recurso. Ficha, capturas y assets.">
+  <meta property="og:title" content="Singularity · Expediente de prensa">
+  <meta property="og:description" content="Roguelike de acción top-down en pixel art. La sangre es tu único recurso. Ficha, capturas y assets.">
   <meta property="og:url" content="https://iterumcorp.org/press.html">
-  <meta property="og:image" content="https://iterumcorp.org/assets/img/og-1200x630.png">
+  <meta property="og:image" content="https://iterumcorp.org/assets/img/og-1200x630.jpg">
   <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-<div class="page">
 
-  <header class="masthead">
-    <div class="masthead__bar">
-      <a class="wordmark" href="/"><span class="glyph">⌖</span>Iterum <small>corp.</small></a>
-      <nav class="nav" aria-label="Principal">
-        <a href="/">Registro</a>
-        <a href="/#singularity">Expediente</a>
-        <a href="press.html" aria-current="page">Prensa</a>
-      </nav>
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="/" aria-label="Iterum Corporation, inicio">
+      <img src="assets/img/emblem.png" alt="" width="30" height="30">
+      <span>Iterum</span><small>Corporation</small>
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="singularity.html">Singularity</a>
+      <a href="proposito.html">Propósito</a>
+      <a href="press.html" aria-current="page">Prensa</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+    <a class="btn btn--primary btn--sm nav__cta" href="assets/press/singularity-presskit.zip">Descargar presskit</a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
+    <div class="nav__menu" id="menu">
+      <a href="singularity.html">Singularity</a>
+      <a href="proposito.html">Propósito</a>
+      <a href="press.html">Prensa</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="assets/press/singularity-presskit.zip" class="cy">Descargar presskit</a>
     </div>
-    <dl class="memo">
-      <dt>De</dt><dd>Iterum Corporation · División de Juegos</dd>
-      <dt>Para</dt><dd>Medios · creadores · curiosos</dd>
-      <dt>Ref.</dt><dd>SGL/PRS/001 · rev. 2026-08</dd>
-      <dt>Distribución</dt><dd><i>Sin restricciones</i> · puede citarse, copiarse y reproducirse</dd>
-    </dl>
-  </header>
+  </div>
+</header>
 
-  <main>
+<main>
 
-    <!-- HERO -->
-    <section class="hero row">
-      <div class="margin">
-        <div>§ 00</div>
-        <div class="vert">Expediente de prensa · Singularity</div>
-      </div>
-      <div class="hero__grid">
-        <div>
-          <h1>Singularity<br><em>expediente<br>de prensa</em></h1>
-          <p class="hero__lede">
-            Roguelike de acción top-down y pixel art. La sangre es tu único recurso.
-            Aquí está todo lo necesario para cubrirlo: ficha, descripciones listas para pegar,
-            mecánicas, capturas y assets. Si falta algo, pídalo. Si sobra algo, <span class="redacted" tabindex="0">no lo mencione</span>.
-          </p>
-          <div class="hero__actions">
-            <a class="cta" href="assets/press/singularity-presskit.zip">Descargar expediente completo (.zip)</a>
-            <a class="cta cta--quiet" href="#contact">Contacto de prensa</a>
-          </div>
-        </div>
-        <div class="hero__aside">
-          <ul class="ledger">
-            <li><span class="k">§ 01</span><span class="dots"></span><a class="v" href="#factsheet">Ficha</a></li>
-            <li><span class="k">§ 02</span><span class="dots"></span><a class="v" href="#description">Descripciones</a></li>
-            <li><span class="k">§ 03</span><span class="dots"></span><a class="v" href="#features">Pilares y mecánicas</a></li>
-            <li><span class="k">§ 04</span><span class="dots"></span><a class="v" href="#world">Mundo, narrativa y arte</a></li>
-            <li><span class="k">§ 05</span><span class="dots"></span><a class="v" href="#gallery">Capturas</a></li>
-            <li><span class="k">§ 06</span><span class="dots"></span><a class="v" href="#assets">Assets</a></li>
-            <li><span class="k">§ 07</span><span class="dots"></span><a class="v" href="#studio">Estudio</a></li>
-            <li><span class="k">§ 08</span><span class="dots"></span><a class="v" href="#contact">Contacto</a></li>
-          </ul>
+  <section class="press-hero">
+    <div class="wrap press-hero__grid">
+      <div>
+        <h1>Singularity <span>Expediente de prensa</span></h1>
+        <p>Roguelike de acción top-down en pixel art. Aquí está todo lo necesario para cubrirlo: ficha, descripciones listas para pegar, mecánicas, capturas y assets.</p>
+        <div class="press-hero__actions">
+          <a class="btn btn--primary" href="assets/press/singularity-presskit.zip">Descargar presskit <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="#contacto">Contacto de prensa</a>
         </div>
       </div>
-    </section>
-
-    <div class="row">
-      <div class="margin">
-        <div>SGL/PRS/001</div>
-        <div class="vert">Iterum Corporation · División de Juegos</div>
+      <div class="press-hero__art">
+        <img class="pixel" src="assets/img/gameplay-combat.jpg" alt="Captura de Singularity: combate en el nivel 1" width="1920" height="1080" fetchpriority="high">
       </div>
+    </div>
+  </section>
 
-      <div class="split split--wide">
+  <div class="wrap press">
 
-        <!-- MAIN COLUMN -->
-        <div>
+    <!-- MAIN -->
+    <div class="press__main">
 
-          <!-- 02 DESCRIPCIONES -->
-          <section class="section" id="description">
-            <h2 class="section__title"><small class="folio-num">02</small>Descripciones</h2>
-            <p class="lead" style="margin-bottom: var(--sp-5);">Tres longitudes, en español e inglés. Copie la que le convenga; no hace falta más atribución que el nombre del estudio.</p>
+      <section class="section" id="descripciones">
+        <div class="section__head">
+          <h2>Descripciones</h2>
+          <p>Tres longitudes, en español e inglés. Copie la que le convenga; basta con citar al estudio.</p>
+        </div>
 
-            <div class="copy" data-label="una frase · ES">Singularity es un roguelike de acción top-down, rápido, en el que la SANGRE es tu único recurso. Te curas y recargas bañándote en la que derramas. Dudar te mata. ¿Por qué entonces es la única forma de romper el bucle?</div>
+        <div class="copy" data-label="Una frase · ES">Singularity es un roguelike de acción top-down, rápido, en el que la <span class="blood">SANGRE</span> es tu único recurso. Te curas y recargas bañándote en la que derramas. Dudar te mata. ¿Por qué entonces es la única forma de romper el bucle?</div>
 
-            <div class="copy" data-label="one-liner · EN">Singularity is a fast top-down action roguelike where BLOOD is your only resource. You heal and reload by bathing in what you spill. Doubt gets you killed — so why is it the only way to break the loop?</div>
+        <div class="copy" data-label="One-liner · EN">Singularity is a fast top-down action roguelike where BLOOD is your only resource. You heal and reload by bathing in what you spill. Doubt gets you killed. So why is it the only way to break the loop?</div>
 
-            <div class="copy" data-label="corta · ES">Singularity es un roguelike de acción top-down, rápido y en pixel art, en el que la sangre es tu único recurso: te curas y recargas bañándote en la que derramas, así que dudar significa morir. Controlas a Ari, una chatarrera en una ciudad que olvidó su propio nombre, a través de un mundo vasto y abandonado donde los jefes te acechan entre partidas. Pero el bucle que te mantiene atrapada sólo se rompe cuando empiezas a dudar de él.</div>
+        <div class="copy" data-label="Corta · ES">Singularity es un roguelike de acción top-down, rápido y en pixel art, en el que la sangre es tu único recurso: te curas y recargas bañándote en la que derramas, así que dudar significa morir. Controlas a Ari, una chatarrera en una ciudad que olvidó su propio nombre, a través de un mundo vasto y abandonado donde los jefes te acechan entre partidas. Pero el bucle que te mantiene atrapada sólo se rompe cuando empiezas a dudar de él.</div>
 
-            <div class="copy" data-label="short · EN">Singularity is a fast top-down action roguelike where blood is your only resource. You heal and reload by bathing in what you spill, so hesitating means dying. You play Ari, a scavenger in a city that forgot its own name, moving through a vast abandoned world where bosses stalk you across runs. But the loop that keeps you trapped only breaks when you start doubting it.</div>
+        <div class="copy" data-label="Short · EN">Singularity is a fast top-down action roguelike where blood is your only resource. You heal and reload by bathing in what you spill, so hesitating means dying. You play Ari, a scavenger in a city that forgot its own name, moving through a vast abandoned world where bosses stalk you across runs. But the loop that keeps you trapped only breaks when you start doubting it.</div>
 
-            <div class="copy" data-label="larga · ES">Singularity es un roguelike de acción top-down, rápido y en pixel art artesanal, en el que la sangre es tu único recurso. Te curas y recargas únicamente bañándote en la sangre de los enemigos mientras cae. Quedarse quieto mata: los enemigos aparecen según tu posición, acampar invoca hordas de castigo y casi todas las paredes se rompen. No hay esquinas seguras. Velocidad es supervivencia.
+        <div class="copy" data-label="Larga · ES">Singularity es un roguelike de acción top-down, rápido y en pixel art artesanal, en el que la sangre es tu único recurso. Te curas y recargas únicamente bañándote en la sangre de los enemigos mientras cae. Quedarse quieto mata: los enemigos aparecen según tu posición, acampar invoca hordas de castigo y casi todas las paredes se rompen. No hay esquinas seguras. Velocidad es supervivencia.
 
 Bajo la velocidad hay profundidad. Overheat castiga el exceso de confianza; Trauma convierte cada error en daño que no se cura; la esquiva perfecta abre ventanas de combo que reducen ambos. Tres sistemas que se cruzan y premian leer el combate, no aporrear botones. Fácil de sobrevivir, brutal de dominar.
 
-Los jefes no esperan en su sala. Las Entidades Persistentes son superjefes errantes que pueden entrar en cualquier habitación, se marchan a los pocos segundos y conservan el daño entre partidas: la misma criatura, una y otra vez, hasta que cae. Con Skip&Kill puedes saltarte un jefe para llegar a salas más duras y mejor botín — o ganarte el único objeto capaz de matarlo para siempre.
+Los jefes no esperan en su sala. Las Entidades Persistentes son superjefes errantes que pueden entrar en cualquier habitación, se marchan a los pocos segundos y conservan el daño entre partidas: la misma criatura, una y otra vez, hasta que cae. Con Skip&amp;Kill puedes saltarte un jefe para llegar a salas más duras y mejor botín, o ganarte el único objeto capaz de matarlo para siempre.
 
 Y entre combate y combate, sin romper el ritmo, una historia críptica y reactiva. Controlas a Ari, una chatarrera en una ciudad que olvidó su propio nombre, en un mundo vasto, vacío y abandonado, entre biología y máquina. El tiempo pasa; los personajes lo notan y reaccionan. Ari, tu habilidad y la historia crecen juntas fallando, muriendo y empujando hacia delante. Porque el bucle sólo se rompe cuando empiezas a dudar de él.</div>
 
-            <div class="copy" data-label="long · EN">Singularity is a fast top-down action roguelike in handcrafted pixel art where blood is your only resource. You heal and reload only by bathing in enemies' blood as it falls. Standing still is death: enemies spawn depending on your position, camping triggers punishment waves and almost every wall is breakable. No safe corners. Speed is survival.
+        <div class="copy" data-label="Long · EN">Singularity is a fast top-down action roguelike in handcrafted pixel art where blood is your only resource. You heal and reload only by bathing in enemies' blood as it falls. Standing still is death: enemies spawn depending on your position, camping triggers punishment waves and almost every wall is breakable. No safe corners. Speed is survival.
 
 Under the speed there is depth. Overheat punishes overcommitting; Trauma turns every mistake into damage you can't heal back; a frame-perfect dodge opens a combo window that reduces both. Three interlocking systems that reward reading the fight, not mashing buttons. Easy to survive, brutal to master.
 
-Bosses don't wait in their room. Persistent Entities are roaming super-bosses that can wander into any room, leave after a few seconds and keep their damage between runs — the same entity again and again, until it falls. With Skip&Kill you can skip a boss to reach harder rooms and better loot, or earn the one item that can kill it for good.
+Bosses don't wait in their room. Persistent Entities are roaming super-bosses that can wander into any room, leave after a few seconds and keep their damage between runs: the same entity again and again, until it falls. With Skip&amp;Kill you can skip a boss to reach harder rooms and better loot, or earn the one item that can kill it for good.
 
 And between fights, without ever breaking flow, a cryptic, reactive story. You play Ari, a scavenger in a city that forgot its own name, in a vast, empty, abandoned world caught between biology and machine. Time passes; the characters notice and react. Ari, your skill and the story grow together by failing, dying and pushing forward. Because the loop only breaks when you start doubting it.</div>
-          </section>
+      </section>
 
-          <!-- 03 PILARES Y MECÁNICAS -->
-          <section class="section" id="features">
-            <h2 class="section__title"><small class="folio-num">03</small>Pilares y mecánicas</h2>
-            <p class="lead" style="margin-bottom: var(--sp-5);">Cuatro sistemas, una idea: todo empuja a atacar, y todo lo que haces deja marca.</p>
-            <ol class="exhibits">
-              <li><div><h3>Combate agresivo</h3><p>Curarte y recargar sólo derramando sangre. Los enemigos aparecen según tu posición; acampar invoca hordas de castigo. Casi todas las paredes se destruyen: no hay dónde esconderse ni tras qué esperar. Dash y OverClock encadenan ataques en un impulso hacia delante que no se detiene.</p></div></li>
-              <li><div><h3>Overheat</h3><p>Castiga el exceso de confianza. Demasiado tiempo en OverClock daña y aturde a Ari. Obliga a decidir en mitad del combate.</p></div></li>
-              <li><div><h3>Trauma</h3><p>Castiga los errores. Un porcentaje del daño recibido no se puede curar durante unos segundos. Los fallos importan. La esquiva perfecta y las muertes cuerpo a cuerpo lo reducen.</p></div></li>
-              <li><div><h3>Esquiva perfecta</h3><p>Premia la agresividad. Un dash en el frame exacto, encadenado con OverClock y un ataque, abre una ventana de combo. Reduce Trauma y Overheat. Riesgo alto, recompensa alta.</p></div></li>
-              <li><div><h3>Entidades Persistentes</h3><p>Superjefes errantes que pueden entrar en cualquier sala. Enormes reservas de vida; se marchan a los pocos segundos. Los encuentras una y otra vez a lo largo de las partidas, desgastándolos poco a poco.</p></div></li>
-              <li><div><h3>Skip&amp;Kill</h3><p>Cuando aparece una sala de jefe, puedes saltártela para llegar a salas más duras y mejor botín. Llega lo bastante hondo, gana un combate especial, y obtienes un <span class="redacted" tabindex="0">Oxidante</span>: la única forma de matar permanentemente al jefe de ese nivel.</p></div></li>
-              <li><div><h3>Crecimiento</h3><p>Tú, tu habilidad y Ari crecéis fallando, muriendo y empujando hacia delante. Terminar el juego es posible para cualquiera que se centre en jugar mejor; los jugadores más exigentes lo viven en otro nivel.</p></div></li>
-            </ol>
-          </section>
-
-          <!-- 04 MUNDO, NARRATIVA Y ARTE -->
-          <section class="section" id="world">
-            <h2 class="section__title"><small class="folio-num">04</small>Mundo, narrativa y arte</h2>
-            <div class="two">
-              <div class="prose">
-                <p class="meta">Narrativa en movimiento</p>
-                <p><strong>Exploración y ambigüedad.</strong> La historia avanza por coincidencias y por exploración. Queremos enganchar al jugador con ambigüedad y enganchar <em>con</em> el jugador haciendo preguntas.</p>
-                <p><strong>Entrega sutil.</strong> Diálogos rápidos y pequeñas escenas en momentos concretos. Nada de paradas constantes durante el juego. Todo es críptico; encajar las piezas es trabajo del jugador.</p>
-                <p><strong>Impacto emocional.</strong> Narrativa profunda y reactiva que responde a las decisiones del jugador, a menudo no lineal. Cada personaje y cada jefe tiene un defecto y una historia detrás.</p>
-                <p><strong>Sentido cíclico.</strong> Una historia sobre significado y crecimiento a través de fallar, lograr, morir y vivir. Ari aprende a ser humana viviendo, muriendo, fracasando y venciendo: de seguir órdenes a madurar y decidir por sí misma.</p>
-                <p><strong>Tiempo, espacio y cambio.</strong> Ciclos de luz, disponibilidad de personajes y combates especiales dan la sensación de que el tiempo pasa. Nadie escapa a eso. Ari y el resto son conscientes de lo que ocurre y reaccionan. Las pequeñas elecciones y los tiempos afectan al mundo.</p>
-              </div>
-              <div class="prose">
-                <p class="meta">Dirección de arte</p>
-                <p><strong>Mundo y tono.</strong> Un mundo vasto, vacío y abandonado, lleno de tecnología antigua e inútil. Melancolía, biología y mecánica. Experimentar con lo vivo y lo muerto, lo físico y lo etéreo.</p>
-                <p><strong>Escala.</strong> Jefes enormes. Escenarios enormes. Cantidades enormes de tiempo.</p>
-                <p><strong>Estilo.</strong> Pixel art artesanal. Ayuda a diferenciarse y le sienta bien a la melancolía.</p>
-                <p><strong>Interfaz mínima.</strong> Sin interfaces convencionales ensuciando la pantalla. Un mundo que se siente antes de entenderse.</p>
-                <p class="meta" style="margin-top: var(--sp-5);">Ari · operativa de campo</p>
-                <p>Una chatarrera en una ciudad que olvidó su propio nombre, moviéndose entre andamios, señal y silencio. Paleta: verde azulado e iridiscente.</p>
-                <p class="meta" style="margin-top: var(--sp-5);">Sobre el título</p>
-                <p><em>Singularidad</em>: punto, evento o condición tan extremos que las reglas que gobiernan la situación dejan de aplicarse. Del latín tardío <em>singularitas</em>: unicidad, soledad. Otras acepciones <span class="redacted" tabindex="0">también aplican</span>.</p>
-              </div>
-            </div>
-          </section>
-
-          <!-- 05 CAPTURAS -->
-          <section class="section" id="gallery">
-            <h2 class="section__title"><small class="folio-num">05</small>Capturas</h2>
-            <p class="meta" style="margin-bottom: var(--sp-4);">Pruebas A–F · 1920 × 1080 · PNG · sin compresión</p>
-            <div class="gallery">
-              <figure><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado captura 01"><span>Prueba A</span><i>01</i></div><figcaption><b>singularity_01.png</b> · combate en el nivel 1 · barra de OverClock y contador de munición</figcaption></figure>
-              <figure><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado captura 02"><span>Prueba B</span><i>02</i></div><figcaption><b>singularity_02.png</b> · ataque cuerpo a cuerpo y a distancia · sangre en el suelo</figcaption></figure>
-              <figure><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado captura 03"><span>Prueba C</span><i>03</i></div><figcaption><b>singularity_03.png</b> · dash a través de una horda</figcaption></figure>
-              <figure><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado captura 04"><span>Prueba D</span><i>04</i></div><figcaption><b>singularity_04.png</b> · curación bañándose en sangre</figcaption></figure>
-              <figure><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado captura 05"><span>Prueba E</span><i>05</i></div><figcaption><b>singularity_05.png</b> · OverClock activo</figcaption></figure>
-              <figure><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado captura 06"><span>Prueba F</span><i>06</i></div><figcaption><b>singularity_06.png</b> · Entidad Persistente · encuentro de jefe</figcaption></figure>
-            </div>
-
-            <p class="meta" style="margin: var(--sp-6) 0 var(--sp-3);">Tráiler · 1920 × 1080 · pendiente</p>
-            <div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado tráiler"><span>Prueba G · vídeo</span><i>embed pendiente</i></div>
-          </section>
-
-          <!-- 06 ASSETS -->
-          <section class="section" id="assets">
-            <h2 class="section__title"><small class="folio-num">06</small>Assets</h2>
-            <div class="two" style="margin-bottom: var(--sp-6);">
-              <figure style="margin:0;"><div class="slate slate--3x1" data-dim="1200 × 400" role="img" aria-label="Espacio reservado logo Singularity"><span>Logotipo · Singularity</span></div><figcaption class="meta" style="margin-top: var(--sp-2);">PNG transparente + SVG</figcaption></figure>
-              <figure style="margin:0;"><div class="slate slate--1x1" data-dim="2000 × 2000" role="img" aria-label="Espacio reservado emblema Iterum: uróboros y espada"><span>Emblema · Iterum Corp.</span></div><figcaption class="meta" style="margin-top: var(--sp-2);">Uróboros y espada · PNG transparente + SVG</figcaption></figure>
-              <figure style="margin:0;"><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado key art"><span>Key art · horizontal</span></div><figcaption class="meta" style="margin-top: var(--sp-2);">PNG</figcaption></figure>
-              <figure style="margin:0;"><div class="slate slate--4x3" data-dim="2311 × 3100" role="img" aria-label="Espacio reservado concept art de Ari"><span>Concept · Ari · hoja 001</span></div><figcaption class="meta" style="margin-top: var(--sp-2);">Ilustración · PNG</figcaption></figure>
-              <figure style="margin:0;"><div class="slate slate--16x9" data-dim="1920 × 1080" role="img" aria-label="Espacio reservado concept art de entorno"><span>Concept · entorno · la torre</span></div><figcaption class="meta" style="margin-top: var(--sp-2);">Ilustración · PNG</figcaption></figure>
-              <figure style="margin:0;"><div class="slate slate--1x1" data-dim="1024 × 1024" role="img" aria-label="Espacio reservado sprites"><span>Sprites · Ari · jefes · enemigos</span></div><figcaption class="meta" style="margin-top: var(--sp-2);">PNG transparente · escala ×4</figcaption></figure>
-            </div>
-
-            <p class="meta" style="margin-bottom: var(--sp-3);">Índice de descargas · assets/press/</p>
-            <ul class="index">
-              <li><div><span class="name">Expediente completo</span><span class="spec">singularity-presskit.zip · todo lo de abajo</span></div><a class="get" href="assets/press/singularity-presskit.zip" download>Descargar</a></li>
-              <li><div><span class="name">Capturas</span><span class="spec">singularity-screenshots.zip · 6 × PNG 1920 × 1080</span></div><a class="get" href="assets/press/singularity-screenshots.zip" download>Descargar</a></li>
-              <li><div><span class="name">Logotipos y emblema</span><span class="spec">singularity-logos.zip · PNG + SVG</span></div><a class="get" href="assets/press/singularity-logos.zip" download>Descargar</a></li>
-              <li><div><span class="name">Key art y concept</span><span class="spec">singularity-keyart.zip · PNG</span></div><a class="get" href="assets/press/singularity-keyart.zip" download>Descargar</a></li>
-              <li><div><span class="name">Sprites y GIFs</span><span class="spec">singularity-sprites.zip · PNG · GIF</span></div><a class="get" href="assets/press/singularity-sprites.zip" download>Descargar</a></li>
-            </ul>
-            <p class="note" style="margin-top: var(--sp-4);">Uso libre para cobertura editorial de Singularity. No alterar los logotipos ni el emblema. No preguntar por los que faltan.</p>
-          </section>
-
-          <!-- 07 ESTUDIO -->
-          <section class="section" id="studio">
-            <h2 class="section__title"><small class="folio-num">07</small>Iterum Corporation</h2>
-            <div class="two">
-              <div class="prose">
-                <p class="lead">Estudio independiente español, deliberadamente pequeño, construido para esta producción. Su primer título es Singularity.</p>
-                <p>La identidad corporativa es una broma seria: una megacorporación ficticia que existe para hacer un juego pequeño y denso. Iterum significa <em>otra vez</em>. El emblema es una serpiente que se muerde la cola, atravesada por una espada.</p>
-                <p>Singularity nació con una parada en seco y una pregunta — <em>¿dónde estoy y hacia dónde voy?</em> — en el mundo que más rápido ha cambiado en la historia. Habla de la tecnología y de sus consecuencias sobre nosotros, del propósito que muchos no encuentran, de un tiempo que ya no parece nuestro; de romper el bucle, crecer a través del dolor, caer y volver a pelear. Podríamos haber escrito un libro. Preferimos dar al jugador la oportunidad de derrotar a la serpiente por sí mismo.</p>
-              </div>
-              <div>
-                <table class="facts">
-                  <tr><th>Estudio</th><td>Iterum Corporation (IterumCorp)</td></tr>
-                  <tr><th>Fundación</th><td>2026</td></tr>
-                  <tr><th>Ubicación</th><td>España</td></tr>
-                  <tr><th>Web</th><td><a href="https://iterumcorp.org">iterumcorp.org</a></td></tr>
-                  <tr><th>Proyectos</th><td>Singularity (en desarrollo)</td></tr>
-                  <tr><th>Anteriores</th><td><span class="redacted" tabindex="0">no constan</span></td></tr>
-                </table>
-                <p class="meta" style="margin: var(--sp-5) 0 var(--sp-2);">Equipo</p>
-                <table class="facts">
-                  <tr><th>Diego de la Peña</th><td>Fundador · diseño · programación · dirección narrativa</td></tr>
-                  <tr><th>Anastasiya</th><td>Marketing · comunidad · ilustraciones clave</td></tr>
-                  <tr><th>Música</th><td>Compositor por contratar · banda sonora original</td></tr>
-                  <tr><th>Colaboradores</th><td>Contratistas y apoyo freelance por hitos</td></tr>
-                </table>
-              </div>
-            </div>
-          </section>
-
+      <section class="section" id="mecanicas">
+        <div class="section__head">
+          <h2>Pilares y mecánicas</h2>
+          <p>Cuatro sistemas, una idea: todo empuja a atacar, y todo lo que haces deja marca.</p>
         </div>
+        <div class="strip">
+          <figure>
+            <img class="pixel" src="assets/img/mech-attack.jpg" alt="Ataque cuerpo a cuerpo y a distancia" width="720" height="480" loading="lazy">
+            <figcaption>Ataque <span>melee y a distancia</span></figcaption>
+          </figure>
+          <figure>
+            <img class="pixel" src="assets/img/mech-dash.jpg" alt="Dash a través de una horda" width="720" height="480" loading="lazy">
+            <figcaption>Dash <span>frame perfecto</span></figcaption>
+          </figure>
+          <figure>
+            <img class="pixel" src="assets/img/mech-heal.jpg" alt="Curación bañándose en sangre con OverClock activo" width="624" height="422" loading="lazy">
+            <figcaption>Curación <span>y OverClock</span></figcaption>
+          </figure>
+        </div>
+        <div class="defs">
+          <div><h3>Combate agresivo</h3><p>Curarte y recargar sólo derramando sangre. Los enemigos aparecen según tu posición; acampar invoca hordas de castigo. Casi todas las paredes se destruyen. Dash y OverClock encadenan ataques en un impulso hacia delante.</p></div>
+          <div><h3>Overheat</h3><p>Castiga el exceso de confianza. Demasiado tiempo en OverClock daña y aturde a Ari. Obliga a decidir en mitad del combate.</p></div>
+          <div><h3>Trauma</h3><p>Castiga los errores. Un porcentaje del daño recibido no se puede curar durante unos segundos. La esquiva perfecta y las muertes cuerpo a cuerpo lo reducen.</p></div>
+          <div><h3>Esquiva perfecta</h3><p>Premia la agresividad. Un dash en el frame exacto, encadenado con OverClock y un ataque, abre una ventana de combo. Reduce Trauma y Overheat.</p></div>
+          <div><h3>Entidades Persistentes</h3><p>Superjefes errantes que pueden entrar en cualquier sala. Enormes reservas de vida; se marchan a los pocos segundos. Los encuentras una y otra vez a lo largo de las partidas.</p></div>
+          <div><h3>Skip&amp;Kill</h3><p>Salta una sala de jefe para llegar a salas más duras y mejor botín. Llega lo bastante hondo, gana un combate especial y obtén un Oxidante: la única forma de matar permanentemente al jefe de ese nivel.</p></div>
+        </div>
+      </section>
 
-        <!-- SIDEBAR -->
-        <aside>
-          <div class="sticky">
-
-            <section class="section" id="factsheet" style="padding-top: var(--sp-7);">
-              <p class="meta"><span class="folio-num">01</span> · Ficha</p>
-              <table class="facts" style="margin-top: var(--sp-3);">
-                <tr><th>Título</th><td>Singularity</td></tr>
-                <tr><th>Desarrollador</th><td>Iterum Corporation</td></tr>
-                <tr><th>Editor</th><td>Autopublicado</td></tr>
-                <tr><th>Género</th><td>Roguelike de acción · top-down · pixel art</td></tr>
-                <tr><th>Plataformas</th><td>PC (Steam) · Steam Deck</td></tr>
-                <tr><th>Mando</th><td>Integración completa</td></tr>
-                <tr><th>Lanzamiento</th><td>Sin determinar</td></tr>
-                <tr><th>Precio</th><td>Sin determinar</td></tr>
-                <tr><th>Idiomas</th><td>Español · English</td></tr>
-                <tr><th>Motor</th><td>Unity · FMOD</td></tr>
-                <tr><th>Jugadores</th><td>1</td></tr>
-                <tr><th>Estado</th><td>En desarrollo · sistemas centrales y nivel 1 completos</td></tr>
-                <tr><th>Público</th><td>Acción · hardcore y speedrun · narrativa · indie experimental</td></tr>
-                <tr><th>Steam</th><td><a href="#">Wishlist · próximamente</a></td></tr>
-                <tr><th>Web</th><td><a href="https://iterumcorp.org">iterumcorp.org</a></td></tr>
-              </table>
-            </section>
-
-            <section class="card" id="contact">
-              <p class="meta"><span class="rec" aria-hidden="true"></span><span class="folio-num">08</span> · Contacto de prensa</p>
-              <ul class="ledger">
-                <li><span class="k">Correo</span><a class="v" href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
-                <li><span class="k">Persona</span><span class="v">Diego de la Peña · fundador</span></li>
-                <li><span class="k">Comunidad</span><span class="v">Anastasiya</span></li>
-                <li><span class="k">Bluesky</span><a class="v" href="#">@placeholder</a></li>
-                <li><span class="k">X</span><a class="v" href="#">@placeholder</a></li>
-                <li><span class="k">Discord</span><a class="v" href="#">invitación placeholder</a></li>
-              </ul>
-              <p class="note">Claves de prensa y builds bajo petición. Respuesta en 24–48 h. Los mensajes se conservan.</p>
-            </section>
-
-            <p class="note" style="margin-top: var(--sp-5);">Los creadores de contenido pueden monetizar vídeos de Singularity sin restricción. Se agradece el enlace a iterumcorp.org.</p>
-
+      <section class="section" id="mundo">
+        <div class="section__head">
+          <h2>Mundo, narrativa y arte</h2>
+        </div>
+        <div class="two">
+          <div class="prose">
+            <p class="meta" style="margin-bottom: var(--sp-3)">Narrativa en movimiento</p>
+            <p><strong>Exploración y ambigüedad.</strong> La historia avanza por coincidencias y por exploración. Queremos enganchar al jugador con ambigüedad y enganchar <em>con</em> el jugador haciendo preguntas.</p>
+            <p><strong>Entrega sutil.</strong> Diálogos rápidos y pequeñas escenas en momentos concretos. Nada de paradas constantes. Todo es críptico; encajar las piezas es trabajo del jugador.</p>
+            <p><strong>Impacto emocional.</strong> Narrativa profunda y reactiva que responde a las decisiones del jugador, a menudo no lineal. Cada personaje y cada jefe tiene un defecto y una historia detrás.</p>
+            <p><strong>Sentido cíclico.</strong> Una historia sobre significado y crecimiento a través de fallar, lograr, morir y vivir. Ari aprende a ser humana: de seguir órdenes a madurar y decidir por sí misma.</p>
+            <p><strong>Tiempo, espacio y cambio.</strong> Ciclos de luz, disponibilidad de personajes y combates especiales dan la sensación de que el tiempo pasa. Las pequeñas elecciones afectan al mundo.</p>
           </div>
-        </aside>
+          <div class="prose">
+            <p class="meta" style="margin-bottom: var(--sp-3)">Dirección de arte</p>
+            <p><strong>Mundo y tono.</strong> Vasto, vacío y abandonado, lleno de tecnología antigua e inútil. Melancolía, biología y mecánica. Lo vivo y lo muerto, lo físico y lo etéreo.</p>
+            <p><strong>Escala.</strong> Jefes enormes. Escenarios enormes. Cantidades enormes de tiempo.</p>
+            <p><strong>Estilo.</strong> Pixel art artesanal. Ayuda a diferenciarse y le sienta bien a la melancolía.</p>
+            <p><strong>Interfaz mínima.</strong> Sin interfaces convencionales ensuciando la pantalla. Un mundo que se siente antes de entenderse.</p>
+            <p><strong>Ari.</strong> Una chatarrera en una ciudad que olvidó su propio nombre, moviéndose entre andamios, señal y silencio. Paleta: verde azulado e iridiscente.</p>
+            <p><strong>Sobre el título.</strong> <em>Singularidad</em>: punto, evento o condición tan extremos que las reglas que gobiernan la situación dejan de aplicarse. Del latín tardío <em>singularitas</em>: unicidad, soledad.</p>
+          </div>
+        </div>
+      </section>
 
-      </div>
+      <section class="section" id="capturas">
+        <div class="section__head">
+          <h2>Capturas y arte</h2>
+          <p>Uso libre para cobertura editorial de Singularity. Versiones a resolución completa en el zip.</p>
+        </div>
+        <div class="gallery">
+          <figure class="is-wide"><img class="pixel" src="assets/img/gameplay-combat.jpg" alt="Combate en el nivel 1" width="1920" height="1080" loading="lazy"><figcaption><b>singularity_01.png</b> · combate en el nivel 1, barra de OverClock y munición</figcaption></figure>
+          <figure><img class="pixel" src="assets/img/mech-attack.jpg" alt="" width="720" height="480" loading="lazy"><figcaption><b>singularity_02.png</b> · ataque cuerpo a cuerpo y a distancia</figcaption></figure>
+          <figure><img class="pixel" src="assets/img/mech-dash.jpg" alt="" width="720" height="480" loading="lazy"><figcaption><b>singularity_03.png</b> · dash a través de una horda</figcaption></figure>
+          <figure><img class="pixel" src="assets/img/mech-heal.jpg" alt="" width="624" height="422" loading="lazy"><figcaption><b>singularity_04.png</b> · curación bañándose en sangre</figcaption></figure>
+          <figure class="is-sprite"><img class="pixel" src="assets/img/sprite-boss-skull.png" alt="Sprite de jefe: cráneo mecánico" width="793" height="490" loading="lazy"><figcaption><b>boss_01.png</b> · jefe del nivel 1</figcaption></figure>
+          <figure class="is-wide is-tall"><img src="assets/img/ari-keyart-wide.jpg" alt="Ilustración de Ari, la protagonista, entre andamios de una ciudad en tonos verde azulado" width="1847" height="1039" loading="lazy"><figcaption><b>keyart_ari.png</b> · ilustración de Ari</figcaption></figure>
+          <figure><img src="assets/img/concept-tower-red.jpg" alt="Concept art: una torre en el centro de un valle rojizo" width="1920" height="1079" loading="lazy"><figcaption><b>concept_tower.png</b> · concept de entorno, la torre</figcaption></figure>
+          <figure><img src="assets/img/concept-tower-blue.jpg" alt="Concept art: la torre bajo un cielo azul y violeta" width="1920" height="1079" loading="lazy"><figcaption><b>concept_tower_02.png</b> · concept de entorno</figcaption></figure>
+          <figure><img src="assets/img/concept-red-tree.jpg" alt="Concept art: árbol rojo sobre un claro amarillo" width="1400" height="1272" loading="lazy"><figcaption><b>concept_03.png</b> · concept de entorno</figcaption></figure>
+          <figure><img src="assets/img/concept-teal-valley.jpg" alt="Concept art: valle con un haz de luz verde azulado" width="992" height="848" loading="lazy"><figcaption><b>concept_04.png</b> · concept de entorno</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="section" id="assets">
+        <div class="section__head">
+          <h2>Descargas</h2>
+        </div>
+        <ul class="dl">
+          <li><div><span class="name">Expediente completo</span><span class="spec">singularity-presskit.zip · todo lo de abajo</span></div><a class="btn btn--ghost btn--sm" href="assets/press/singularity-presskit.zip" download>Descargar</a></li>
+          <li><div><span class="name">Capturas</span><span class="spec">singularity-screenshots.zip · PNG 1920 × 1080</span></div><a class="btn btn--ghost btn--sm" href="assets/press/singularity-screenshots.zip" download>Descargar</a></li>
+          <li><div><span class="name">Logotipos y emblema</span><span class="spec">singularity-logos.zip · PNG + SVG</span></div><a class="btn btn--ghost btn--sm" href="assets/press/singularity-logos.zip" download>Descargar</a></li>
+          <li><div><span class="name">Key art y concept</span><span class="spec">singularity-keyart.zip · PNG</span></div><a class="btn btn--ghost btn--sm" href="assets/press/singularity-keyart.zip" download>Descargar</a></li>
+          <li><div><span class="name">Sprites y GIFs</span><span class="spec">singularity-sprites.zip · PNG · GIF</span></div><a class="btn btn--ghost btn--sm" href="assets/press/singularity-sprites.zip" download>Descargar</a></li>
+        </ul>
+        <p class="note" style="margin-top: var(--sp-5)">No alterar los logotipos ni el emblema. Los creadores de contenido pueden monetizar vídeos de Singularity sin restricción.</p>
+      </section>
+
+      <section class="section" id="estudio">
+        <div class="section__head">
+          <h2>Iterum Corporation</h2>
+        </div>
+        <div class="two">
+          <div class="prose">
+            <p class="lead">Estudio independiente español, deliberadamente pequeño, construido para esta producción. Su primer título es Singularity.</p>
+            <p>La identidad corporativa es una broma seria: una megacorporación ficticia que existe para hacer un juego pequeño y denso. Iterum significa <em>otra vez</em>. El emblema es una serpiente que se muerde la cola, atravesada por una espada.</p>
+            <p>Singularity nació con una parada en seco y una pregunta, <em>¿dónde estoy y hacia dónde voy?</em>, en el mundo que más rápido ha cambiado en la historia. Habla de la tecnología y de sus consecuencias sobre nosotros, del propósito que muchos no encuentran, de un tiempo que ya no parece nuestro; de romper el bucle, crecer a través del dolor, caer y volver a pelear.</p>
+          </div>
+          <div>
+            <table class="facts">
+              <tr><th>Estudio</th><td>Iterum Corporation</td></tr>
+              <tr><th>Fundación</th><td>2026</td></tr>
+              <tr><th>Ubicación</th><td>España</td></tr>
+              <tr><th>Web</th><td><a href="https://iterumcorp.org">iterumcorp.org</a></td></tr>
+              <tr><th>Proyectos</th><td>Singularity (en desarrollo)</td></tr>
+            </table>
+            <p class="meta" style="margin: var(--sp-6) 0 var(--sp-2)">Equipo</p>
+            <table class="facts">
+              <tr><th>Diego de la Peña</th><td>Dirección, diseño, programación y narrativa</td></tr>
+              <tr><th>Anastasiya</th><td>Marketing, comunidad e ilustraciones clave</td></tr>
+              <tr><th>Compositor</th><td>Por contratar, banda sonora original</td></tr>
+              <tr><th>Colaboradores</th><td>Contratistas y freelance por hitos</td></tr>
+            </table>
+          </div>
+        </div>
+      </section>
+
     </div>
 
-  </main>
-
-  <footer class="colophon row">
-    <div class="margin"><div>§ ∞</div></div>
-    <div>
-      <div class="colophon__grid">
-        <div>
-          <a class="wordmark" href="/"><span class="glyph">⌖</span>Iterum <small>corp.</small></a>
-          <p class="small dim" style="margin-top: var(--sp-3);">Estudio independiente de videojuegos. La corporación es ficticia. El juego no.</p>
-        </div>
-        <div>
-          <span class="meta">Índice</span>
-          <ul>
-            <li><a href="/">Registro</a></li>
-            <li><a href="/#singularity">§ 01 Singularity</a></li>
-            <li><a href="/#access">§ 02 Solicitud de acceso</a></li>
-          </ul>
-        </div>
-        <div>
-          <span class="meta">Expediente</span>
-          <ul>
-            <li><a href="#factsheet">Ficha</a></li>
-            <li><a href="#features">Mecánicas</a></li>
-            <li><a href="#gallery">Capturas</a></li>
-            <li><a href="#assets">Assets</a></li>
-          </ul>
-        </div>
-        <div>
-          <span class="meta">Contacto</span>
-          <ul>
-            <li><a href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
-            <li><a href="mailto:hello@iterumcorp.org">hello@iterumcorp.org</a></li>
-          </ul>
-        </div>
+    <!-- SIDEBAR -->
+    <aside class="press__side">
+      <div>
+        <p class="meta" style="margin-bottom: var(--sp-3)">Índice</p>
+        <ul class="toc">
+          <li><a href="#ficha">Ficha</a></li>
+          <li><a href="#descripciones">Descripciones</a></li>
+          <li><a href="#mecanicas">Pilares y mecánicas</a></li>
+          <li><a href="#mundo">Mundo, narrativa y arte</a></li>
+          <li><a href="#capturas">Capturas y arte</a></li>
+          <li><a href="#assets">Descargas</a></li>
+          <li><a href="#estudio">Estudio</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
       </div>
-      <div class="colophon__legal">
-        © 2026 Iterum Corporation. Todos los derechos reservados. Singularity es una marca de Iterum Corporation.<br>
-        Doc. SGL/PRS/001 · rev. 2026-08 · distribución sin restricciones · uso editorial permitido.<br>
-        <span class="checksum">Suma de control: 9d2b 7f41 3f9a 1c02 e7d4 5b6f 88a1 0c3e · verificada</span>
+
+      <div id="ficha">
+        <p class="meta" style="margin-bottom: var(--sp-3)">Ficha</p>
+        <table class="facts">
+          <tr><th>Título</th><td>Singularity</td></tr>
+          <tr><th>Desarrollador</th><td>Iterum Corporation</td></tr>
+          <tr><th>Editor</th><td>Autopublicado</td></tr>
+          <tr><th>Género</th><td>Roguelike de acción top-down, pixel art</td></tr>
+          <tr><th>Plataformas</th><td>PC (Steam), Steam Deck</td></tr>
+          <tr><th>Mando</th><td>Integración completa</td></tr>
+          <tr><th>Lanzamiento</th><td>Sin determinar</td></tr>
+          <tr><th>Precio</th><td>Sin determinar</td></tr>
+          <tr><th>Idiomas</th><td>Español, English</td></tr>
+          <tr><th>Motor</th><td>Unity, FMOD</td></tr>
+          <tr><th>Jugadores</th><td>1</td></tr>
+          <tr><th>Estado</th><td>Sistemas centrales y nivel 1 completos</td></tr>
+          <tr><th>Steam</th><td><a href="#">Wishlist, próximamente</a></td></tr>
+        </table>
+      </div>
+
+      <div class="contact" id="contacto">
+        <p class="meta">Contacto de prensa</p>
+        <ul class="ledger">
+          <li><span class="k">Correo</span><a class="v" href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
+          <li><span class="k">Persona</span><span class="v">Diego de la Peña, fundador</span></li>
+          <li><span class="k">Comunidad</span><span class="v">Anastasiya</span></li>
+          <li><span class="k">Bluesky</span><a class="v" href="#">@placeholder</a></li>
+          <li><span class="k">Discord</span><a class="v" href="#">invitación placeholder</a></li>
+        </ul>
+        <p class="note">Claves de prensa y builds bajo petición. Respuesta en 24-48 h.</p>
+      </div>
+    </aside>
+
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="brand" href="/"><img src="assets/img/emblem.png" alt="" width="30" height="30"><span>Iterum</span><small>Corporation</small></a>
+        <p>Estudio independiente de videojuegos. La corporación es ficticia. El juego no.</p>
+      </div>
+      <div>
+        <span class="meta">Sitio</span>
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="singularity.html">Singularity</a></li>
+          <li><a href="proposito.html">Propósito</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="meta">Expediente</span>
+        <ul>
+          <li><a href="#ficha">Ficha</a></li>
+          <li><a href="#mecanicas">Mecánicas</a></li>
+          <li><a href="#capturas">Capturas</a></li>
+          <li><a href="#assets">Descargas</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="meta">Contacto</span>
+        <ul>
+          <li><a href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
+          <li><a href="mailto:hello@iterumcorp.org">hello@iterumcorp.org</a></li>
+        </ul>
       </div>
     </div>
-  </footer>
+    <div class="footer__legal">
+      © 2026 Iterum Corporation. Todos los derechos reservados. Singularity es una marca de Iterum Corporation.<br>
+      Distribución sin restricciones. Uso editorial permitido.
+    </div>
+  </div>
+</footer>
 
-</div>
+<script src="site.js"></script>
 </body>
 </html>
