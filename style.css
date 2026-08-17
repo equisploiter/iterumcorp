@@ -58,7 +58,7 @@ body {
   -webkit-font-smoothing: antialiased; overflow-x: hidden;
 }
 /* Opaque cap over the iOS status-bar strip: nothing scrolls visibly above the nav. */
-body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; height: var(--sat); z-index: 55; background: var(--bg); pointer-events: none; }
+body::after { content: ""; position: fixed; top: -8rem; left: 0; right: 0; height: calc(8rem + var(--sat)); z-index: 55; background: var(--bg); pointer-events: none; }
 /* Fixed film grain. pointer-events none, fixed layer, cheap. */
 body::before {
   content: ""; position: fixed; inset: -50%; z-index: 90; pointer-events: none;
@@ -256,6 +256,9 @@ table { border-collapse: collapse; }
   backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
   border-bottom: 1px solid var(--rule);
 }
+/* Extends the nav 8rem above the screen: iOS Safari (bottom tab bar) paints scrolled-off content behind the
+   status bar; with this, what it paints there is the nav's own opaque ground. Invisible everywhere else. */
+.nav::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 8rem; background: var(--bg); }
 .nav__in { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-4); }
 .brand { display: inline-flex; align-items: center; gap: .7em; color: var(--ink); }
 .brand:hover { color: var(--ink); }
