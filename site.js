@@ -10,6 +10,14 @@
     if (/\/en\//.test(location.pathname) && !localStorage.getItem('lang')) localStorage.setItem('lang', 'en');
   } catch (e) {}
 
+  // Lazy images: reveal with a fade once decoded (see style.css `html.js img[loading="lazy"]`).
+  document.documentElement.classList.add('js');
+  document.querySelectorAll('img[loading="lazy"]').forEach(function (img) {
+    var done = function () { img.classList.add('is-loaded'); };
+    if (img.complete && img.naturalWidth) done();
+    else { img.addEventListener('load', done, { once: true }); img.addEventListener('error', done, { once: true }); }
+  });
+
   // Mobile nav
   var nav = document.querySelector('.nav');
   var btn = document.querySelector('.nav__toggle');

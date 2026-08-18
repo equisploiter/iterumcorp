@@ -155,6 +155,9 @@ table { border-collapse: collapse; }
 /* Tall wrappers (press / legal / contact bodies): the engraving pins to the viewport instead of stretching. */
 .plate--pin .plate__img img { position: sticky; top: 0; height: 100vh; height: 100dvh; }
 /* Parallax: JS writes --py (px) per plate. Slight over-scale hides the edges. */
+/* Lazy images fade in once decoded (no pop-in on slow connections). JS adds .is-loaded; without JS nothing is hidden. */
+html.js img[loading="lazy"]:not(.is-loaded) { opacity: 0 !important; }
+img[loading="lazy"] { transition: opacity .7s var(--ease); }
 .plate__img img { will-change: transform; transform: translate3d(0, var(--py, 0px), 0) scale(1.08); }
 .plate--pin .plate__img img { transform: none; }
 /* Torch: the engraving wakes up under the pointer. JS writes --mx/--my; --torch 0→1 while hovering. */
