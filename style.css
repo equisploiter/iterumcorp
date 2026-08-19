@@ -44,8 +44,18 @@
   --sat: env(safe-area-inset-top, 0px);   /* iOS status-bar strip when Safari's bar collapses */
   --sab: env(safe-area-inset-bottom, 0px); /* iPhone home indicator */
   --nav-top: calc(var(--nav-h) + var(--sat)); /* where content may start under the sticky nav */
+  --bars: 0px;  /* the phone-toolbar strip; a real value under @supports below */
 
   --ease: cubic-bezier(.16, 1, .3, 1);
+}
+
+/* A phone browser hides its URL bar as you scroll and hands that strip of screen back. --bars is
+   how tall it is: zero on a desktop, some 50-90px on a phone. Heroes are then laid out as
+   "large viewport tall, small viewport of content" — the section always reaches the bottom edge,
+   so the next one never peeks in under it, while the copy stays inside what is visible at the
+   moment the page opens. Guarded, because a browser without the 2022 viewport units keeps 0. */
+@supports (height: 1lvh) and (height: 1svh) {
+  :root { --bars: calc(100lvh - 100svh); }
 }
 
 /* --------------------------------------------------------------------------
@@ -331,15 +341,15 @@ img[loading="lazy"] { transition: opacity .7s var(--ease); }
     linear-gradient(90deg, var(--bg) 0%, rgba(7,11,12,.85) 45%, rgba(7,11,12,.15) 100%);
 }
 .hero__media picture { display: contents; }
-/* Height in three passes: vh for browsers older than the 2022 viewport units (they ignore the two
-   below and keep a full screen instead of collapsing), then dvh, then svh — the small viewport,
-   measured with the phone's toolbars showing, so the first screen is never cut off by them. */
+/* Full screen, twice over: vh first for browsers older than the 2022 viewport units (they ignore
+   the line below and still get a full screen instead of collapsing), then lvh — the largest the
+   viewport ever gets, so the section covers the phone's screen whether the URL bar is showing or
+   retracted, and the section below never appears under it. --bars keeps the copy above the fold. */
 .hero__in {
   position: relative; z-index: 1; display: grid; align-content: end;
   min-height: calc(100vh - var(--nav-top));
-  min-height: calc(100dvh - var(--nav-top));
-  min-height: calc(100svh - var(--nav-top));
-  padding-block: var(--sp-8) var(--sp-7);
+  min-height: calc(100lvh - var(--nav-top));
+  padding-block: var(--sp-8) calc(var(--sp-7) + var(--bars));
 }
 .hero__kicker { margin-bottom: var(--sp-4); }
 .hero h1 { font-size: var(--step-4); font-weight: 700; letter-spacing: -0.035em; line-height: .96; max-width: 12ch; }
@@ -382,11 +392,10 @@ img[loading="lazy"] { transition: opacity .7s var(--ease); }
 .hero--mark .hero__in {
   grid-template-columns: minmax(0, 1fr);
   min-height: calc(100vh - var(--nav-top));
-  min-height: calc(100dvh - var(--nav-top));
-  min-height: calc(100svh - var(--nav-top));
+  min-height: calc(100lvh - var(--nav-top));
   align-content: center; justify-items: center; text-align: center;
   padding-block: var(--sp-8);
-  padding-bottom: calc(var(--sp-8) + var(--sab));
+  padding-bottom: calc(var(--sp-8) + var(--sab) + var(--bars));
 }
 
 /* Maximalist ground, back to front: a Doré plate, then a scatter of small emblems and engraver's
@@ -515,7 +524,7 @@ img[loading="lazy"] { transition: opacity .7s var(--ease); }
 .hero__tagline { margin-top: var(--sp-6); font-size: var(--step-1); line-height: 1.4; max-width: 30ch; }
 .hero__tagline span { display: block; margin-bottom: var(--sp-2); font-size: var(--step-2); font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
 .hero__stamp { margin-top: var(--sp-5); color: #fff; }
-.hero__cue { position: absolute; left: 50%; bottom: calc(var(--sp-6) + var(--sab)); z-index: 1; transform: translateX(-50%); display: grid; place-items: center; width: 2.5rem; height: 3rem; }
+.hero__cue { position: absolute; left: 50%; bottom: calc(var(--sp-6) + var(--sab) + var(--bars)); z-index: 1; transform: translateX(-50%); display: grid; place-items: center; width: 2.5rem; height: 3rem; }
 .hero__cue i { display: block; width: 1px; height: 2.25rem; background: linear-gradient(180deg, transparent, var(--rule-2) 35%, var(--ink-3)); transition: background .25s var(--ease); }
 .hero__cue:hover i { background: linear-gradient(180deg, transparent, var(--cy-2) 35%, var(--cy)); }
 
@@ -526,14 +535,14 @@ img[loading="lazy"] { transition: opacity .7s var(--ease); }
    the layout is pixel-identical to what it was, and a browser too old for svh drops the second
    declaration and keeps the first. Nothing is ever cut, nothing is ever left short. */
 @media (max-width: 61.99em) {
-  .hero--mark .hero__in { padding-block: clamp(1.5rem, 6svh, 4.5rem); padding-bottom: calc(clamp(1.5rem, 6svh, 4.5rem) + var(--sab)); }
+  .hero--mark .hero__in { padding-block: clamp(1.5rem, 6svh, 4.5rem); padding-bottom: calc(clamp(1.5rem, 6svh, 4.5rem) + var(--sab) + var(--bars)); }
   .hero--mark .mark { width: min(46vw, 26svh, 13rem); }
   .hero--mark .hero__wordmark { font-size: min(var(--step-4), 11svh); margin-top: clamp(1rem, 4svh, 2rem); }
   .hero--mark .hero__wordmark span { margin-top: clamp(.55em, 2.4svh, 1.1em); }
   .hero--mark .hero__tagline { margin-top: clamp(1rem, 4svh, 2rem); }
   .hero--mark .hero__tagline span { font-size: min(var(--step-2), 4.4svh); }
   .hero--mark .hero__stamp { margin-top: clamp(.75rem, 2.6svh, 1.5rem); }
-  .hero--mark .hero__cue { bottom: calc(clamp(.75rem, 2.6svh, 2rem) + var(--sab)); }
+  .hero--mark .hero__cue { bottom: calc(clamp(.75rem, 2.6svh, 2rem) + var(--sab) + var(--bars)); }
 }
 
 @media (min-width: 62em) {
