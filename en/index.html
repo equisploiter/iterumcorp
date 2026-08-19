@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <script>(function(){try{var p=location.pathname;if(/\/en\//.test(p))return;var l=localStorage.getItem('lang');if(l==='es')return;var n=((navigator.languages&&navigator.languages[0])||navigator.language||'');if(l==='en'||/^en\b/i.test(n)){location.replace('en/'+(p.split('/').pop()||'index.html')+location.hash)}}catch(e){}})()</script>
   <title>Iterum Corporation</title>
-  <meta name="description" content="Iterum Corporation is an independent Spanish game studio operating under the guise of a corporation that does not exist. Its first title is Singular.">
+  <meta name="description" content="Iterum Corporation is an independent Spanish game studio. Cult. First title: Singular, an action roguelike in development.">
   <meta name="theme-color" content="#070b0c">
   <link rel="canonical" href="https://iterumcorp.org/en/">
   <link rel="alternate" hreflang="es" href="https://iterumcorp.org/">
@@ -14,15 +14,14 @@
   <link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/">
   <link rel="icon" href="../assets/img/emblem.png" type="image/png">
   <link rel="preload" href="../assets/fonts/SpaceGrotesk-700-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="../assets/img/ari-keyart-wide.jpg" as="image" media="(min-width: 48em)">
-  <link rel="preload" href="../assets/img/ari-keyart.jpg" as="image" media="(max-width: 47.99em)">
+  <link rel="preload" href="../assets/img/emblem.png" as="image">
   <link rel="stylesheet" href="../style.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Iterum Corporation">
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="es_ES">
   <meta property="og:title" content="Iterum Corporation">
-  <meta property="og:description" content="Independent game studio. The corporation is fictional. The game is not. First title: Singular.">
+  <meta property="og:description" content="Independent game studio. Cult. First title: Singular, in development.">
   <meta property="og:url" content="https://iterumcorp.org/en/">
   <meta property="og:image" content="https://iterumcorp.org/assets/img/og-1200x630.jpg">
   <meta name="twitter:card" content="summary_large_image">
@@ -50,60 +49,100 @@
       <span>Iterum</span><small>Corporation</small>
     </a>
     <nav class="nav__links" aria-label="Main">
-      <a href="singularity.html">Singular</a>
+      <a href="singular.html">Singular</a>
       <a href="proposito.html">Purpose</a>
       <a href="press.html">Press</a>
       <a href="contacto.html">Contact</a>
     </nav>
     <div class="nav__end">
       <a class="nav__lang" href="../index.html" hreflang="es" lang="es" data-lang-switch aria-label="Leer este sitio en español">ES</a>
-      <a class="btn btn--primary btn--sm nav__cta" href="singularity.html#acceso">Request access</a>
+      <a class="btn btn--primary btn--sm nav__cta" href="singular.html#acceso">Request access</a>
       <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
     </div>
     <div class="nav__menu" id="menu">
-      <a href="singularity.html">Singular</a>
+      <a href="singular.html">Singular</a>
       <a href="proposito.html">Purpose</a>
       <a href="press.html">Press</a>
       <a href="contacto.html">Contact</a>
-      <a href="singularity.html#acceso" class="cy">Request access</a>
+      <a href="singular.html#acceso" class="cy">Request access</a>
     </div>
   </div>
 </header>
 
 <main>
 
-  <!-- HERO -->
-  <section class="hero" aria-labelledby="h1">
-    <div class="hero__media" aria-hidden="true">
-      <picture>
-        <source media="(max-width: 47.99em)" srcset="../assets/img/ari-keyart.jpg" width="1400" height="1483">
-        <img src="../assets/img/ari-keyart-wide.jpg" alt="" width="1847" height="1039" fetchpriority="high">
-      </picture>
+  <!-- HERO: the emblem is the image. Three oversized black cuts of the same mark overlap behind it
+       — one halved by each edge of the screen, one concentric with the sharp seal on top. None of
+       them turns; they only drift against each other (see site.js · "Home emblem"). -->
+  <section class="hero hero--mark" aria-labelledby="h1">
+    <div class="hero__engraving" aria-hidden="true">
+      <img src="../assets/img/dore-beasts.webp" srcset="../assets/img/dore-beasts-720.webp 720w, ../assets/img/dore-beasts.webp 1200w, ../assets/img/dore-beasts-1600.webp 1600w" sizes="100vw" alt="" loading="lazy" decoding="async" width="1200" height="949">
+    </div>
+    <!-- Surveillance layer: tracking brackets locking onto points, their readouts, and the
+         engraver's hitmarkers. Decorative and machine-generated, hence translate="no". -->
+    <div class="hero__hud" aria-hidden="true" translate="no">
+      <span class="box box--vi" style="--t: 11%; --x: 6%;  --s: 4.2rem"></span>
+      <span class="box box--bk" style="--t: 19%; --x: 84%; --s: 2.8rem"></span>
+      <span class="box box--bk" style="--t: 46%; --x: 3%;  --s: 2.2rem"></span>
+      <span class="box box--vi" style="--t: 53%; --x: 89%; --s: 3.6rem"></span>
+      <span class="box box--vi" style="--t: 74%; --x: 13%; --s: 3rem"></span>
+      <span class="box box--bk" style="--t: 82%; --x: 76%; --s: 2.4rem"></span>
+      <span class="box box--bk" style="--t: 5%;  --x: 34%; --s: 1.6rem"></span>
+      <span class="box box--vi" style="--t: 90%; --x: 60%; --s: 1.8rem"></span>
+
+      <span class="datum datum--vi" style="--t: 22.5%; --x: 6%">ITR 0001</span>
+      <span class="datum datum--bk" style="--t: 15.5%; --x: 84%">SIG 0.982</span>
+      <span class="datum datum--bk" style="--t: 42.5%; --x: 3%">LOOP 998/1000</span>
+      <span class="datum datum--vi" style="--t: 64%;   --x: 89%">T-2027.11</span>
+      <span class="datum datum--vi" style="--t: 70.5%; --x: 13%">40.4168 / -3.7038</span>
+      <span class="datum datum--bk" style="--t: 87.5%; --x: 76%">SEQ 0x1F4A</span>
+      <span class="datum datum--bk" style="--t: 27%;   --x: 68%">REC 00:14:07</span>
+      <span class="datum datum--vi" style="--t: 57%;   --x: 22%">PWR 87%</span>
+
+      <span class="blip blip--vi" style="--t: 33%; --x: 12%"></span>
+      <span class="blip blip--bk" style="--t: 8%;  --x: 66%"></span>
+      <span class="blip blip--vi" style="--t: 68%; --x: 94%"></span>
+      <span class="blip blip--bk" style="--t: 94%; --x: 28%"></span>
+
+      <span class="tick tick--vi" style="--t: 14%; --x: 22%"></span>
+      <span class="tick tick--bk" style="--t: 38%; --x: 8%"></span>
+      <span class="tick tick--bk" style="--t: 12%; --x: 71%"></span>
+      <span class="tick tick--vi" style="--t: 43%; --x: 90%"></span>
+      <span class="tick tick--bk" style="--t: 62%; --x: 20%"></span>
+      <span class="tick tick--vi" style="--t: 79%; --x: 88%"></span>
+      <span class="tick tick--bk" style="--t: 92%; --x: 34%"></span>
+      <span class="tick tick--vi" style="--t: 58%; --x: 78%"></span>
+    </div>
+    <div class="hero__sigils" aria-hidden="true">
+      <img class="sigil sigil--l" src="../assets/img/emblem.png" alt="" width="1000" height="1000" decoding="async">
+      <img class="sigil sigil--r" src="../assets/img/emblem.png" alt="" width="1000" height="1000" decoding="async">
     </div>
     <div class="wrap hero__in">
-      <div>
-        <p class="meta hero__kicker"><b>Iterum Corporation</b> · independent game studio · Spain</p>
-        <h1 id="h1">A roguelike where <span class="blood">blood</span> is your only resource.</h1>
-        <p class="hero__sub"><strong>Singular</strong>, in development. Iterum means <em>again</em>: a deliberately small studio operating under the guise of a corporation that does not exist.</p>
-        <div class="hero__actions">
-          <a class="btn btn--primary" href="singularity.html">See Singular <span class="arr" aria-hidden="true">→</span></a>
-          <a class="btn btn--ghost" href="proposito.html">Our purpose</a>
-        </div>
+      <div class="mark" aria-hidden="true">
+        <img class="mark__ghost" src="../assets/img/emblem.png" alt="" width="1000" height="1000" decoding="async">
+        <span class="mark__halo"></span>
+        <img class="mark__seal" src="../assets/img/emblem.png" alt="" width="1000" height="1000" fetchpriority="high">
+        <span class="mark__ping"></span>
       </div>
+      <h1 id="h1" class="hero__wordmark">Iterum <span>Corporation</span></h1>
+      <p class="hero__tagline"><span>Cult</span>Independent game studio</p>
+      <p class="meta hero__stamp">Spain · dossier 0001 · since 2026</p>
     </div>
+    <a class="hero__cue" href="#singular" aria-label="Scroll down to Singular"><i aria-hidden="true"></i></a>
   </section>
 
-  <!-- FEATURED: SINGULARITY -->
-  <section class="section feature plate plate--right" id="singularity" style="--plate-pos: 70% 15%; --plate-op: .36">
+  <!-- FEATURED: SINGULAR -->
+  <section class="section feature plate plate--right" id="singular" style="--plate-pos: 70% 15%; --plate-op: .36">
     <div class="plate__img" aria-hidden="true"><img src="../assets/img/dore-light.webp" srcset="../assets/img/dore-light-720.webp 720w, ../assets/img/dore-light.webp 1200w, ../assets/img/dore-light-1600.webp 1600w" sizes="100vw" alt="" loading="lazy" decoding="async" width="1200" height="1512"></div>
     <div class="wrap">
       <div class="section__head reveal">
         <div class="orn orn--start" aria-hidden="true"><i></i></div>
-        <p class="meta" style="margin-bottom: var(--sp-3)"><b>Current project</b> · in development</p>
+        <p class="meta" style="margin-bottom: var(--sp-3)"><b>Dossier 0001</b> · in development</p>
         <h2>Singular</h2>
-        <p>A top-down action roguelike in pixel art. <span class="blood">Blood</span> is your only resource: you heal and reload by bathing in what you spill. Doubt gets you killed. And it is the only way to break the loop.</p>
+        <p>A fast top-down action roguelike where <span class="blood">BLOOD</span> is your only resource. You heal and reload by bathing in what you spill. The loop will never change… unless you <span class="blood">KILL IT</span>.</p>
+        <p class="meta feature__genre">Fast paced · Twin stick · Roguelike · Deep lore · Change</p>
       </div>
-      <a class="feature__card tilt reveal" data-delay="1" href="singularity.html" aria-label="Go to the Singular page">
+      <a class="feature__card tilt reveal" data-delay="1" href="singular.html" aria-label="Go to the Singular page">
         <img class="pixel" src="../assets/img/gameplay-combat.jpg" alt="" width="1920" height="1080" loading="lazy">
         <div class="feature__overlay">
           <div class="feature__tags">
@@ -113,39 +152,37 @@
         </div>
       </a>
       <div class="feature__links reveal" data-delay="2">
-        <a href="singularity.html#combate">Combat <span class="arr" aria-hidden="true">→</span></a>
-        <a href="singularity.html#jefes">Bosses <span class="arr" aria-hidden="true">→</span></a>
-        <a href="singularity.html#mundo">World <span class="arr" aria-hidden="true">→</span></a>
-        <a href="singularity.html#acceso">Request access <span class="arr" aria-hidden="true">→</span></a>
+        <a href="singular.html#combate">Combat <span class="arr" aria-hidden="true">→</span></a>
+        <a href="singular.html#jefes">Bosses <span class="arr" aria-hidden="true">→</span></a>
+        <a href="singular.html#mundo">World <span class="arr" aria-hidden="true">→</span></a>
+        <a href="singular.html#acceso">Request access <span class="arr" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
 
-  <!-- CORPORATION -->
-  <section class="section corp plate plate--left plate--soft" id="corporacion" style="--plate-pos: 40% 20%; --plate-op: .38">
+  <!-- THE STUDIO -->
+  <section class="section corp plate plate--left plate--soft" id="estudio" style="--plate-pos: 40% 20%; --plate-op: .38">
     <div class="plate__img" aria-hidden="true"><img src="../assets/img/dore-sinai.webp" srcset="../assets/img/dore-sinai-720.webp 720w, ../assets/img/dore-sinai.webp 1200w, ../assets/img/dore-sinai-1600.webp 1600w" sizes="100vw" alt="" loading="lazy" decoding="async" width="1200" height="1525"></div>
     <img class="corp__emblem" src="../assets/img/emblem.png" alt="" width="1000" height="1000" loading="lazy" aria-hidden="true">
     <div class="wrap corp__grid">
       <div class="prose reveal">
         <div class="orn orn--start" aria-hidden="true"><i></i></div>
-        <h2>The corporation is fictional. The game is not.</h2>
-        <p class="lead">Iterum Corporation is an independent Spanish studio operating under the guise of a corporation that does not exist.</p>
-        <p>It has no headquarters, no board, no shareholders. It has a deliberately small team that decided the best way to make a dense, replayable game is to pretend to be an enormous organisation. The emblem, a serpent biting its own tail, run through by a sword, is taken seriously. The rest, as convenient.</p>
-        <p>Singular was born from a sudden stop and a question: <em>where am I, and where am I going?</em> It speaks of technology and what it does to us, of the purpose many of us cannot find, and of a time that no longer feels like ours. We could have written a book. We would rather give the player the chance to <span class="redacted" tabindex="0">defeat the serpent themselves</span>.</p>
+        <p class="meta" style="margin-bottom: var(--sp-3)">IterumCorp</p>
+        <h2>Break the loop</h2>
+        <p class="lead">Life and death are a cycle. Night and day are a cycle. Today and tomorrow will be a cycle too.</p>
+        <p>But how far does it reach? How long do we want to stay in it? When does it stop being a cycle that repeats and become a loop we are locked inside?</p>
+        <p>Your brain, your time and your life are no longer yours.</p>
+        <p class="corp__creed">We cannot intervene directly<span>We hand you the tool</span><span>Take the sword and kill the serpent</span></p>
+        <p class="corp__chant">Iterum · Iterum · Iterum</p>
       </div>
       <div class="reveal" data-delay="1">
-        <p class="meta ledger__title">Team</p>
-        <ul class="ledger">
-          <li><span class="k">Diego de la Peña</span><span class="v">Direction · design · code</span></li>
-          <li><span class="k">Anastasiya</span><span class="v">Community · illustration</span></li>
-          <li><span class="k">Composer</span><span class="v mute">Open position</span></li>
-          <li><span class="k">Collaborators</span><span class="v mute">Per milestone</span></li>
-        </ul>
-        <p class="meta ledger__title" style="margin-top: var(--sp-6)">Facts</p>
+        <p class="meta ledger__title">Facts</p>
         <ul class="ledger">
           <li><span class="k">Founded</span><span class="v">2026</span></li>
           <li><span class="k">Location</span><span class="v">Spain</span></li>
-          <li><span class="k">Projects</span><span class="v"><a href="singularity.html">Singular</a></span></li>
+          <li><span class="k">Project</span><span class="v"><a href="singular.html">Singular</a> · in development</span></li>
+          <li><span class="k">Publishing</span><span class="v">Seeking partner</span></li>
+          <li><span class="k">Target launch</span><span class="v">Late 2027 · early 2028</span></li>
           <li><span class="k">Contact</span><span class="v"><a href="contacto.html">contact</a></span></li>
         </ul>
       </div>
@@ -161,7 +198,8 @@
       <p class="meta reveal"><b>Purpose</b> · why Iterum exists</p>
       <h2 class="reveal" data-delay="1">Disconnect to reconnect.</h2>
       <p class="reveal" data-delay="2">We make technology, and we know what technology does to time, to attention, and to the people next to us. We use it with intent: games that end, that get talked about with others, and that leave a question instead of a notification.</p>
-      <div class="reveal" data-delay="3"><a class="btn btn--ghost" href="proposito.html">Read the purpose <span class="arr" aria-hidden="true">→</span></a></div>
+      <p class="teaser__creed reveal" data-delay="3"><span>We don't provoke.</span>We take action.</p>
+      <div class="reveal" data-delay="4"><a class="btn btn--ghost" href="proposito.html">Read the purpose <span class="arr" aria-hidden="true">→</span></a></div>
     </div>
   </section>
 
@@ -169,21 +207,21 @@
 
 <footer class="footer plate plate--full">
   <div class="plate__img" aria-hidden="true"><img src="../assets/img/dore-flood.webp" srcset="../assets/img/dore-flood-720.webp 720w, ../assets/img/dore-flood.webp 1200w, ../assets/img/dore-flood-1600.webp 1600w" sizes="100vw" alt="" loading="lazy" decoding="async" width="1200" height="1494"></div>
-  <div class="ticker" aria-hidden="true"><div class="ticker__in"><span><b>Iterum Corporation</b> · dossier 0001 · Singular · in development · <span class="blood">blood</span> is your only resource · the corporation is fictional · the game is not · iterum: again · disconnect to reconnect</span><span><b>Iterum Corporation</b> · dossier 0001 · Singular · in development · <span class="blood">blood</span> is your only resource · the corporation is fictional · the game is not · iterum: again · disconnect to reconnect</span></div></div>
+  <div class="ticker" aria-hidden="true"><div class="ticker__in"><span><b>Iterum Corporation</b> · dossier 0001 · Singular · in development · <span class="blood">blood</span> is your only resource · iterum: again · repeat until the loop breaks · disconnect to reconnect</span><span><b>Iterum Corporation</b> · dossier 0001 · Singular · in development · <span class="blood">blood</span> is your only resource · iterum: again · repeat until the loop breaks · disconnect to reconnect</span></div></div>
   <div class="wrap">
     <div class="orn" aria-hidden="true"><i></i></div>
     <div class="footer__grid">
       <div class="footer__brand">
         <a class="brand" href="/en/"><img src="../assets/img/emblem.png" alt="" width="30" height="30"><span>Iterum</span><small>Corporation</small></a>
-        <p>Independent game studio. The corporation is fictional. The game is not.</p>
+        <p>Independent game studio. First title: Singular.</p>
       </div>
       <div>
         <span class="meta">Singular</span>
         <ul>
-          <li><a href="singularity.html">The game</a></li>
-          <li><a href="singularity.html#combate">Combat</a></li>
-          <li><a href="singularity.html#mundo">World</a></li>
-          <li><a href="singularity.html#acceso">Request access</a></li>
+          <li><a href="singular.html">The game</a></li>
+          <li><a href="singular.html#combate">Combat</a></li>
+          <li><a href="singular.html#mundo">World</a></li>
+          <li><a href="singular.html#acceso">Request access</a></li>
         </ul>
       </div>
       <div>

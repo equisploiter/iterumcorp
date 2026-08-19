@@ -22,6 +22,7 @@
   --cy-2:    #12807b;
   --cy-ink:  #06302f;
   --blood:   #ff2f2f;   /* semantic: the word "sangre". Used once per page. */
+  --vi:      #8f6bff;   /* semantic: the light on the home emblem. The only purple on the site. */
 
   --sans: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
@@ -357,6 +358,150 @@ img[loading="lazy"] { transition: opacity .7s var(--ease); }
   }
 }
 
+/* Home hero: no key art. The emblem is the image — centred, dark, and nothing else.
+   Overrides the key-art hero above by specificity, so the .hero__media rules never apply.
+   Three pools of light: one wide enough to hold the whole wordmark, and one at each edge so the
+   halved black sigils have something to be cut out of. --vi is the site's only purple. */
+.hero--mark {
+  --ghost: min(170vw, 74rem);   /* the central black cut; the purple light is derived from it */
+  background:
+    radial-gradient(52% 62% at 0% 50%, #16242a 0%, rgba(22,36,42,0) 76%),
+    radial-gradient(52% 62% at 100% 50%, #16242a 0%, rgba(22,36,42,0) 76%),
+    radial-gradient(108% 86% at 50% 46%, #16242a 0%, #101b1f 44%, var(--bg) 86%);
+}
+.hero--mark .hero__in {
+  grid-template-columns: minmax(0, 1fr);
+  min-height: calc(100dvh - var(--nav-top));
+  align-content: center; justify-items: center; text-align: center;
+  padding-block: var(--sp-8);
+}
+
+/* Maximalist ground, back to front: a Doré plate, then a scatter of small emblems and engraver's
+   registration marks in black and purple, then the sigils. All of it stays out of the middle
+   column, where the seal and the copy live. */
+.hero__engraving { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.hero__engraving img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; opacity: .13; filter: grayscale(1) contrast(1.3) brightness(.7); }
+.hero__engraving::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(42% 40% at 8% 12%, rgba(143,107,255,.07) 0%, rgba(143,107,255,0) 70%),
+    radial-gradient(42% 40% at 92% 86%, rgba(143,107,255,.06) 0%, rgba(143,107,255,0) 70%),
+    linear-gradient(180deg, var(--bg) 0%, rgba(7,11,12,0) 26%, rgba(7,11,12,0) 68%, var(--bg) 100%);
+}
+.hero__hud { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.box, .datum, .blip, .tick { position: absolute; top: var(--t); left: var(--x); transition: transform 1.2s var(--ease); }
+/* Tracking bracket: four corners drawn straight out of the background, no extra markup. */
+.box {
+  width: var(--s); aspect-ratio: 1;
+  transform: translate(var(--gx, 0px), var(--gy, 0px));
+  background:
+    linear-gradient(var(--c), var(--c)) 0    0    / 28% 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) 0    0    / 1px 28% no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 0    / 28% 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 0    / 1px 28% no-repeat,
+    linear-gradient(var(--c), var(--c)) 0    100% / 28% 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) 0    100% / 1px 28% no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 100% / 28% 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 100% / 1px 28% no-repeat;
+}
+/* The lock indicator at the centre of each bracket. */
+.box::after { content: ""; position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; margin: -1.5px 0 0 -1.5px; background: var(--c); animation: hud-lock 5.5s ease-in-out infinite; }
+.box--bk { --c: #000; opacity: .6; }
+.box--vi { --c: var(--vi); opacity: .42; }
+.box--vi::after { animation-delay: -2.4s; }
+/* Readouts: codes the plate prints next to whatever it is watching. */
+.datum {
+  font-family: var(--mono); font-size: .58rem; letter-spacing: .16em; text-transform: uppercase; white-space: nowrap;
+  transform: translate(var(--gx, 0px), var(--gy, 0px));
+}
+.datum--bk { color: #000; opacity: .75; }
+.datum--vi { color: var(--vi); opacity: .45; }
+.blip { width: 4px; height: 4px; transform: translate(var(--gx, 0px), var(--gy, 0px)); animation: hud-lock 5.5s ease-in-out infinite; }
+.blip--bk { background: #000; opacity: .6; animation-delay: -1.2s; }
+.blip--vi { background: var(--vi); opacity: .45; animation-delay: -3.6s; }
+/* Hitmarkers: the crosses an engraver leaves on the plate. These drift against everything else. */
+.tick { width: 11px; height: 11px; transform: translate(calc(var(--gx, 0px) * -1), calc(var(--gy, 0px) * -1)); }
+.tick::before, .tick::after { content: ""; position: absolute; background: currentColor; }
+.tick::before { left: 0; right: 0; top: 50%; height: 1px; }
+.tick::after { top: 0; bottom: 0; left: 50%; width: 1px; }
+.tick--bk { color: #000; opacity: .6; }
+.tick--vi { color: var(--vi); opacity: .38; }
+@keyframes hud-lock { 0%, 62%, 100% { opacity: .25; } 70%, 88% { opacity: 1; } }
+
+/* Sigils: the black version of the emblem, one halved by each edge of the screen. Nothing turns —
+   they only drift a little against the seal (site.js --gx/--gy). The third black cut is
+   .mark__ghost below, kept inside .mark so it stays concentric with the white seal.
+   All three fade out downward so no line art ever crosses the wordmark and the copy under it. */
+.hero__sigils { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.sigil {
+  position: absolute; top: 50%; width: min(150vw, 62rem); max-width: none;
+  opacity: .45; filter: invert(1);
+  transition: transform 1.2s var(--ease);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 44%, rgba(0,0,0,.28) 62%, rgba(0,0,0,0) 80%);
+          mask-image: linear-gradient(180deg, #000 0%, #000 44%, rgba(0,0,0,.28) 62%, rgba(0,0,0,0) 80%);
+}
+.sigil--l { left: 0;  transform: translate(calc(-50% + var(--gx, 0px)), calc(-50% + var(--gy, 0px))); }
+.sigil--r { right: 0; transform: translate(calc( 50% - var(--gx, 0px)), calc(-50% + var(--gy, 0px))); }
+
+/* The mark: the sharp seal at the centre, over the third black cut. site.js sets --sx/--sy and
+   --srx/--sry (lean toward the pointer). Everything degrades to a still emblem without JS. */
+.mark { position: relative; z-index: 0; width: min(46vw, 13rem); aspect-ratio: 1; perspective: 900px; animation: mark-in 1.4s var(--ease) both; }
+.mark__ghost {
+  position: absolute; top: 50%; left: 50%; z-index: -1; pointer-events: none;
+  width: var(--ghost); max-width: none;
+  opacity: .45; filter: invert(1);
+  /* Pulls against the side sigils so the three never read as one flat stamp. */
+  transform: translate(calc(-50% - var(--gx, 0px)), calc(-50% - var(--gy, 0px)));
+  transition: transform 1.2s var(--ease);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 52%, rgba(0,0,0,.25) 64%, rgba(0,0,0,0) 78%);
+          mask-image: linear-gradient(180deg, #000 0%, #000 52%, rgba(0,0,0,.25) 64%, rgba(0,0,0,0) 78%);
+}
+/* The purple light is the serpent's own ring: same centre as .mark__ghost, and .47 of its width,
+   which is where the ouroboros sits inside the 1000×1000 artwork. */
+.mark__halo {
+  position: absolute; top: 50%; left: 50%; z-index: -1; border-radius: 50%; pointer-events: none;
+  width: calc(var(--ghost) * .47); aspect-ratio: 1;
+  transform: translate(calc(-50% - var(--gx, 0px)), calc(-50% - var(--gy, 0px)));
+  background: radial-gradient(circle, rgba(143,107,255,.16) 0%, rgba(143,107,255,.12) 58%, rgba(143,107,255,0) 74%);
+  opacity: .75; transition: opacity .6s var(--ease), transform 1.2s var(--ease);
+}
+.mark__seal {
+  position: relative; width: 100%;
+  transform: translate3d(var(--sx, 0px), var(--sy, 0px), 0) rotateX(var(--srx, 0deg)) rotateY(var(--sry, 0deg));
+  transition: transform .9s var(--ease), filter .6s var(--ease);
+}
+.mark__ping { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--vi); opacity: 0; pointer-events: none; }
+.mark.is-pinging .mark__ping { animation: mark-ping .95s var(--ease); }
+.mark:hover .mark__halo { opacity: 1; }
+.mark:hover .mark__seal { filter: drop-shadow(0 0 24px rgba(143,107,255,.35)); }
+@keyframes mark-ping { from { opacity: .65; transform: scale(.6); } to { opacity: 0; transform: scale(1.55); } }
+@keyframes mark-in   { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: none; } }
+
+/* The copy sits in its own dark aura: the line art behind never reads through the glyphs. */
+.hero__wordmark, .hero__tagline, .hero__stamp {
+  color: #fff; position: relative;
+  text-shadow: 0 0 10px var(--bg), 0 0 24px var(--bg), 0 0 44px rgba(7,11,12,.92), 0 1px 2px rgba(0,0,0,.8);
+}
+.hero__wordmark { margin-top: var(--sp-6); max-width: none; font-size: var(--step-4); font-weight: 700; letter-spacing: -0.045em; line-height: .92; }
+.hero__wordmark span {
+  display: block; margin-top: 1.1em; color: #fff;
+  font-family: var(--mono); font-size: var(--step--2); font-weight: 400;
+  letter-spacing: .42em; text-indent: .42em; text-transform: uppercase;
+}
+/* Two lines: the word first, the plain description under it. */
+.hero__tagline { margin-top: var(--sp-6); font-size: var(--step-1); line-height: 1.4; max-width: 30ch; }
+.hero__tagline span { display: block; margin-bottom: var(--sp-2); font-size: var(--step-2); font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+.hero__stamp { margin-top: var(--sp-5); color: #fff; }
+.hero__cue { position: absolute; left: 50%; bottom: var(--sp-6); z-index: 1; transform: translateX(-50%); display: grid; place-items: center; width: 2.5rem; height: 3rem; }
+.hero__cue i { display: block; width: 1px; height: 2.25rem; background: linear-gradient(180deg, transparent, var(--rule-2) 35%, var(--ink-3)); transition: background .25s var(--ease); }
+.hero__cue:hover i { background: linear-gradient(180deg, transparent, var(--cy-2) 35%, var(--cy)); }
+@media (min-width: 62em) {
+  .hero--mark { --ghost: 80rem; }
+  .hero--mark .hero__in { grid-template-columns: minmax(0, 1fr); padding-block: var(--sp-8); }
+  .mark { width: 15rem; }
+  .sigil { width: 66rem; }
+}
+
 /* --------------------------------------------------------------------------
    6b. SUBNAV  (sticky section index on the game page)
    -------------------------------------------------------------------------- */
@@ -378,6 +523,9 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-top) + 3.5rem); }
 /* --------------------------------------------------------------------------
    6c. HOME · FEATURED PROJECT + PURPOSE TEASER
    -------------------------------------------------------------------------- */
+/* Genre line under the pitch: the tags a press site would file the game under. It has to hold one
+   line, so it opts out of the 62ch cap that `p` sets — that cap was what orphaned the last tag. */
+.feature__genre { margin-top: var(--sp-4); max-width: none; color: var(--ink-2); letter-spacing: .16em; text-wrap: pretty; }
 .feature__card { position: relative; display: block; border: 1px solid var(--rule-2); background: var(--bg-2); overflow: hidden; color: var(--ink); }
 .feature__card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: 50% 40%; transition: transform 1.4s var(--ease), opacity .6s var(--ease); opacity: .85; }
 .feature__card:hover img { transform: scale(1.02); opacity: 1; }
@@ -414,6 +562,9 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-top) + 3.5rem); }
 .teaser__in { position: relative; z-index: 1; padding-block: var(--sp-9); display: grid; gap: var(--sp-5); justify-items: start; }
 .teaser h2 { font-size: var(--step-3); max-width: 16ch; }
 .teaser p:not(.meta) { color: var(--ink-2); max-width: 46ch; }
+/* Two-line creed: the concession first, the claim under it. Spacing comes from .teaser__in's gap. */
+.teaser p.teaser__creed { margin-top: 0; max-width: 30ch; line-height: 1.25; color: var(--ink); font-weight: 500; }
+.teaser__creed span { display: block; color: var(--ink-2); font-weight: 400; }
 @media (min-width: 62em) { .teaser__in { padding-block: var(--sp-10); } .teaser__img img { object-position: 70% 30%; } }
 
 /* --------------------------------------------------------------------------
@@ -564,6 +715,15 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-top) + 3.5rem); }
 .corp h2 { font-size: var(--step-3); }
 .corp .lead { margin-top: var(--sp-5); }
 .corp p + p { margin-top: var(--sp-4); }
+/* Close of the manifesto: three lines that escalate into the imperative, then the chant. */
+.prose p.corp__creed { margin-top: var(--sp-6); font-size: var(--step-1); line-height: 1.35; color: var(--ink-2); }
+.corp__creed span { display: block; color: var(--ink); }
+.corp__creed span:last-child { margin-top: var(--sp-2); font-size: var(--step-2); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.prose p.corp__chant {
+  margin-top: var(--sp-6); color: var(--ink-3);
+  font-family: var(--mono); font-size: var(--step--1);
+  letter-spacing: .42em; text-indent: .42em; text-transform: uppercase;
+}
 .ledger { font-family: var(--mono); font-size: var(--step--1); }
 .ledger li { display: grid; grid-template-columns: 1fr auto; gap: var(--sp-4); padding-block: var(--sp-3); border-top: 1px solid var(--rule); }
 .ledger li:last-child { border-bottom: 1px solid var(--rule); }
@@ -572,7 +732,8 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-top) + 3.5rem); }
 .ledger .v.mute { color: var(--ink-3); }
 .ledger__title { margin-bottom: var(--sp-3); }
 @media (min-width: 62em) {
-  .corp__grid { grid-template-columns: 1.2fr .8fr; gap: var(--sp-9); align-items: start; }
+  /* The manifesto column is much taller than the ledger, so the ledger centres against it. */
+  .corp__grid { grid-template-columns: 1.2fr .8fr; gap: var(--sp-9); align-items: center; }
   .corp__emblem { right: -4%; width: 36rem; opacity: .1; }
 }
 
@@ -778,7 +939,7 @@ body.is-purpose .purpose { border-top: 0; }
    -------------------------------------------------------------------------- */
 @media print {
   body { background: #fff; color: #000; padding-top: 0; }
-  body::before, .nav, .hero__media, .world__img, .corp__emblem, .pin--img, .plate__img, .bosses__plate, .orn { display: none !important; }
+  body::before, .nav, .hero__media, .hero__sigils, .hero__engraving, .hero__hud, .mark__ghost, .mark__halo, .world__img, .corp__emblem, .pin--img, .plate__img, .bosses__plate, .orn { display: none !important; }
   .redacted { color: #000; background: none; box-shadow: none; }
   .copy, .contact, .gallery figure { border-color: #999; background: none; }
 }

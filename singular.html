@@ -7,10 +7,10 @@
   <title>Singular · Iterum Corporation</title>
   <meta name="description" content="Singular es un roguelike de acción top-down en pixel art donde la sangre es tu único recurso. Combate, jefes, mundo y acceso anticipado.">
   <meta name="theme-color" content="#070b0c">
-  <link rel="canonical" href="https://iterumcorp.org/singularity.html">
-  <link rel="alternate" hreflang="es" href="https://iterumcorp.org/singularity.html">
-  <link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/singularity.html">
-  <link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/singularity.html">
+  <link rel="canonical" href="https://iterumcorp.org/singular.html">
+  <link rel="alternate" hreflang="es" href="https://iterumcorp.org/singular.html">
+  <link rel="alternate" hreflang="en" href="https://iterumcorp.org/en/singular.html">
+  <link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/singular.html">
   <link rel="icon" href="assets/img/emblem.png" type="image/png">
   <link rel="preload" href="assets/fonts/SpaceGrotesk-700-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/img/ari-keyart-wide.jpg" as="image" media="(min-width: 48em)">
@@ -22,7 +22,7 @@
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:title" content="Singular · Iterum Corporation">
   <meta property="og:description" content="Roguelike de acción top-down en pixel art. La sangre es tu único recurso. Dudar te mata. Y es la única forma de romper el bucle.">
-  <meta property="og:url" content="https://iterumcorp.org/singularity.html">
+  <meta property="og:url" content="https://iterumcorp.org/singular.html">
   <meta property="og:image" content="https://iterumcorp.org/assets/img/og-1200x630.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
@@ -30,7 +30,7 @@
     "@context": "https://schema.org",
     "@type": "VideoGame",
     "name": "Singular",
-    "url": "https://iterumcorp.org/singularity.html",
+    "url": "https://iterumcorp.org/singular.html",
     "image": "https://iterumcorp.org/assets/img/og-1200x630.jpg",
     "description": "Roguelike de acción top-down en pixel art donde la sangre es tu único recurso.",
     "genre": ["Roguelike", "Action"],
@@ -52,18 +52,18 @@
       <span>Iterum</span><small>Corporation</small>
     </a>
     <nav class="nav__links" aria-label="Principal">
-      <a href="singularity.html" aria-current="page">Singular</a>
+      <a href="singular.html" aria-current="page">Singular</a>
       <a href="proposito.html">Propósito</a>
       <a href="press.html">Prensa</a>
       <a href="contacto.html">Contacto</a>
     </nav>
     <div class="nav__end">
-      <a class="nav__lang" href="en/singularity.html" hreflang="en" lang="en" data-lang-switch aria-label="Read this site in English">EN</a>
+      <a class="nav__lang" href="en/singular.html" hreflang="en" lang="en" data-lang-switch aria-label="Read this site in English">EN</a>
       <a class="btn btn--primary btn--sm nav__cta" href="#acceso">Solicitar acceso</a>
       <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menú</button>
     </div>
     <div class="nav__menu" id="menu">
-      <a href="singularity.html">Singular</a>
+      <a href="singular.html">Singular</a>
       <a href="proposito.html">Propósito</a>
       <a href="press.html">Prensa</a>
       <a href="contacto.html">Contacto</a>
@@ -281,7 +281,7 @@
         </div>
       </div>
       <!-- FORMSPREE: sustituye YOUR_FORM_ID por el ID real -->
-      <form class="form reveal" data-delay="1" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <form class="form reveal" data-delay="1" data-attribution action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
         <div class="field">
           <label for="email">Dirección de correo</label>
           <input id="email" type="email" name="email" placeholder="usuario@dominio" autocomplete="email" required>
@@ -295,6 +295,12 @@
           <span>Consiento recibir comunicaciones de Iterum Corporation sobre Singular y proyectos posteriores. <a href="legal.html#privacidad">Política de privacidad</a>.</span>
         </label>
         <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <!-- Atribución: los rellena site.js al enviar (UTM, referente, página de entrada). -->
+        <input type="hidden" name="origen" value="">
+        <input type="hidden" name="referente" value="">
+        <input type="hidden" name="entrada" value="">
+        <input type="hidden" name="pagina" value="">
+        <input type="hidden" name="idioma" value="">
         <input type="hidden" name="_subject" value="[iterumcorp.org] Solicitud de acceso">
         <div><button class="btn btn--primary" type="submit">Registrar solicitud <span class="arr" aria-hidden="true">→</span></button></div>
         <p class="form__foot">El envío tarda unos segundos en confirmar.</p>
@@ -306,13 +312,13 @@
 
 <footer class="footer plate plate--full">
   <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-flood.webp" srcset="assets/img/dore-flood-720.webp 720w, assets/img/dore-flood.webp 1200w, assets/img/dore-flood-1600.webp 1600w" sizes="100vw" alt="" loading="lazy" decoding="async" width="1200" height="1494"></div>
-  <div class="ticker" aria-hidden="true"><div class="ticker__in"><span><b>Iterum Corporation</b> · expediente 0001 · Singular · en desarrollo · la <span class="blood">sangre</span> es tu único recurso · la corporación es ficticia · el juego no · iterum: otra vez · desconectar para volver a conectar</span><span><b>Iterum Corporation</b> · expediente 0001 · Singular · en desarrollo · la <span class="blood">sangre</span> es tu único recurso · la corporación es ficticia · el juego no · iterum: otra vez · desconectar para volver a conectar</span></div></div>
+  <div class="ticker" aria-hidden="true"><div class="ticker__in"><span><b>Iterum Corporation</b> · expediente 0001 · Singular · en desarrollo · la <span class="blood">sangre</span> es tu único recurso · iterum: otra vez · repetir hasta romper el bucle · desconectar para volver a conectar</span><span><b>Iterum Corporation</b> · expediente 0001 · Singular · en desarrollo · la <span class="blood">sangre</span> es tu único recurso · iterum: otra vez · repetir hasta romper el bucle · desconectar para volver a conectar</span></div></div>
   <div class="wrap">
     <div class="orn" aria-hidden="true"><i></i></div>
     <div class="footer__grid">
       <div class="footer__brand">
         <a class="brand" href="/"><img src="assets/img/emblem.png" alt="" width="30" height="30"><span>Iterum</span><small>Corporation</small></a>
-        <p>Estudio independiente de videojuegos. La corporación es ficticia. El juego no.</p>
+        <p>Estudio independiente de videojuegos. Primer título: Singular.</p>
       </div>
       <div>
         <span class="meta">Singular</span>

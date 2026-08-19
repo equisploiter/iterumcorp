@@ -45,7 +45,7 @@ const CONFIG = {
   outDir: 'en',
   dictionary: path.join('i18n', 'en.json'),
   obsolete: path.join('i18n', 'obsolete.en.json'),
-  pages: ['index.html', 'singularity.html', 'proposito.html', 'press.html', 'contacto.html', 'legal.html'],
+  pages: ['index.html', 'singular.html', 'proposito.html', 'press.html', 'contacto.html', 'legal.html'],
   locale: { es: 'es_ES', en: 'en_US' },
   // Text shown by the language switcher (data-lang-switch) in each output.
   switcher: { es: { text: 'EN', label: 'Read this site in English' }, en: { text: 'ES', label: 'Leer este sitio en español' } },

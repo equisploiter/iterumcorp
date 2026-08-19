@@ -133,6 +133,37 @@
     }
   }
 
+  // Home emblem: the seal leans toward the pointer; the three black cuts behind it pull the other
+  // way (--gx/--gy), and the centre one pulls against the two at the edges. Nothing rotates.
+  var mark = document.querySelector('.hero--mark .mark');
+  if (mark) {
+    var markHero = mark.closest('.hero');
+    if (fine && !reduce) {
+      markHero.addEventListener('pointermove', function (e) {
+        var r = markHero.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        // Set on the section: the seal reads --sx/--sy/--srx/--sry, the sigils read --gx/--gy.
+        markHero.style.setProperty('--sx', (x * 18).toFixed(1) + 'px');
+        markHero.style.setProperty('--sy', (y * 13).toFixed(1) + 'px');
+        markHero.style.setProperty('--sry', (x * 9).toFixed(2) + 'deg');
+        markHero.style.setProperty('--srx', (-y * 9).toFixed(2) + 'deg');
+        markHero.style.setProperty('--gx', (x * -22).toFixed(1) + 'px');
+        markHero.style.setProperty('--gy', (y * -16).toFixed(1) + 'px');
+      });
+      markHero.addEventListener('pointerleave', function () {
+        ['--sx', '--sy', '--gx', '--gy'].forEach(function (v) { markHero.style.setProperty(v, '0px'); });
+        ['--sry', '--srx'].forEach(function (v) { markHero.style.setProperty(v, '0deg'); });
+      });
+    }
+    // Press it and the seal rings.
+    mark.addEventListener('pointerdown', function () {
+      if (reduce) return;
+      mark.classList.remove('is-pinging');
+      void mark.offsetWidth;   // restart the animation on a repeated press
+      mark.classList.add('is-pinging');
+    });
+  }
+
   // Decode: mono kickers resolve from noise into text the first time they enter view
   if (!reduce && 'IntersectionObserver' in window) {
     var GLYPHS = '▓▒░#%&/<>[]{}=+*·:;0123456789ABCDEFXYZ';
@@ -180,4 +211,50 @@
     }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
     Object.keys(map).forEach(function (id) { so.observe(document.getElementById(id)); });
   }
+
+  // ---------------------------------------------------------------------------
+  // Atribución. El primer toque de la visita (etiquetas UTM, click ids,
+  // referente, página de entrada) se guarda en sessionStorage y se adjunta al
+  // formulario que el visitante envíe, de modo que un publisher que llega por
+  // un enlace de pitch se identifica en la bandeja. Sin cookies, sin terceros,
+  // sin nada que sobreviva a la pestaña.
+  // ---------------------------------------------------------------------------
+  var ATTR_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content',
+                   'ref', 'gclid', 'fbclid', 'msclkid', 'ttclid'];
+  var attribution = (function () {
+    var STORE = 'iterum.attr', saved = null;
+    try { saved = JSON.parse(sessionStorage.getItem(STORE) || 'null'); } catch (e) {}
+
+    var q = new URLSearchParams(location.search), fresh = {}, tagged = false;
+    ATTR_KEYS.forEach(function (k) {
+      var v = q.get(k);
+      if (v) { fresh[k] = v.slice(0, 120); tagged = true; }
+    });
+
+    // First touch wins: sólo se sobreescribe si este hit trae etiquetas nuevas.
+    if (!saved || tagged) {
+      saved = fresh;
+      saved.landing = (location.pathname + location.search).slice(0, 300);
+      var r = document.referrer || '';
+      saved.referrer = r && r.indexOf(location.origin) !== 0 ? r.slice(0, 300) : '';
+      try { sessionStorage.setItem(STORE, JSON.stringify(saved)); } catch (e) {}
+    }
+    return saved;
+  })();
+
+  document.querySelectorAll('form[data-attribution]').forEach(function (form) {
+    form.addEventListener('submit', function () {
+      var set = function (name, value) {
+        var el = form.querySelector('input[type="hidden"][name="' + name + '"]');
+        if (el) el.value = value || '';
+      };
+      set('origen', ATTR_KEYS.map(function (k) {
+        return attribution[k] ? k.replace(/^utm_/, '') + '=' + attribution[k] : null;
+      }).filter(Boolean).join(' · ') || 'directo');
+      set('referente', attribution.referrer || (document.referrer ? '' : 'sin referente'));
+      set('entrada', attribution.landing);
+      set('pagina', location.pathname);
+      set('idioma', document.documentElement.lang || '');
+    }, true);
+  });
 })();
