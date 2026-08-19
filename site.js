@@ -133,28 +133,122 @@
     }
   }
 
-  // Home emblem: the seal leans toward the pointer; the three black cuts behind it pull the other
-  // way (--gx/--gy), and the centre one pulls against the two at the edges. Nothing rotates.
+  // Home emblem: the seal leans toward whatever the visitor is driving it with; the three black
+  // cuts behind it pull the other way (--gx/--gy), and the centre one pulls against the two at
+  // the edges. Nothing rotates. Four drivers feed the same two numbers (x, y in -0.5..0.5):
+  //   · pointer  — desktop, a fine pointer over the section
+  //   · touch    — a finger dragged anywhere over the section (scroll is never blocked)
+  //   · tilt     — the device's own gyroscope, where the browser hands it over unprompted
+  //   · scroll   — the universal floor: every phone, every browser, no permission, no sensor
   var mark = document.querySelector('.hero--mark .mark');
   if (mark) {
     var markHero = mark.closest('.hero');
+    var clamp = function (v) { return v < -.5 ? -.5 : (v > .5 ? .5 : v); };
+    // The seal reads --sx/--sy/--srx/--sry, the sigils and the HUD read --gx/--gy.
+    var lean = function (x, y) {
+      markHero.style.setProperty('--sx', (x * 18).toFixed(1) + 'px');
+      markHero.style.setProperty('--sy', (y * 13).toFixed(1) + 'px');
+      markHero.style.setProperty('--sry', (x * 9).toFixed(2) + 'deg');
+      markHero.style.setProperty('--srx', (-y * 9).toFixed(2) + 'deg');
+      markHero.style.setProperty('--gx', (x * -22).toFixed(1) + 'px');
+      markHero.style.setProperty('--gy', (y * -16).toFixed(1) + 'px');
+    };
+    var lx = 0, ly = 0, leanTick = false;
+    var aim = function (x, y) {                 // one style write per frame, whoever is driving
+      lx = clamp(x); ly = clamp(y);
+      if (leanTick) return; leanTick = true;
+      raf(function () { lean(lx, ly); leanTick = false; });
+    };
+
     if (fine && !reduce) {
       markHero.addEventListener('pointermove', function (e) {
+        if (e.pointerType === 'touch') return;  // hybrid laptops: the touch driver owns those
         var r = markHero.getBoundingClientRect();
-        var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-        // Set on the section: the seal reads --sx/--sy/--srx/--sry, the sigils read --gx/--gy.
-        markHero.style.setProperty('--sx', (x * 18).toFixed(1) + 'px');
-        markHero.style.setProperty('--sy', (y * 13).toFixed(1) + 'px');
-        markHero.style.setProperty('--sry', (x * 9).toFixed(2) + 'deg');
-        markHero.style.setProperty('--srx', (-y * 9).toFixed(2) + 'deg');
-        markHero.style.setProperty('--gx', (x * -22).toFixed(1) + 'px');
-        markHero.style.setProperty('--gy', (y * -16).toFixed(1) + 'px');
+        aim((e.clientX - r.left) / r.width - .5, (e.clientY - r.top) / r.height - .5);
       });
-      markHero.addEventListener('pointerleave', function () {
-        ['--sx', '--sy', '--gx', '--gy'].forEach(function (v) { markHero.style.setProperty(v, '0px'); });
-        ['--sry', '--srx'].forEach(function (v) { markHero.style.setProperty(v, '0deg'); });
-      });
+      markHero.addEventListener('pointerleave', function () { aim(0, 0); });
     }
+
+    // Coarse pointer (phones, tablets, anything with a touchscreen). Feature-detected rather
+    // than sniffed, so it holds on any browser/OS combination, and it degrades one step at a
+    // time: no gyroscope still scrolls, no Pointer Events still gets touch events.
+    var touchy = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 ||
+                 (window.matchMedia && matchMedia('(pointer: coarse)').matches);
+    if (touchy && !reduce) {
+      var lastTouch = -1e9;
+      var now = function () { return (window.performance && performance.now) ? performance.now() : +new Date(); };
+      // Tilt and scroll add up, so a phone lying flat on a table still moves when it is scrolled
+      // and a phone held still moves when it is turned. A finger overrides both while it is down.
+      var tiltX = 0, tiltY = 0, scrX = 0, scrY = 0;
+      var compose = function () {
+        if (now() - lastTouch < 1400) return;
+        aim(tiltX + scrX, tiltY + scrY);
+      };
+
+      // 1. Finger drag. Passive listeners only: the page keeps scrolling underneath.
+      var dragAt = function (p) {
+        var r = markHero.getBoundingClientRect();
+        lastTouch = now();
+        markHero.classList.add('is-dragging');   // shortens the transitions: a finger wants no lag
+        aim((p.clientX - r.left) / r.width - .5, (p.clientY - r.top) / r.height - .5);
+      };
+      var drop = function () {
+        markHero.classList.remove('is-dragging');
+        setTimeout(compose, 1450);               // hand the seal back to tilt/scroll once let go
+      };
+      if (window.PointerEvent) {
+        markHero.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') dragAt(e); }, { passive: true });
+        markHero.addEventListener('pointermove', function (e) { if (e.pointerType !== 'mouse') dragAt(e); }, { passive: true });
+        ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (t) { markHero.addEventListener(t, drop, { passive: true }); });
+      } else {
+        markHero.addEventListener('touchstart', function (e) { if (e.touches[0]) dragAt(e.touches[0]); }, { passive: true });
+        markHero.addEventListener('touchmove', function (e) { if (e.touches[0]) dragAt(e.touches[0]); }, { passive: true });
+        ['touchend', 'touchcancel'].forEach(function (t) { markHero.addEventListener(t, drop, { passive: true }); });
+      }
+
+      // 2. Gyroscope, when the browser gives it without asking (Android/Chrome, and iOS once
+      //    motion access has been granted). No permission prompt is raised: 3. covers those.
+      var base = null, tTick = false;
+      var onTilt = function (e) {
+        var g = e.gamma, b = e.beta;
+        if (g === null || g === undefined || b === null || b === undefined) return;
+        if (tTick) return; tTick = true;
+        raf(function () {
+          tTick = false;
+          // Landscape swaps the two axes, so the emblem leans where the phone leans either way.
+          var ang = (screen.orientation && screen.orientation.angle) || window.orientation || 0;
+          var x = g, y = b;
+          if (ang === 90) { x = b; y = -g; }
+          else if (ang === -90 || ang === 270) { x = -b; y = g; }
+          if (base === null) base = y;          // calibrate to however the phone is being held
+          tiltX = clamp(x / 45) * .7;
+          tiltY = clamp((y - base) / 45) * .7;
+          compose();
+        });
+      };
+      addEventListener('deviceorientation', onTilt, true);
+      // Recalibrate when the phone is turned, so "upright" is wherever it now is.
+      addEventListener('orientationchange', function () { base = null; });
+
+      // 3. Scroll. Always there, on every device: the seal drifts as the hero leaves the screen.
+      var sTick = false;
+      var onScrollMark = function () {
+        if (sTick) return; sTick = true;
+        raf(function () {
+          sTick = false;
+          var r = markHero.getBoundingClientRect();
+          if (r.bottom < 0 || r.top > innerHeight) return;
+          var p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height)));
+          scrX = Math.sin(p * Math.PI) * .3;   // sways out and back as the hero passes
+          scrY = p * .55;                      // and settles downward: 0 at rest, so it starts still
+          compose();
+        });
+      };
+      addEventListener('scroll', onScrollMark, { passive: true });
+      addEventListener('resize', onScrollMark);
+      onScrollMark();
+    }
+
     // Press it and the seal rings.
     mark.addEventListener('pointerdown', function () {
       if (reduce) return;

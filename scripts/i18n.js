@@ -45,7 +45,9 @@ const CONFIG = {
   outDir: 'en',
   dictionary: path.join('i18n', 'en.json'),
   obsolete: path.join('i18n', 'obsolete.en.json'),
-  pages: ['index.html', 'singular.html', 'proposito.html', 'press.html', 'contacto.html', 'legal.html'],
+  pages: ['index.html', 'singular.html', 'proposito.html', 'press.html', 'contacto.html', 'legal.html', '404.html'],
+  // Translated like any other page, but never listed in the sitemap.
+  noSitemap: ['404.html'],
   locale: { es: 'es_ES', en: 'en_US' },
   // Text shown by the language switcher (data-lang-switch) in each output.
   switcher: { es: { text: 'EN', label: 'Read this site in English' }, en: { text: 'ES', label: 'Leer este sitio en español' } },
@@ -208,9 +210,16 @@ function rewriteUrl(url, page, ctx) {
   }
   if (/^(#|mailto:|tel:|data:|https?:|\/\/)/i.test(url)) return url;
   if (url === '/') return '/' + CONFIG.outDir + '/';
+  if (/^\/[^\/]+\.html([#?].*)?$/.test(url)) return '/' + CONFIG.outDir + url;  // absolute page link (404)
   if (url.startsWith('/')) return url;
   if (/^[^\/]+\.html(#.*)?$/.test(url)) return url;        // sibling page inside en/
   return '../' + url;                                        // assets, css, js
+}
+
+// Rewrite href/src inside a translated fragment (the fragment replaces a whole innerHTML, so the
+// element walk below can no longer reach the attributes it contains).
+function rewriteInlineUrls(html, page) {
+  return html.replace(/(href|src|poster)="([^"]*)"/gi, function (m, name, val) { return name + '="' + rewriteUrl(val, page, {}) + '"'; });
 }
 
 function buildPage(page, dict, report) {
@@ -229,7 +238,9 @@ function buildPage(page, dict, report) {
     } else {
       const raw = src.slice(u.start, u.end);
       const lead = /^\s*/.exec(raw)[0], tail = /\s*$/.exec(raw)[0];
-      edits.push({ start: u.start, end: u.end, text: lead + tr + tail });
+      // The translation carries its own inline markup, so its links are rewritten here rather
+      // than by the structural pass below — that pass would overlap this edit and be dropped.
+      edits.push({ start: u.start, end: u.end, text: lead + rewriteInlineUrls(tr, page) + tail, kind: 'text' });
     }
   }
 
@@ -257,7 +268,7 @@ function buildPage(page, dict, report) {
     } else if (node.attrs.some(x => x.name === 'data-lang-switch')) {
       const sw = CONFIG.switcher[CONFIG.targetLang];
       for (const a of node.attrs) {
-        if (a.name === 'href') edits.push({ start: a.valStart, end: a.valEnd, text: '../' + page });
+        if (a.name === 'href') edits.push({ start: a.valStart, end: a.valEnd, text: (a.value || '').startsWith('/') ? '/' + page : '../' + page });
         if (a.name === 'hreflang' || a.name === 'lang') edits.push({ start: a.valStart, end: a.valEnd, text: CONFIG.sourceLang });
         if (a.name === 'aria-label') edits.push({ start: a.valStart, end: a.valEnd, text: escAttr(sw.label) });
       }
@@ -281,7 +292,11 @@ function buildPage(page, dict, report) {
   };
   walk(tree);
 
-  // 3. Apply edits back-to-front. Guard against overlaps.
+  // 3. Apply edits back-to-front. Anything nested inside a translated fragment is already handled
+  //    by rewriteInlineUrls, so drop it; a genuine overlap after that is a bug and is reported.
+  const spans = edits.filter(e => e.kind === 'text');
+  const kept = edits.filter(e => e.kind === 'text' || !spans.some(t => e.start >= t.start && e.end <= t.end));
+  edits.length = 0; edits.push(...kept);
   edits.sort((a, b) => b.start - a.start || b.end - a.end);
   let out = src, lastStart = Infinity;
   for (const e of edits) {
@@ -301,6 +316,7 @@ function sitemap() {
   const url = (page, lang) => CONFIG.site + '/' + (lang === CONFIG.sourceLang ? '' : CONFIG.outDir + '/') + (page === 'index.html' ? '' : page);
   const items = [];
   for (const page of CONFIG.pages) {
+    if (CONFIG.noSitemap.includes(page)) continue;
     const alts = [CONFIG.sourceLang, CONFIG.targetLang].map(l => `    <xhtml:link rel="alternate" hreflang="${l}" href="${url(page, l)}"/>`).join('\n') +
       `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${url(page, CONFIG.sourceLang)}"/>`;
     for (const l of [CONFIG.sourceLang, CONFIG.targetLang]) items.push(`  <url>\n    <loc>${url(page, l)}</loc>\n${alts}\n  </url>`);

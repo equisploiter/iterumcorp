@@ -472,8 +472,18 @@ img[loading="lazy"] { transition: opacity .7s var(--ease); }
 }
 .mark__ping { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--vi); opacity: 0; pointer-events: none; }
 .mark.is-pinging .mark__ping { animation: mark-ping .95s var(--ease); }
-.mark:hover .mark__halo { opacity: 1; }
-.mark:hover .mark__seal { filter: drop-shadow(0 0 24px rgba(143,107,255,.35)); }
+.mark:hover .mark__halo, .mark:active .mark__halo { opacity: 1; }
+.mark:hover .mark__seal, .mark:active .mark__seal { filter: drop-shadow(0 0 24px rgba(143,107,255,.35)); }
+/* Touch: while a finger is on the hero the drift follows it closely (site.js .is-dragging).
+   Gyroscope and scroll keep the long, slow transitions above. */
+.hero--mark.is-dragging .mark__seal { transition: transform .18s linear, filter .6s var(--ease); }
+.hero--mark.is-dragging .mark__ghost,
+.hero--mark.is-dragging .mark__halo { transition: transform .35s linear, opacity .6s var(--ease); }
+.hero--mark.is-dragging .sigil,
+.hero--mark.is-dragging .box,
+.hero--mark.is-dragging .datum,
+.hero--mark.is-dragging .blip,
+.hero--mark.is-dragging .tick { transition: transform .35s linear; }
 @keyframes mark-ping { from { opacity: .65; transform: scale(.6); } to { opacity: 0; transform: scale(1.55); } }
 @keyframes mark-in   { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: none; } }
 
@@ -600,6 +610,72 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-top) + 3.5rem); }
 @media (min-width: 62em) {
   .contact-page { grid-template-columns: minmax(0, 1fr) 22rem; gap: var(--sp-9); padding-block: var(--sp-9); }
   .contact-page__side { position: sticky; top: calc(var(--nav-top) + var(--sp-5)); }
+}
+
+/* --------------------------------------------------------------------------
+   6e. VOID  (404: the home presentation, stamping itself over a page that isn't there)
+   -------------------------------------------------------------------------- */
+/* Bigger central cut than the home page, and no scroll cue: this hero is the whole document. */
+.hero--void { --ghost: min(180vw, 80rem); }
+.hero--void .hero__engraving img { opacity: .10; object-position: 50% 34%; }
+
+/* The swarm: the mark repeated small across the plate. Black ones are inverted <img>, purple ones
+   are <span> masked with the same artwork so the site's one purple does the stamping. They drift
+   with the sigils (--gx/--gy from site.js) and each sits at its own fixed angle. */
+.hero__swarm { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.seed {
+  position: absolute; top: var(--t); left: var(--x);
+  width: var(--w); aspect-ratio: 1; max-width: none; opacity: var(--o);
+  transform: translate(-50%, -50%) translate(var(--gx, 0px), var(--gy, 0px)) rotate(var(--r, 0deg));
+  transition: transform 1.2s var(--ease);
+}
+img.seed { filter: invert(1); }
+.seed--vi {
+  background: var(--vi);
+  -webkit-mask: url("assets/img/emblem.png") center / contain no-repeat;
+          mask: url("assets/img/emblem.png") center / contain no-repeat;
+  /* The purple stamps pull the opposite way, so the swarm never reads as one flat layer. */
+  transform: translate(-50%, -50%) translate(calc(var(--gx, 0px) * -1), calc(var(--gy, 0px) * -1)) rotate(var(--r, 0deg));
+}
+
+/* The code. Two off-register ghosts behind it — the plate printed the number three times and
+   missed twice. attr(data-code) keeps the markup to one element. */
+.hero--void .void__code {
+  display: block; position: relative; margin: 0;
+  font-family: var(--sans); font-size: clamp(5rem, 25vw, 15rem); font-weight: 700;
+  letter-spacing: -0.06em; line-height: .82; text-indent: 0; text-transform: none;
+  /* Tighter aura than the rest of the wordmark, so the two ghosts below still read. */
+  text-shadow: 0 0 12px var(--bg), 0 2px 6px rgba(0,0,0,.75);
+  isolation: isolate;   /* keeps the negative-z ghosts inside the number, not behind the hero */
+}
+.hero--void .void__code::before,
+.hero--void .void__code::after {
+  content: attr(data-code); position: absolute; inset: 0; z-index: -1;
+  text-shadow: none; pointer-events: none;
+}
+.hero--void .void__code::before { color: var(--vi); opacity: .5; animation: void-slip 7s var(--ease) infinite; }
+.hero--void .void__code::after  { color: var(--cy); opacity: .32; animation: void-slip 7s var(--ease) infinite reverse; }
+@keyframes void-slip {
+  0%, 100% { transform: translate(-.035em, .012em); }
+  50%      { transform: translate(.03em, -.014em); }
+}
+/* Second line of the heading keeps the home wordmark's mono caps, just tighter to the number. */
+.hero--void .hero__wordmark { margin-top: var(--sp-5); }
+.hero--void .hero__wordmark span + span { margin-top: .9em; }
+.hero--void .hero__tagline { margin-top: var(--sp-5); max-width: 36ch; }
+
+/* The requested path, printed back as a readout. */
+.void__req { position: relative; margin-top: var(--sp-6); display: grid; justify-items: center; gap: var(--sp-2); }
+.void__req__val {
+  max-width: min(90vw, 44rem); padding: .5rem .9rem;
+  border: 1px solid var(--rule-2); background: color-mix(in srgb, var(--bg) 78%, transparent);
+  font-family: var(--mono); font-size: var(--step--1); color: var(--cy);
+  overflow-wrap: anywhere;
+}
+.void__actions { position: relative; margin-top: var(--sp-6); display: flex; flex-wrap: wrap; gap: var(--sp-3); justify-content: center; }
+.hero--void .hero__stamp { margin-top: var(--sp-6); }
+@media (min-width: 62em) {
+  .hero--void { --ghost: 86rem; }
 }
 
 /* --------------------------------------------------------------------------
@@ -939,7 +1015,7 @@ body.is-purpose .purpose { border-top: 0; }
    -------------------------------------------------------------------------- */
 @media print {
   body { background: #fff; color: #000; padding-top: 0; }
-  body::before, .nav, .hero__media, .hero__sigils, .hero__engraving, .hero__hud, .mark__ghost, .mark__halo, .world__img, .corp__emblem, .pin--img, .plate__img, .bosses__plate, .orn { display: none !important; }
+  body::before, .nav, .hero__media, .hero__sigils, .hero__engraving, .hero__hud, .hero__swarm, .mark__ghost, .mark__halo, .world__img, .corp__emblem, .pin--img, .plate__img, .bosses__plate, .orn { display: none !important; }
   .redacted { color: #000; background: none; box-shadow: none; }
   .copy, .contact, .gallery figure { border-color: #999; background: none; }
 }
