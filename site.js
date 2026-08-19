@@ -227,6 +227,9 @@
         });
       };
       addEventListener('deviceorientation', onTilt, true);
+      // Some Android builds (and Firefox) only emit the absolute variant. Same handler, and the
+      // per-frame guard inside it means feeding both events costs nothing when both fire.
+      addEventListener('deviceorientationabsolute', onTilt, true);
       // Recalibrate when the phone is turned, so "upright" is wherever it now is.
       addEventListener('orientationchange', function () { base = null; });
 
