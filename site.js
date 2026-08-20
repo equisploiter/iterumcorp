@@ -2,12 +2,12 @@
   // Language: remember an explicit choice so the head redirect (see <head>) respects it.
   document.querySelectorAll('[data-lang-switch]').forEach(function (a) {
     a.addEventListener('click', function () {
-      try { localStorage.setItem('lang', a.getAttribute('hreflang') || 'es'); } catch (e) {}
+      try { localStorage.setItem('lang', a.getAttribute('hreflang') || 'en'); } catch (e) {}
     });
   });
   try {
-    // Landing directly on /en/ (search, shared link) counts as a preference too.
-    if (/\/en\//.test(location.pathname) && !localStorage.getItem('lang')) localStorage.setItem('lang', 'en');
+    // Landing directly on /es/ (search, shared link) counts as a preference too.
+    if (/\/es\//.test(location.pathname) && !localStorage.getItem('lang')) localStorage.setItem('lang', 'es');
   } catch (e) {}
 
   // Lazy images: reveal with a fade once decoded (see style.css `html.js img[loading="lazy"]`).

@@ -1,7 +1,7 @@
-{
+﻿{
   "name": "iterumcorp.org",
   "private": true,
-  "description": "Iterum Corporation static site. No dependencies; Node is only used to generate the English pages.",
+  "description": "Iterum Corporation static site. No dependencies; Node is only used to generate the Spanish pages.",
   "scripts": {
     "i18n:extract": "node scripts/i18n.js extract",
     "build": "node scripts/i18n.js build",

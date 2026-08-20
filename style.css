@@ -759,8 +759,9 @@ img.seed { filter: invert(1); }
   .tile--bar { grid-column: 1 / -1; }
 }
 @media (min-width: 62em) {
-  .bento { grid-template-columns: 1.3fr 1fr 1fr; grid-template-rows: auto auto auto; }
+  .bento { grid-template-columns: 1.3fr 1fr 1fr; grid-template-rows: auto auto; }
   .tile--tall { grid-row: 1 / 3; min-height: 30rem; }
+  .tile:last-child:nth-child(4) { grid-column: 2 / -1; }
   .tile--bar { grid-column: 1 / -1; }
 }
 

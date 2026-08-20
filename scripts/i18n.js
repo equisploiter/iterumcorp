@@ -4,16 +4,16 @@
   ---------------------------------------------------------------------------
   Zero-dependency translation pipeline for the static site.
 
-  Source of truth: the Spanish HTML files in the repo root (index.html, ...).
-  Dictionary:      i18n/en.json  →  { "<texto en español>": "<English text>" }
-  Output:          en/*.html + sitemap.xml   (never edit en/ by hand)
+  Source of truth: the English HTML files in the repo root (index.html, ...).
+  Dictionary:      i18n/es.json  →  { "<English text>": "<texto en español>" }
+  Output:          es/*.html + sitemap.xml   (never edit es/ by hand)
 
   Commands
-    node scripts/i18n.js extract   Scan the Spanish pages, add every new string
-                                   to i18n/en.json (value ""), move strings that
-                                   no longer exist to i18n/obsolete.en.json.
-    node scripts/i18n.js build     Generate en/*.html and sitemap.xml. Strings
-                                   without translation fall back to Spanish and
+    node scripts/i18n.js extract   Scan the English pages, add every new string
+                                   to i18n/es.json (value ""), move strings that
+                                   no longer exist to i18n/obsolete.es.json.
+    node scripts/i18n.js build     Generate es/*.html and sitemap.xml. Strings
+                                   without translation fall back to English and
                                    are reported.
     node scripts/i18n.js check     Exit 1 if any string is untranslated or if
                                    en/ is out of date. Meant for CI.
@@ -40,17 +40,19 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const CONFIG = {
   site: 'https://iterumcorp.org',
-  sourceLang: 'es',
-  targetLang: 'en',
-  outDir: 'en',
-  dictionary: path.join('i18n', 'en.json'),
-  obsolete: path.join('i18n', 'obsolete.en.json'),
-  pages: ['index.html', 'singular.html', 'proposito.html', 'press.html', 'contacto.html', 'legal.html', '404.html'],
+  sourceLang: 'en',
+  targetLang: 'es',
+  outDir: 'es',
+  dictionary: path.join('i18n', 'es.json'),
+  obsolete: path.join('i18n', 'obsolete.es.json'),
+  pages: ['index.html', 'singular.html', 'purpose.html', 'press.html', 'contact.html', 'legal.html', '404.html'],
+  // Pages whose file name is itself translated: <source name> → <name inside outDir>.
+  slugs: { 'purpose.html': 'proposito.html', 'contact.html': 'contacto.html' },
   // Translated like any other page, but never listed in the sitemap.
   noSitemap: ['404.html'],
   locale: { es: 'es_ES', en: 'en_US' },
   // Text shown by the language switcher (data-lang-switch) in each output.
-  switcher: { es: { text: 'EN', label: 'Read this site in English' }, en: { text: 'ES', label: 'Leer este sitio en español' } },
+  switcher: { en: { text: 'ES', label: 'Leer este sitio en español' }, es: { text: 'EN', label: 'Read this site in English' } },
 };
 
 const VOID = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
@@ -203,16 +205,20 @@ function collect(src) {
 /* --------------------------------------------------------------------------
    Build one page
    -------------------------------------------------------------------------- */
+const slug = page => CONFIG.slugs[page] || page;
+// Translate the file name inside a URL or path, leaving any #hash/?query alone.
+const slugUrl = url => url.replace(/([^\/]+\.html)(?=[#?]|$)/, m => slug(m));
+
 function rewriteUrl(url, page, ctx) {
   if (!url) return url;
   if (ctx.isCanonical) {
-    return url.replace(CONFIG.site + '/', CONFIG.site + '/' + CONFIG.outDir + '/');
+    return slugUrl(url.replace(CONFIG.site + '/', CONFIG.site + '/' + CONFIG.outDir + '/'));
   }
   if (/^(#|mailto:|tel:|data:|https?:|\/\/)/i.test(url)) return url;
   if (url === '/') return '/' + CONFIG.outDir + '/';
-  if (/^\/[^\/]+\.html([#?].*)?$/.test(url)) return '/' + CONFIG.outDir + url;  // absolute page link (404)
+  if (/^\/[^\/]+\.html([#?].*)?$/.test(url)) return '/' + CONFIG.outDir + slugUrl(url);  // absolute page link (404)
   if (url.startsWith('/')) return url;
-  if (/^[^\/]+\.html(#.*)?$/.test(url)) return url;        // sibling page inside en/
+  if (/^[^\/]+\.html(#.*)?$/.test(url)) return slugUrl(url);  // sibling page inside outDir
   return '../' + url;                                        // assets, css, js
 }
 
@@ -304,7 +310,7 @@ function buildPage(page, dict, report) {
     out = out.slice(0, e.start) + e.text + out.slice(e.end);
     lastStart = e.start;
   }
-  const banner = `<!-- Generated from ${page} by scripts/i18n.js — do not edit; edit the Spanish page and i18n/en.json, then run \`npm run build\`. -->\n`;
+  const banner = `<!-- Generated from ${page} by scripts/i18n.js — do not edit; edit the English page and i18n/es.json, then run \`npm run build\`. -->\n`;
   out = out.replace(/^(<!DOCTYPE[^>]*>\s*)/i, (m) => m + banner);
   return out;
 }
@@ -313,7 +319,10 @@ function buildPage(page, dict, report) {
    Sitemap with hreflang alternates
    -------------------------------------------------------------------------- */
 function sitemap() {
-  const url = (page, lang) => CONFIG.site + '/' + (lang === CONFIG.sourceLang ? '' : CONFIG.outDir + '/') + (page === 'index.html' ? '' : page);
+  const url = (page, lang) => {
+    const name = lang === CONFIG.sourceLang ? page : slug(page);
+    return CONFIG.site + '/' + (lang === CONFIG.sourceLang ? '' : CONFIG.outDir + '/') + (name === 'index.html' ? '' : name);
+  };
   const items = [];
   for (const page of CONFIG.pages) {
     if (CONFIG.noSitemap.includes(page)) continue;
@@ -361,7 +370,7 @@ function build({ write = true } = {}) {
   if (!dict) { console.error(`build: ${CONFIG.dictionary} not found. Run "extract" first.`); process.exit(1); }
   const report = { missing: [], warnings: [] };
   const outputs = {};
-  for (const page of CONFIG.pages) outputs[path.join(CONFIG.outDir, page)] = buildPage(page, dict, report);
+  for (const page of CONFIG.pages) outputs[path.join(CONFIG.outDir, slug(page))] = buildPage(page, dict, report);
   outputs['sitemap.xml'] = sitemap();
   let stale = [];
   for (const [rel, content] of Object.entries(outputs)) {
