@@ -310,11 +310,11 @@
   }
 
   // ---------------------------------------------------------------------------
-  // Atribución. El primer toque de la visita (etiquetas UTM, click ids,
-  // referente, página de entrada) se guarda en sessionStorage y se adjunta al
-  // formulario que el visitante envíe, de modo que un publisher que llega por
-  // un enlace de pitch se identifica en la bandeja. Sin cookies, sin terceros,
-  // sin nada que sobreviva a la pestaña.
+  // Attribution. The visit's first touch (UTM tags, click ids, referrer,
+  // landing page) is kept in sessionStorage and attached to whichever form the
+  // visitor submits, so a publisher arriving from a pitch link identifies
+  // itself in the inbox. No cookies, no third parties, nothing that outlives
+  // the tab.
   // ---------------------------------------------------------------------------
   var ATTR_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content',
                    'ref', 'gclid', 'fbclid', 'msclkid', 'ttclid'];
@@ -328,7 +328,7 @@
       if (v) { fresh[k] = v.slice(0, 120); tagged = true; }
     });
 
-    // First touch wins: sólo se sobreescribe si este hit trae etiquetas nuevas.
+    // First touch wins: only overwritten when this hit carries fresh tags.
     if (!saved || tagged) {
       saved = fresh;
       saved.landing = (location.pathname + location.search).slice(0, 300);
@@ -345,13 +345,13 @@
         var el = form.querySelector('input[type="hidden"][name="' + name + '"]');
         if (el) el.value = value || '';
       };
-      set('origen', ATTR_KEYS.map(function (k) {
+      set('source', ATTR_KEYS.map(function (k) {
         return attribution[k] ? k.replace(/^utm_/, '') + '=' + attribution[k] : null;
-      }).filter(Boolean).join(' · ') || 'directo');
-      set('referente', attribution.referrer || (document.referrer ? '' : 'sin referente'));
-      set('entrada', attribution.landing);
-      set('pagina', location.pathname);
-      set('idioma', document.documentElement.lang || '');
+      }).filter(Boolean).join(' · ') || 'direct');
+      set('referrer', attribution.referrer || (document.referrer ? '' : 'no referrer'));
+      set('landing', attribution.landing);
+      set('page', location.pathname);
+      set('language', document.documentElement.lang || '');
     }, true);
   });
 })();

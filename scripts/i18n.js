@@ -5,7 +5,7 @@
   Zero-dependency translation pipeline for the static site.
 
   Source of truth: the English HTML files in the repo root (index.html, ...).
-  Dictionary:      i18n/es.json  →  { "<English text>": "<texto en español>" }
+  Dictionary:      i18n/es.json  →  { "<English text>": "<Spanish text>" }
   Output:          es/*.html + sitemap.xml   (never edit es/ by hand)
 
   Commands
@@ -21,8 +21,8 @@
   How a "string" is found (no markup needed in the HTML):
     · An element that contains text directly (not only child elements) is one
       unit; its whole innerHTML is the key. So
-        <p>La <span class="blood">sangre</span> es tu único recurso.</p>
-      yields the key  «La <span class="blood">sangre</span> es tu único recurso.»
+        <p><span class="blood">Blood</span> is your only resource.</p>
+      yields the key  «<span class="blood">Blood</span> is your only resource.»
       and the translation keeps the inline markup.
     · Elements with no direct text (lists, divs, nav…) are recursed into.
     · Attributes: title/alt/aria-label/placeholder/data-label, <meta> content
