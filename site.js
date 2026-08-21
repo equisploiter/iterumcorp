@@ -354,4 +354,48 @@
       set('language', document.documentElement.lang || '');
     }, true);
   });
+
+  // ---------------------------------------------------------------------------
+  // Form delivery. The form posts to Formspree in the background so the visitor
+  // never leaves the page, and the outcome is reported inline. Without JS (or if
+  // fetch is missing) nothing is intercepted: the browser submits natively and
+  // Formspree's `_next` brings the visitor back to #sent, which the stylesheet
+  // reveals through :target. The endpoint lives in the HTML `action`, so wiring
+  // a new form id never means touching this file.
+  // ---------------------------------------------------------------------------
+  if (window.fetch && window.FormData) {
+    document.querySelectorAll('form[action*="formspree.io"]').forEach(function (form) {
+      if (/YOUR_FORM_ID/.test(form.getAttribute('action') || '')) return;  // not wired yet
+      var ok = form.querySelector('[data-form-ok]');
+      var err = form.querySelector('[data-form-err]');
+      var btn = form.querySelector('button[type="submit"]');
+      var busy = false;
+
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        if (busy) return;
+        busy = true;
+        if (btn) { btn.disabled = true; btn.setAttribute('aria-busy', 'true'); }
+        if (ok) ok.classList.remove('is-on');
+        if (err) err.classList.remove('is-on');
+
+        // The attribution listener above runs in the capture phase, so the hidden
+        // fields are already filled by the time FormData reads the form.
+        fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        }).then(function (res) {
+          if (!res.ok) throw new Error(res.status);
+          form.reset();
+          if (ok) ok.classList.add('is-on');
+        })['catch'](function () {
+          if (err) err.classList.add('is-on');
+        }).then(function () {
+          busy = false;
+          if (btn) { btn.disabled = false; btn.removeAttribute('aria-busy'); }
+        });
+      });
+    });
+  }
 })();

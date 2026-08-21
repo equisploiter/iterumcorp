@@ -271,8 +271,11 @@
           <p>There is no newsletter and no schedule. You will only be written to when an iteration warrants it. Data is processed through Formspree and never shared with anyone. You can unsubscribe at any time.</p>
         </div>
       </div>
-      <!-- FORMSPREE: replace YOUR_FORM_ID with the real form id -->
-      <form class="form reveal" data-delay="1" data-attribution action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <!-- FORMSPREE · form "access", delivered to diego@iterumcorp.org. Edit this file
+           only (es/ is generated) and run `npm run build`. site.js posts the form in the
+           background; without JS the browser submits natively and `_next` returns here
+           to #sent. -->
+      <form class="form reveal" data-delay="1" data-attribution action="https://formspree.io/f/mdenbpyj" method="POST">
         <div class="field">
           <label for="email">Email address</label>
           <input id="email" type="email" name="email" placeholder="user@domain" autocomplete="email" required>
@@ -293,7 +296,10 @@
         <input type="hidden" name="page" value="">
         <input type="hidden" name="language" value="">
         <input type="hidden" name="_subject" value="[iterumcorp.org] Access request">
+        <input type="hidden" name="_next" value="https://iterumcorp.org/singular.html#sent">
         <div><button class="btn btn--primary" type="submit">Register request <span class="arr" aria-hidden="true">→</span></button></div>
+        <p class="form__msg" id="sent" data-form-ok role="status">Request registered. You will be written to when access opens.</p>
+        <p class="form__msg" data-form-err role="status">The request could not be sent. Please write to hello@iterumcorp.org instead.</p>
         <p class="form__foot">Submission takes a few seconds to confirm.</p>
       </form>
     </div>

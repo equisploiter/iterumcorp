@@ -69,8 +69,11 @@
   <div class="plate__img" aria-hidden="true"><img src="../assets/img/dore-light.webp" srcset="../assets/img/dore-light-720.webp 720w, ../assets/img/dore-light.webp 1200w, ../assets/img/dore-light-1600.webp 1600w" sizes="100vw" alt="" loading="lazy" decoding="async" width="1200" height="1512"></div>
   <div class="wrap contact-page">
 
-    <!-- FORMSPREE: replace YOUR_FORM_ID with the real form id -->
-    <form class="form contact-page__form" data-attribution action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <!-- FORMSPREE · form "contact", delivered to diego@iterumcorp.org. Edit this file
+         only (es/ is generated) and run `npm run build`. site.js posts the form in the
+         background; without JS the browser submits natively and `_next` returns here
+         to #sent. -->
+    <form class="form contact-page__form" data-attribution action="https://formspree.io/f/xljrzoaq" method="POST">
       <div class="field">
         <label for="c-name">Nombre</label>
         <input id="c-name" type="text" name="name" placeholder="Nombre o alias" autocomplete="name" required>
@@ -107,7 +110,10 @@
       <input type="hidden" name="page" value="">
       <input type="hidden" name="language" value="">
       <input type="hidden" name="_subject" value="[iterumcorp.org] Contacto">
+      <input type="hidden" name="_next" value="https://iterumcorp.org/es/contacto.html#sent">
       <div><button class="btn btn--primary" type="submit">Enviar mensaje <span class="arr" aria-hidden="true">→</span></button></div>
+      <p class="form__msg" id="sent" data-form-ok role="status">Mensaje enviado. Recibirá respuesta en la dirección que ha indicado, normalmente en unos días.</p>
+      <p class="form__msg" data-form-err role="status">No se ha podido enviar el mensaje. Escriba directamente a hello@iterumcorp.org.</p>
       <p class="form__foot">Los datos se procesan mediante Formspree y no se ceden a nadie.</p>
     </form>
 
