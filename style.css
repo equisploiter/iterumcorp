@@ -261,6 +261,8 @@ img[loading="lazy"] { transition: opacity .7s var(--ease); }
 .reveal[data-delay="1"] { transition-delay: .08s; }
 .reveal[data-delay="2"] { transition-delay: .16s; }
 .reveal[data-delay="3"] { transition-delay: .24s; }
+.reveal[data-delay="4"] { transition-delay: .32s; }
+.reveal[data-delay="5"] { transition-delay: .40s; }
 
 /* --------------------------------------------------------------------------
    4. NAV
@@ -612,6 +614,8 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-top) + 3.5rem); }
 .teaser__in { position: relative; z-index: 1; padding-block: var(--sp-9); display: grid; gap: var(--sp-5); justify-items: start; }
 .teaser h2 { font-size: var(--step-3); max-width: 16ch; }
 .teaser p:not(.meta) { color: var(--ink-2); max-width: 46ch; }
+/* The question that follows the diagnosis: same weight as the creed, set apart by italics. */
+.teaser p.teaser__q { max-width: 34ch; color: var(--ink); font-style: italic; }
 /* Two-line creed: the concession first, the claim under it. Spacing comes from .teaser__in's gap. */
 .teaser p.teaser__creed { margin-top: 0; max-width: 30ch; line-height: 1.25; color: var(--ink); font-weight: 500; }
 .teaser__creed span { display: block; color: var(--ink-2); font-weight: 400; }
