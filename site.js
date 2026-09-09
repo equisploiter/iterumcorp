@@ -49,6 +49,8 @@
   // prefers reduced motion or the device has no fine pointer where relevant.
   // ---------------------------------------------------------------------------
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Autoplaying clips (the Singular gameplay reel) stay on their poster for reduced-motion visitors.
+  if (reduce) document.querySelectorAll('video[autoplay]').forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); v.load(); });
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   var raf = window.requestAnimationFrame || function (f) { return setTimeout(f, 16); };
 

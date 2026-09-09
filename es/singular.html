@@ -118,7 +118,11 @@
       </div>
       <figure class="reveal" data-delay="1" style="margin:0">
         <div class="band__frame tilt">
-          <img class="pixel" src="../assets/img/gameplay-combat.jpg" alt="Captura de Singular: Ari en una sala roja, barra de OverClock arriba a la izquierda y contador de munición 10/30" width="1920" height="1080" loading="lazy">
+          <!-- Gameplay reel (Publish.mp4 re-encoded to 720p / 30 fps, no audio). Muted + playsinline so phones
+               autoplay it; the poster is the first paint and what reduced-motion visitors keep (site.js). -->
+          <video autoplay muted loop playsinline poster="../assets/img/reel-poster.jpg" width="1280" height="720" tabindex="-1" disablepictureinpicture disableremoteplayback aria-label="Vídeo de gameplay de Singular: Ari abriéndose paso por el Nivel 1">
+            <source src="../assets/video/singular-reel.mp4" type="video/mp4">
+          </video>
         </div>
         <figcaption class="band__caption">
           <span><b>Nivel 1</b> · build interna</span>
@@ -135,24 +139,20 @@
         <h2>Cuatro sistemas, una idea.</h2>
         <p>Todo empuja a atacar. Todo lo que haces deja marca.</p>
       </div>
-      <div class="bento">
-        <article class="tile tile--tall reveal">
-          <div class="tile__img"><img src="../assets/img/concept-red-tree.jpg" alt="" width="1400" height="1272" loading="lazy"></div>
+      <div class="bento bento--plain">
+        <article class="tile reveal">
           <h3>Combate agresivo</h3>
           <p>Curarte y recargar sólo derramando sangre. Dash y OverClock encadenan ataques en un impulso hacia delante que no se detiene.</p>
         </article>
         <article class="tile reveal" data-delay="1">
-          <img class="sprite pixel" src="../assets/img/sprite-ari-dash.png" alt="" width="375" height="475" loading="lazy">
           <h3>Maestría</h3>
           <p>Overheat, Trauma y esquiva perfecta: tres sistemas que se cruzan. Fácil de sobrevivir, brutal de dominar.</p>
         </article>
-        <article class="tile tile--sprite reveal" data-delay="2">
-          <img class="sprite pixel" src="../assets/img/sprite-boss-skull.png" alt="" width="793" height="490" loading="lazy">
+        <article class="tile reveal" data-delay="2">
           <h3>Jefes</h3>
           <p>Entidades Persistentes que te acechan entre partidas. Skip&amp;Kill para saltarte un jefe o ganarte lo único que puede matarlo para siempre.</p>
         </article>
         <article class="tile reveal" data-delay="1">
-          <div class="tile__img"><img src="../assets/img/ari-keyart.jpg" alt="" width="1400" height="1483" loading="lazy" style="object-position: 50% 20%"></div>
           <h3>Narrativa en movimiento</h3>
           <p>Historia críptica y reactiva contada entre combates, sin romper el ritmo. Muchas preguntas. Responderlas es trabajo del jugador.</p>
         </article>
@@ -168,24 +168,33 @@
         <h2>Leer el combate, no aporrear botones.</h2>
         <p>Cada decisión en mitad del combate tiene consecuencias. Riesgo alto, recompensa alta.</p>
       </div>
-      <div class="strip reveal">
+      <div class="strip strip--wide reveal">
         <figure>
-          <img class="pixel" src="../assets/img/mech-attack.jpg" alt="Ataque cuerpo a cuerpo y a distancia: el suelo cubierto de sangre tras un combate" width="720" height="480" loading="lazy">
+          <img src="../assets/img/mech-attack.gif" alt="Ari atacando cuerpo a cuerpo y a distancia, con el suelo cubierto de sangre" width="800" height="450" loading="lazy">
           <figcaption>Ataque <span>melee y a distancia</span></figcaption>
         </figure>
         <figure>
-          <img class="pixel" src="../assets/img/mech-dash.jpg" alt="Ari atravesando una horda con un dash" width="720" height="480" loading="lazy">
+          <img src="../assets/img/mech-dash.gif" alt="Ari atravesando una horda con un dash" width="800" height="450" loading="lazy">
           <figcaption>Dash <span>frame perfecto</span></figcaption>
         </figure>
         <figure>
-          <img class="pixel" src="../assets/img/mech-heal.jpg" alt="Ari curándose sobre un charco de sangre con la barra de OverClock activa" width="624" height="422" loading="lazy">
-          <figcaption>Curación <span>y OverClock</span></figcaption>
+          <img src="../assets/img/mech-heal.gif" alt="Ari curándose sobre un charco de sangre" width="800" height="450" loading="lazy">
+          <figcaption>Curación <span>báñate en sangre</span></figcaption>
+        </figure>
+        <figure>
+          <img src="../assets/img/mech-overclock.gif" alt="Ari en OverClock, con la barra de arriba a la izquierda llenándose" width="800" height="450" loading="lazy">
+          <figcaption>OverClock <span>modo sobrecarga</span></figcaption>
         </figure>
       </div>
-      <div class="defs">
+      <div class="defs defs--pair">
         <div class="reveal"><h3>Overheat</h3><p>Demasiado tiempo en OverClock daña y aturde a Ari. Obliga a decidir en mitad del combate.</p></div>
         <div class="reveal" data-delay="1"><h3>Trauma</h3><p>Un porcentaje del daño recibido no se cura durante unos segundos. Los fallos importan. Esquivas perfectas y muertes cuerpo a cuerpo lo reducen.</p></div>
-        <div class="reveal" data-delay="2"><h3>Esquiva perfecta</h3><p>Un dash en el frame exacto encadenado con OverClock abre una ventana de combo. Reduce Trauma y Overheat. Riesgo alto, recompensa alta.</p></div>
+      </div>
+      <figure class="combo tilt reveal">
+        <img src="../assets/img/mech-combo.gif" alt="Ari encadenando una esquiva perfecta con un combo en OverClock" width="800" height="450" loading="lazy">
+      </figure>
+      <div class="defs defs--one">
+        <div class="reveal"><h3>Esquiva perfecta</h3><p>Un dash en el frame exacto encadenado con OverClock abre una ventana de combo. Reduce Trauma y Overheat. Riesgo alto, recompensa alta.</p></div>
       </div>
     </div>
   </section>
@@ -193,12 +202,8 @@
   <!-- BOSSES -->
   <section class="section" id="bosses">
     <div class="wrap bosses">
-      <div class="bosses__art tilt reveal" aria-hidden="true">
-        <img src="../assets/img/dore-beasts.webp" srcset="../assets/img/dore-beasts-720.webp 720w, ../assets/img/dore-beasts.webp 1200w, ../assets/img/dore-beasts-1600.webp 1600w" sizes="(min-width: 62em) 50vw, 100vw" class="bosses__plate" alt="" loading="lazy" decoding="async" width="1200" height="949">
-        <img class="b1 pixel" src="../assets/img/sprite-boss-skull.png" alt="" width="793" height="490" loading="lazy">
-        <img class="b2 pixel" src="../assets/img/sprite-entity.png" alt="" width="418" height="498" loading="lazy">
-        <img class="b3 pixel" src="../assets/img/sprite-entity.png" alt="" width="418" height="498" loading="lazy" style="transform: scaleX(-1)">
-        <img class="b4 pixel" src="../assets/img/sprite-ari.png" alt="" width="275" height="475" loading="lazy">
+      <div class="bosses__art bosses__art--clip tilt reveal">
+        <img src="../assets/img/boss-andromeda.gif" alt="Andromeda, una Entidad Persistente, entrando en la sala en mitad del combate" width="800" height="450" loading="lazy">
       </div>
       <div class="bosses__copy">
         <h2 class="reveal">Los jefes no te esperan en su sala.</h2>
@@ -217,7 +222,7 @@
   <!-- WORLD -->
   <section class="world" id="world">
     <div class="world__img" aria-hidden="true">
-      <img src="../assets/img/concept-tower-red.jpg" alt="" width="1920" height="1079" loading="lazy">
+      <img src="../assets/img/concept-env-08.jpg" srcset="../assets/img/concept-env-08-1280.jpg 1280w, ../assets/img/concept-env-08.jpg 1920w" sizes="100vw" alt="" width="1920" height="1080" loading="lazy" decoding="async">
     </div>
     <div class="wrap world__in">
       <h2 class="reveal">Un mundo que se siente antes de entenderse.</h2>
