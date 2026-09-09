@@ -27,12 +27,12 @@ Everything else in the HTML is English and identical in both languages: section 
 - `index.html` — studio front page (hero, featured project, corporation, purpose teaser)
 - `singular.html` — the game's page: combat, bosses, world, story and the access form (Formspree)
 - `purpose.html` — manifesto / purpose (Doré moodboard)
-- `press.html` — Singular press kit
-- `contact.html` — contact form (Formspree) + addresses, people, channels and the open role
+- `press.html` — press page. For now a TBA notice: Singular is looking for a publisher and the full press kit is on hold. The Spanish strings of the old kit are kept in `i18n/obsolete.es.json`, so it can come back without retranslating
+- `contact.html` — contact form (Formspree) + direct email and press pointer
 - `site.js` — shared JS: mobile menu, scroll reveal, active subnav, campaign attribution (see *Attribution*)
 - `style.css` — the single stylesheet; tokens live in `:root`
 - `assets/img/` — real images pulled from the pitch deck (key art, gameplay, sprites, concept, emblem, OG) and `dore-*.webp`: Gustave Doré engravings (public domain, Wikimedia Commons) inverted and toned cyan for the Purpose section, rescaled to 800 px and saved as WebP (~2 MB in total). Singular gameplay clips as gifs (800 × 450, 10 fps): `mech-attack/dash/heal/overclock.gif` for the combat strip, `mech-combo.gif` under Overheat/Trauma and `boss-andromeda.gif` for the bosses block (~40 MB in total, all lazy-loaded; mech-combo.gif is the unoptimised 18.7 MB export); `reel-poster.jpg` is the poster of the gameplay reel and `concept-env-08*.jpg` the World background
-- `assets/video/` — `singular-reel.mp4`: the gameplay reel in the Singular gameplay band, under "You heal and reload…" (source `Publish.mp4`, 1920 × 1080 / 60 fps / 650 MB, re-encoded to 1280 × 720 / 30 fps, H.264 CRF 30, no audio, ~22 MB). Autoplays muted and looped; visitors with reduced motion keep the poster
+- `assets/video/` — `singular-reel.mp4`: the gameplay reel in the Singular gameplay band, under "You heal and reload…", and inside the Singular card on the home page (source `Publish.mp4`, 1920 × 1080 / 60 fps / 650 MB, re-encoded to 1280 × 720 / 30 fps, H.264 CRF 30, no audio, ~22 MB). Autoplays muted and looped; visitors with reduced motion keep the poster
 - `assets/fonts/` — self-hosted Space Grotesk + IBM Plex Mono (`fonts.css`)
 - `assets/press/` — downloadable press-kit zips
 - `legal.html` — legal notice, privacy and cookies (linked from the footer and the consent checkboxes)
@@ -86,5 +86,5 @@ What this does **not** cover: if the recipient looks at the site and never submi
 ## To do
 
 - Upload the final 1920×1080 screenshots and replace the low-resolution ones in `assets/img/`.
-- Upload zips to `assets/press/` under the names already linked from `press.html`.
+- Bring the press kit back to `press.html` (and upload the zips to `assets/press/`) once there is a publisher to announce.
 - Fill in the `#` placeholder links for social, Steam and itch.

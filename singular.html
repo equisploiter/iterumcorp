@@ -272,8 +272,8 @@
       <div class="reveal">
         <h2>Request access</h2>
         <div class="prose">
-          <p class="lead">Leave your address and you will be notified when there is something to notify: Steam page, demo, external playtests, release date.</p>
-          <p>There is no newsletter and no schedule. You will only be written to when an iteration warrants it. Data is processed through Formspree and never shared with anyone. You can unsubscribe at any time.</p>
+          <p class="lead">This form requests access to the Singular playtesting build on itch.io. Leave your address and the company you are writing from; if the request is accepted, the itch.io key and instructions will arrive at that address.</p>
+          <p>The build is a work in progress and access is granted case by case. There is no newsletter and no schedule: you will only be written to when an iteration warrants it. Data is processed through Formspree and never shared with anyone. You can unsubscribe at any time.</p>
         </div>
       </div>
       <!-- FORMSPREE · form "access", delivered to diego@iterumcorp.org. Edit this file
@@ -289,6 +289,10 @@
           <label for="name">Name or alias</label>
           <input id="name" type="text" name="name" placeholder="Optional" autocomplete="name">
         </div>
+        <div class="field">
+          <label for="company">Company</label>
+          <input id="company" type="text" name="company" placeholder="Studio, publisher, outlet…" autocomplete="organization" required>
+        </div>
         <label class="check">
           <input type="checkbox" name="consent" value="yes" required>
           <span>I consent to receiving communications from Iterum Corporation about Singular and later projects. <a href="legal.html#privacy">Privacy policy</a>.</span>
@@ -300,11 +304,11 @@
         <input type="hidden" name="landing" value="">
         <input type="hidden" name="page" value="">
         <input type="hidden" name="language" value="">
-        <input type="hidden" name="_subject" value="[iterumcorp.org] Access request">
+        <input type="hidden" name="_subject" value="[iterumcorp.org] Access request · itch.io playtesting build">
         <input type="hidden" name="_next" value="https://iterumcorp.org/singular.html#sent">
-        <div><button class="btn btn--primary" type="submit">Register request <span class="arr" aria-hidden="true">→</span></button></div>
-        <p class="form__msg" id="sent" data-form-ok role="status">Request registered. You will be written to when access opens.</p>
-        <p class="form__msg" data-form-err role="status">The request could not be sent. Please write to hello@iterumcorp.org instead.</p>
+        <div><button class="btn btn--primary" type="submit">Request access to the build <span class="arr" aria-hidden="true">→</span></button></div>
+        <p class="form__msg" id="sent" data-form-ok role="status">Request registered. If it is accepted, the itch.io key and instructions will arrive at the address you gave.</p>
+        <p class="form__msg" data-form-err role="status">The request could not be sent. Please write to diego@iterumcorp.org instead.</p>
         <p class="form__foot">Submission takes a few seconds to confirm.</p>
       </form>
     </div>
@@ -343,8 +347,7 @@
       <div>
         <span class="meta">Contact</span>
         <ul>
-          <li><a href="mailto:hello@iterumcorp.org">hello@iterumcorp.org</a></li>
-          <li><a href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
+          <li><a href="mailto:diego@iterumcorp.org">diego@iterumcorp.org</a></li>
           <li><span class="dim">Steam · page coming soon</span></li>
         </ul>
       </div>

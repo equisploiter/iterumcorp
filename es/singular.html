@@ -273,8 +273,8 @@
       <div class="reveal">
         <h2>Solicitar acceso</h2>
         <div class="prose">
-          <p class="lead">Deje su dirección y será notificado cuando haya algo que notificar: página de Steam, demo, pruebas externas, fecha de lanzamiento.</p>
-          <p>No hay boletín ni periodicidad. Sólo se le escribirá cuando una iteración lo justifique. Los datos se procesan mediante Formspree y no se ceden a nadie. Puede darse de baja cuando quiera.</p>
+          <p class="lead">Este formulario solicita acceso a la build de playtesting de Singular en itch.io. Deje su dirección y la empresa desde la que escribe; si la solicitud se acepta, la clave de itch.io y las instrucciones llegarán a esa dirección.</p>
+          <p>La build es un trabajo en curso y el acceso se concede caso por caso. No hay boletín ni periodicidad: sólo se le escribirá cuando una iteración lo justifique. Los datos se procesan mediante Formspree y no se ceden a nadie. Puede darse de baja cuando quiera.</p>
         </div>
       </div>
       <!-- FORMSPREE · form "access", delivered to diego@iterumcorp.org. Edit this file
@@ -290,6 +290,10 @@
           <label for="name">Nombre o alias</label>
           <input id="name" type="text" name="name" placeholder="Opcional" autocomplete="name">
         </div>
+        <div class="field">
+          <label for="company">Empresa</label>
+          <input id="company" type="text" name="company" placeholder="Estudio, editora, medio…" autocomplete="organization" required>
+        </div>
         <label class="check">
           <input type="checkbox" name="consent" value="yes" required>
           <span>Consiento recibir comunicaciones de Iterum Corporation sobre Singular y proyectos posteriores. <a href="legal.html#privacy">Política de privacidad</a>.</span>
@@ -301,11 +305,11 @@
         <input type="hidden" name="landing" value="">
         <input type="hidden" name="page" value="">
         <input type="hidden" name="language" value="">
-        <input type="hidden" name="_subject" value="[iterumcorp.org] Solicitud de acceso">
+        <input type="hidden" name="_subject" value="[iterumcorp.org] Solicitud de acceso · build de playtesting en itch.io">
         <input type="hidden" name="_next" value="https://iterumcorp.org/es/singular.html#sent">
-        <div><button class="btn btn--primary" type="submit">Registrar solicitud <span class="arr" aria-hidden="true">→</span></button></div>
-        <p class="form__msg" id="sent" data-form-ok role="status">Solicitud registrada. Se le escribirá cuando se abra el acceso.</p>
-        <p class="form__msg" data-form-err role="status">No se ha podido enviar la solicitud. Escriba directamente a hello@iterumcorp.org.</p>
+        <div><button class="btn btn--primary" type="submit">Solicitar acceso a la build <span class="arr" aria-hidden="true">→</span></button></div>
+        <p class="form__msg" id="sent" data-form-ok role="status">Solicitud registrada. Si se acepta, la clave de itch.io y las instrucciones llegarán a la dirección indicada.</p>
+        <p class="form__msg" data-form-err role="status">No se ha podido enviar la solicitud. Escriba directamente a diego@iterumcorp.org.</p>
         <p class="form__foot">El envío tarda unos segundos en confirmar.</p>
       </form>
     </div>
@@ -344,8 +348,7 @@
       <div>
         <span class="meta">Contacto</span>
         <ul>
-          <li><a href="mailto:hello@iterumcorp.org">hello@iterumcorp.org</a></li>
-          <li><a href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
+          <li><a href="mailto:diego@iterumcorp.org">diego@iterumcorp.org</a></li>
           <li><span class="dim">Steam · página próximamente</span></li>
         </ul>
       </div>

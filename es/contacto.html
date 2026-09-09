@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <script>(function(){try{var p=location.pathname;if(/\/es\//.test(p))return;var l=localStorage.getItem('lang');if(l==='en')return;var n=((navigator.languages&&navigator.languages[0])||navigator.language||'');if(l==='es'||/^es\b/i.test(n)){var m={'purpose.html':'proposito.html','contact.html':'contacto.html'};var f=p.split('/').pop()||'index.html';location.replace('es/'+(m[f]||f)+location.hash)}}catch(e){}})()</script>
   <title>Contacto · Iterum Corporation</title>
-  <meta name="description" content="Contacto de Iterum Corporation: consultas generales, prensa, colaboraciones y candidaturas. Respuesta en 24-48 h.">
+  <meta name="description" content="Contacto de Iterum Corporation: consultas generales, prensa y colaboraciones. Respuesta en 24-48 h.">
   <meta name="theme-color" content="#070b0c">
   <link rel="canonical" href="https://iterumcorp.org/es/contacto.html">
   <link rel="alternate" hreflang="es" href="https://iterumcorp.org/es/contacto.html">
@@ -20,7 +20,7 @@
   <meta property="og:locale" content="es_ES">
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:title" content="Contacto · Iterum Corporation">
-  <meta property="og:description" content="Consultas generales, prensa, colaboraciones y candidaturas.">
+  <meta property="og:description" content="Consultas generales, prensa y colaboraciones.">
   <meta property="og:url" content="https://iterumcorp.org/es/contacto.html">
   <meta property="og:image" content="https://iterumcorp.org/assets/img/og-1200x630.jpg">
   <meta name="twitter:card" content="summary_large_image">
@@ -61,7 +61,7 @@
     <div class="wrap">
       <p class="meta"><b>Contacto</b> · canal abierto</p>
       <h1>Hablar con la corporación.</h1>
-      <p>Consultas, prensa, colaboraciones y candidaturas. Detrás del formulario hay dos personas; la respuesta suele llegar en 24-48 h.</p>
+      <p>Consultas, prensa y colaboraciones. Detrás del formulario hay dos personas; la respuesta suele llegar en 24-48 h.</p>
     </div>
   </section>
 
@@ -87,9 +87,9 @@
         <select id="c-topic" name="topic" required>
           <option value="" disabled selected>Seleccione uno</option>
           <option value="general">Consulta general</option>
+          <option value="access">Acceso · build de playtesting en itch.io</option>
           <option value="press">Prensa · claves y builds</option>
           <option value="collaboration">Colaboración · freelance</option>
-          <option value="composer">Candidatura · compositor</option>
           <option value="business">Publishing · plataformas · eventos</option>
           <option value="other">Otro</option>
         </select>
@@ -113,7 +113,7 @@
       <input type="hidden" name="_next" value="https://iterumcorp.org/es/contacto.html#sent">
       <div><button class="btn btn--primary" type="submit">Enviar mensaje <span class="arr" aria-hidden="true">→</span></button></div>
       <p class="form__msg" id="sent" data-form-ok role="status">Mensaje enviado. Recibirá respuesta en la dirección que ha indicado, normalmente en unos días.</p>
-      <p class="form__msg" data-form-err role="status">No se ha podido enviar el mensaje. Escriba directamente a hello@iterumcorp.org.</p>
+      <p class="form__msg" data-form-err role="status">No se ha podido enviar el mensaje. Escriba directamente a diego@iterumcorp.org.</p>
       <p class="form__foot">Los datos se procesan mediante Formspree y no se ceden a nadie.</p>
     </form>
 
@@ -121,24 +121,9 @@
       <div class="contact">
         <p class="meta">Correo directo</p>
         <ul class="ledger">
-          <li><span class="k">General</span><a class="v" href="mailto:hello@iterumcorp.org">hello@iterumcorp.org</a></li>
-          <li><span class="k">Prensa</span><a class="v" href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
+          <li><span class="k">Todas las consultas</span><a class="v" href="mailto:diego@iterumcorp.org">diego@iterumcorp.org</a></li>
         </ul>
-        <p class="note">Claves de prensa y builds bajo petición. Si escribe por prensa, el <a href="press.html">expediente</a> ya tiene ficha, descripciones y assets.</p>
-      </div>
-
-      <div class="contact">
-        <p class="meta">Personas</p>
-        <ul class="ledger">
-          <li><span class="k">Diego de la Peña</span><span class="v">Fundador · dirección, diseño y código</span></li>
-          <li><span class="k">Anastasiya</span><span class="v">Comunidad · marketing · ilustración</span></li>
-        </ul>
-      </div>
-
-      <div class="contact contact--open">
-        <p class="meta"><b>Puesto abierto</b></p>
-        <p class="contact__title">Compositor</p>
-        <p class="note">Banda sonora original para Singular. Melancolía, biología y mecánica; FMOD. Envíe portfolio con el asunto «Candidatura · compositor».</p>
+        <p class="note">Claves y builds de prensa bajo petición. El <a href="press.html">expediente de prensa</a> todavía no es público: Singular busca publisher y daremos más información más adelante.</p>
       </div>
     </aside>
 
@@ -177,8 +162,7 @@
       <div>
         <span class="meta">Contacto</span>
         <ul>
-          <li><a href="mailto:hello@iterumcorp.org">hello@iterumcorp.org</a></li>
-          <li><a href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
+          <li><a href="mailto:diego@iterumcorp.org">diego@iterumcorp.org</a></li>
         </ul>
       </div>
     </div>

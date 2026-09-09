@@ -31,7 +31,7 @@
     "name": "Iterum Corporation",
     "url": "https://iterumcorp.org/",
     "logo": "https://iterumcorp.org/assets/img/emblem.png",
-    "email": "hello@iterumcorp.org",
+    "email": "diego@iterumcorp.org",
     "foundingDate": "2026",
     "address": { "@type": "PostalAddress", "addressCountry": "ES" },
     "founder": { "@type": "Person", "name": "Diego de la Peña" },
@@ -142,7 +142,10 @@
         <p class="meta feature__genre">Fast paced · Twin stick · Roguelike · Deep lore · Change</p>
       </div>
       <a class="feature__card tilt reveal" data-delay="1" href="singular.html" aria-label="Go to the Singular page">
-        <img class="pixel" src="assets/img/gameplay-combat.jpg" alt="" width="1920" height="1080" loading="lazy">
+        <!-- Same gameplay reel as singular.html (see README · assets/video). Decorative here: the link carries the label. -->
+        <video autoplay muted loop playsinline poster="assets/img/reel-poster.jpg" width="1280" height="720" tabindex="-1" disablepictureinpicture disableremoteplayback>
+          <source src="assets/video/singular-reel.mp4" type="video/mp4">
+        </video>
         <div class="feature__overlay">
           <div class="feature__tags">
             <span>Aggressive combat</span><span>Persistent bosses</span><span>Narrative in motion</span><span>Handcrafted pixel art</span>
@@ -235,8 +238,7 @@
       <div>
         <span class="meta">Contact</span>
         <ul>
-          <li><a href="mailto:hello@iterumcorp.org">hello@iterumcorp.org</a></li>
-          <li><a href="mailto:press@iterumcorp.org">press@iterumcorp.org</a></li>
+          <li><a href="mailto:diego@iterumcorp.org">diego@iterumcorp.org</a></li>
           <li><span class="dim">Steam · page coming soon</span></li>
         </ul>
       </div>

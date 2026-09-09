@@ -579,8 +579,8 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-top) + 3.5rem); }
    line, so it opts out of the 62ch cap that `p` sets — that cap was what orphaned the last tag. */
 .feature__genre { margin-top: var(--sp-4); max-width: none; color: var(--ink-2); letter-spacing: .16em; text-wrap: pretty; }
 .feature__card { position: relative; display: block; border: 1px solid var(--rule-2); background: var(--bg-2); overflow: hidden; color: var(--ink); }
-.feature__card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: 50% 40%; transition: transform 1.4s var(--ease), opacity .6s var(--ease); opacity: .85; }
-.feature__card:hover img { transform: scale(1.02); opacity: 1; }
+.feature__card img, .feature__card video { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: 50% 40%; transition: transform 1.4s var(--ease), opacity .6s var(--ease); opacity: .85; }
+.feature__card:hover img, .feature__card:hover video { transform: scale(1.02); opacity: 1; }
 .feature__card:hover { color: var(--ink); }
 .feature__overlay {
   position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; gap: var(--sp-5);
@@ -600,7 +600,7 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-top) + 3.5rem); }
 }
 @media (min-width: 48em) {
   .feature__links { grid-template-columns: repeat(2, 1fr); }
-  .feature__card img { aspect-ratio: 21/9; }
+  .feature__card img, .feature__card video { aspect-ratio: 21/9; }
 }
 @media (min-width: 62em) {
   .feature__links { grid-template-columns: repeat(4, 1fr); }
@@ -662,6 +662,9 @@ html:has(.subnav) { scroll-padding-top: calc(var(--nav-top) + 3.5rem); }
 /* Bigger central cut than the home page, and no scroll cue: this hero is the whole document. */
 .hero--void { --ghost: min(180vw, 80rem); }
 .hero--void .hero__engraving img { opacity: .10; object-position: 50% 34%; }
+/* TBA (press): the same presentation without the swarm, stamped with a status code while the press
+   kit is on hold. Shares the code and spacing rules below with the 404. */
+.hero--tba .hero__engraving img { opacity: .12; object-position: 50% 22%; }
 
 /* The swarm: the mark repeated small across the plate. Black ones are inverted <img>, purple ones
    are <span> masked with the same artwork so the site's one purple does the stamping. They drift
@@ -684,7 +687,7 @@ img.seed { filter: invert(1); }
 
 /* The code. Two off-register ghosts behind it — the plate printed the number three times and
    missed twice. attr(data-code) keeps the markup to one element. */
-.hero--void .void__code {
+.hero--void .void__code, .hero--tba .void__code {
   display: block; position: relative; margin: 0;
   font-family: var(--sans); font-size: clamp(5rem, 25vw, 15rem); font-weight: 700;
   letter-spacing: -0.06em; line-height: .82; text-indent: 0; text-transform: none;
@@ -692,21 +695,21 @@ img.seed { filter: invert(1); }
   text-shadow: 0 0 12px var(--bg), 0 2px 6px rgba(0,0,0,.75);
   isolation: isolate;   /* keeps the negative-z ghosts inside the number, not behind the hero */
 }
-.hero--void .void__code::before,
-.hero--void .void__code::after {
+.hero--void .void__code::before, .hero--tba .void__code::before,
+.hero--void .void__code::after, .hero--tba .void__code::after {
   content: attr(data-code); position: absolute; inset: 0; z-index: -1;
   text-shadow: none; pointer-events: none;
 }
-.hero--void .void__code::before { color: var(--vi); opacity: .5; animation: void-slip 7s var(--ease) infinite; }
-.hero--void .void__code::after  { color: var(--cy); opacity: .32; animation: void-slip 7s var(--ease) infinite reverse; }
+.hero--void .void__code::before, .hero--tba .void__code::before { color: var(--vi); opacity: .5; animation: void-slip 7s var(--ease) infinite; }
+.hero--void .void__code::after, .hero--tba .void__code::after { color: var(--cy); opacity: .32; animation: void-slip 7s var(--ease) infinite reverse; }
 @keyframes void-slip {
   0%, 100% { transform: translate(-.035em, .012em); }
   50%      { transform: translate(.03em, -.014em); }
 }
 /* Second line of the heading keeps the home wordmark's mono caps, just tighter to the number. */
-.hero--void .hero__wordmark { margin-top: var(--sp-5); }
-.hero--void .hero__wordmark span + span { margin-top: .9em; }
-.hero--void .hero__tagline { margin-top: var(--sp-5); max-width: 36ch; }
+.hero--void .hero__wordmark, .hero--tba .hero__wordmark { margin-top: var(--sp-5); }
+.hero--void .hero__wordmark span + span, .hero--tba .hero__wordmark span + span { margin-top: .9em; }
+.hero--void .hero__tagline, .hero--tba .hero__tagline { margin-top: var(--sp-5); max-width: 36ch; }
 
 /* The requested path, printed back as a readout. */
 .void__req { position: relative; margin-top: var(--sp-6); display: grid; justify-items: center; gap: var(--sp-2); }
@@ -717,7 +720,7 @@ img.seed { filter: invert(1); }
   overflow-wrap: anywhere;
 }
 .void__actions { position: relative; margin-top: var(--sp-6); display: flex; flex-wrap: wrap; gap: var(--sp-3); justify-content: center; }
-.hero--void .hero__stamp { margin-top: var(--sp-6); }
+.hero--void .hero__stamp, .hero--tba .hero__stamp { margin-top: var(--sp-6); }
 @media (min-width: 62em) {
   .hero--void { --ghost: 86rem; }
 }
