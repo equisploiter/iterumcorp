@@ -1,0 +1,4 @@
+pdf.js 6.3.289 — Apache-2.0, Mozilla Foundation — https://github.com/mozilla/pdf.js
+The ESM builds from cdnjs (pdf.min.mjs, pdf.worker.min.mjs), renamed to .js so every host serves
+them as JavaScript. Loaded by deck.js (pitch.html) to draw the pitch deck slide by slide.
+To upgrade: download the same two files from https://cdnjs.com/libraries/pdf.js and overwrite.

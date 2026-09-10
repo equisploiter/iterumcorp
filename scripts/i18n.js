@@ -45,11 +45,11 @@ const CONFIG = {
   outDir: 'es',
   dictionary: path.join('i18n', 'es.json'),
   obsolete: path.join('i18n', 'obsolete.es.json'),
-  pages: ['index.html', 'singular.html', 'purpose.html', 'press.html', 'contact.html', 'legal.html', '404.html'],
+  pages: ['index.html', 'singular.html', 'purpose.html', 'press.html', 'pitch.html', 'contact.html', 'legal.html', '404.html'],
   // Pages whose file name is itself translated: <source name> → <name inside outDir>.
   slugs: { 'purpose.html': 'proposito.html', 'contact.html': 'contacto.html' },
   // Translated like any other page, but never listed in the sitemap.
-  noSitemap: ['404.html'],
+  noSitemap: ['404.html', 'pitch.html'],
   locale: { es: 'es_ES', en: 'en_US' },
   // Text shown by the language switcher (data-lang-switch) in each output.
   switcher: { en: { text: 'ES', label: 'Leer este sitio en español' }, es: { text: 'EN', label: 'Read this site in English' } },

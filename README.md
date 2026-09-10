@@ -28,13 +28,16 @@ Everything else in the HTML is English and identical in both languages: section 
 - `singular.html` — the game's page: combat, bosses, world, story and the access form (Formspree)
 - `purpose.html` — manifesto / purpose (Doré moodboard)
 - `press.html` — press page. For now a TBA notice: Singular is looking for a publisher and the full press kit is on hold. The Spanish strings of the old kit are kept in `i18n/obsolete.es.json`, so it can come back without retranslating
+- `pitch.html` — the Singular pitch deck for SAGA, slide by slide: `deck.js` draws `assets/pitch/void-singularcorp.pdf` with pdf.js, and the gameplay clips play over the slides that only hold their still frames (see *Pitch deck*). `noindex`, and out of the sitemap
 - `contact.html` — contact form (Formspree) + direct email and press pointer
 - `site.js` — shared JS: mobile menu, scroll reveal, active subnav, campaign attribution (see *Attribution*)
+- `deck.js` — the pitch-deck viewer (ES module, only loaded by `pitch.html`): arrows, keys, swipe, thumbnails, fullscreen, `#s<N>` links, and the clips laid over their slides
 - `style.css` — the single stylesheet; tokens live in `:root`
 - `assets/img/` — real images pulled from the pitch deck (key art, gameplay, sprites, concept, emblem, OG) and `dore-*.webp`: Gustave Doré engravings (public domain, Wikimedia Commons) inverted and toned cyan for the Purpose section, rescaled to 800 px and saved as WebP (~2 MB in total). Singular gameplay clips as gifs (800 × 450, 10 fps): `mech-attack/dash/heal/overclock.gif` for the combat strip, `mech-combo.gif` under Overheat/Trauma and `boss-andromeda.gif` for the bosses block (~40 MB in total, all lazy-loaded; mech-combo.gif is the unoptimised 18.7 MB export); `reel-poster.jpg` is the poster of the gameplay reel and `concept-env-08*.jpg` the World background
 - `assets/video/` — `singular-reel.mp4`: the gameplay reel in the Singular gameplay band, under "You heal and reload…", and inside the Singular card on the home page (source `Publish.mp4`, 1920 × 1080 / 60 fps / 650 MB, re-encoded to 1280 × 720 / 30 fps, H.264 CRF 30, no audio, ~22 MB). Autoplays muted and looped; visitors with reduced motion keep the poster
 - `assets/fonts/` — self-hosted Space Grotesk + IBM Plex Mono (`fonts.css`)
 - `assets/press/` — downloadable press-kit zips
+- `assets/pitch/` — `void-singularcorp.pdf`, the deck shown on `pitch.html` · `assets/vendor/pdfjs/` — pdf.js 6.3 (ESM build + worker, see `VERSION.txt`)
 - `legal.html` — legal notice, privacy and cookies (linked from the footer and the consent checkboxes)
 - `es/` — **generated** Spanish pages · `i18n/es.json` — EN→ES dictionary · `scripts/i18n.js` — extract/build/check · `sitemap.xml` — generated, with hreflang alternates
 - `CNAME`, `.nojekyll`, `robots.txt` — GitHub Pages
@@ -44,6 +47,14 @@ Everything else in the HTML is English and identical in both languages: section 
 1. Repo → Settings → Pages → Source: `main` / root.
 2. DNS for `iterumcorp.org`: `A` records pointing at the GitHub Pages IPs (185.199.108-111.153) and `CNAME www` → `<user>.github.io`.
 3. Tick "Enforce HTTPS" once the certificate is ready.
+
+## Pitch deck
+
+`pitch.html` renders `assets/pitch/void-singularcorp.pdf` slide by slide in the browser (pdf.js, vendored, no CDN). The page reads the PDF path from its download link, so **to update the deck, overwrite the PDF with the same name** and nothing else changes. To rename it, change the three `assets/pitch/…` links in `pitch.html` and run `npm run build`.
+
+PowerPoint exports an embedded video or gif as its first frame, so the PDF only carries stills. The figures in the *clips* section of `pitch.html` carry `data-deck-page` (the slide) and `data-deck-box` (`left top width height`, in % of the page); `deck.js` lays each clip over its still while that slide is on screen. After replacing the PDF, `python scripts/deck-boxes.py assets/pitch/void-singularcorp.pdf` (needs `pip install pymupdf`) prints every image box per page; copy the new values into the figures, or drop a figure if its slide is gone. Clips that are not on any slide can stay in the section without those two attributes.
+
+Handy: `pitch.html#s6` opens on slide 6; `data-deck-last="22"` on the `.deck__viewer` element hides everything after slide 22 (backup slides exported after "Thank you"). The page is `noindex` and left out of the sitemap because it is addressed to one publisher; remove the `robots` meta and the `noSitemap` entry in `scripts/i18n.js` to publish it openly.
 
 ## Forms
 

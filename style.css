@@ -1106,3 +1106,131 @@ body.is-purpose .purpose { border-top: 0; }
   .redacted { color: #000; background: none; box-shadow: none; }
   .copy, .contact, .gallery figure { border-color: #999; background: none; }
 }
+
+/* --------------------------------------------------------------------------
+   17. PITCH DECK  (pitch.html · deck.js)
+   The publisher deck, drawn slide by slide from the PDF. The press hero's purple carries over:
+   the brackets around the stage, the progress line and the slide in hand all take --vi, while
+   the buttons keep the site's cyan. Nothing below is needed to read the deck: without JS the
+   stage shows the loading note and the PDF link, and the clips section stands on its own.
+   -------------------------------------------------------------------------- */
+.hero--pitch .hero__engraving img { opacity: .11; object-position: 50% 30%; }
+/* The deck is the point of the page: the hero opens full screen on phones, but on a desktop it
+   stops short so the first slide already shows under the fold. */
+@media (min-width: 62em) {
+  .hero--pitch .hero__in { min-height: calc(84vh - var(--nav-top)); min-height: calc(84lvh - var(--nav-top)); }
+}
+
+.deck {
+  position: relative; overflow: hidden; overflow: clip;
+  background:
+    radial-gradient(60% 45% at 50% 0%, rgba(143,107,255,.09) 0%, rgba(143,107,255,0) 70%),
+    radial-gradient(40% 40% at 100% 100%, rgba(143,107,255,.05) 0%, rgba(143,107,255,0) 70%),
+    var(--bg);
+}
+.deck__head { display: grid; gap: var(--sp-4); margin-bottom: var(--sp-6); }
+.deck__head h2 { margin-top: var(--sp-4); font-size: var(--step-3); max-width: 18ch; }
+.deck__head p:not(.meta) { color: var(--ink-2); max-width: 46ch; }
+.deck__head .meta b { color: var(--vi); }
+@media (min-width: 62em) {
+  .deck__head { grid-template-columns: 1fr 1fr; gap: var(--sp-8); align-items: end; }
+}
+
+.deck__viewer { --arn: 1.7778; position: relative; outline-offset: 6px; }
+.deck__viewer:focus-visible { outline-color: var(--vi); }
+.deck__stage {
+  position: relative; aspect-ratio: var(--arn); overflow: hidden;
+  background: #000; border: 1px solid var(--rule-2);
+  box-shadow: 0 40px 90px -50px rgba(143,107,255,.45), 0 0 0 1px rgba(143,107,255,.08);
+  touch-action: pan-y; user-select: none; -webkit-user-select: none;
+}
+/* Registration brackets: the press HUD closing its corners around the slide. */
+.deck__stage::before {
+  content: ""; position: absolute; inset: .55rem; z-index: 3; pointer-events: none; opacity: .6;
+  --tk: linear-gradient(var(--vi), var(--vi));
+  background:
+    var(--tk) 0 0 / 1.1rem 1px, var(--tk) 0 0 / 1px 1.1rem,
+    var(--tk) 100% 0 / 1.1rem 1px, var(--tk) 100% 0 / 1px 1.1rem,
+    var(--tk) 0 100% / 1.1rem 1px, var(--tk) 0 100% / 1px 1.1rem,
+    var(--tk) 100% 100% / 1.1rem 1px, var(--tk) 100% 100% / 1px 1.1rem;
+  background-repeat: no-repeat;
+}
+.deck__slide { position: absolute; inset: 0; }
+.deck__slide canvas { display: block; width: 100%; height: 100%; }
+.deck__slide.is-in { animation: deck-in .5s var(--ease); }
+@keyframes deck-in { from { opacity: 0; transform: translateX(var(--dir, 14px)); } to { opacity: 1; transform: none; } }
+/* The clips the slides refer to, laid over their still frames. deck.js sets --x/--y/--w/--h (%). */
+.deck__media { position: absolute; inset: 0; pointer-events: none; }
+.deck__media > * { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h); max-width: none; object-fit: cover; background: #000; pointer-events: auto; }
+.deck__media > img { pointer-events: none; }
+/* Loading readout, centred on the empty stage until the first slide lands. */
+.deck__status {
+  position: absolute; left: 50%; top: 50%; z-index: 2; transform: translate(-50%, -50%);
+  width: min(80%, 26rem); text-align: center;
+  font-family: var(--mono); font-size: var(--step--2); letter-spacing: .16em; text-transform: uppercase; color: var(--vi);
+}
+.deck__status i { display: block; width: 10rem; height: 1px; margin: var(--sp-4) auto 0; background: var(--rule-2); overflow: hidden; }
+.deck__status i::after { content: ""; display: block; height: 100%; transform-origin: left; transform: scaleX(var(--p, 0)); background: var(--vi); box-shadow: 0 0 8px var(--vi); transition: transform .3s var(--ease); }
+.deck__status .deck__error, .deck__status .deck__noscript { margin: 0; max-width: none; font-family: var(--sans); font-size: var(--step--1); letter-spacing: 0; text-transform: none; color: var(--ink-2); line-height: 1.5; }
+.deck__status a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.deck__status a:hover { color: var(--vi); }
+.deck__viewer.is-ready .deck__status { display: none; }
+.deck__viewer.is-error .deck__status i { display: none; }
+/* Arrows: hidden until the pointer is over the stage; always there on touch screens. */
+.deck__arrow {
+  position: absolute; top: 50%; z-index: 4; transform: translateY(-50%);
+  width: 2.75rem; height: 3.75rem; padding: 0;
+  border: 1px solid var(--rule-2); background: color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  color: var(--ink); font-family: var(--mono); font-size: var(--step-0); cursor: pointer; opacity: 0;
+  transition: opacity .3s var(--ease), color .25s var(--ease), border-color .25s var(--ease);
+}
+.deck__arrow--prev { left: var(--sp-3); }
+.deck__arrow--next { right: var(--sp-3); }
+.deck__viewer:hover .deck__arrow, .deck__viewer:focus-within .deck__arrow { opacity: 1; }
+@media (hover: none) { .deck__arrow { opacity: 1; } }
+.deck__arrow:hover { color: var(--vi); border-color: var(--vi); }
+.deck__arrow[disabled] { opacity: 0 !important; pointer-events: none; }
+
+.deck__bar { display: flex; align-items: center; gap: var(--sp-4); padding: var(--sp-3) 0; border-bottom: 1px solid var(--rule); }
+.deck__count { flex: none; min-width: 6.5ch; font-family: var(--mono); font-size: var(--step--1); letter-spacing: .14em; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.deck__count span:first-child { color: var(--vi); }
+.deck__progress { flex: 1; height: 1px; background: var(--rule-2); }
+.deck__progress i { display: block; height: 100%; transform-origin: left; transform: scaleX(var(--p, 0)); background: linear-gradient(90deg, var(--vi), color-mix(in srgb, var(--vi) 55%, var(--cy))); box-shadow: 0 0 8px rgba(143,107,255,.5); transition: transform .45s var(--ease); }
+.deck__tools { display: flex; gap: var(--sp-2); flex: none; }
+.deck__tools .btn { min-height: 2.2rem; padding: .45rem .8rem; font-size: var(--step--2); }
+.deck__tools .btn:hover { color: var(--vi); border-color: var(--vi); }
+
+/* Thumbnails: one strip, the slide in hand outlined in purple, a play sign on the ones with a clip. */
+.deck__thumbs { position: relative; display: flex; gap: var(--sp-2); padding: var(--sp-4) 0 var(--sp-3); overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: var(--rule-2) transparent; }
+.deck__thumb {
+  position: relative; flex: none; width: clamp(6.5rem, 14vw, 9rem); aspect-ratio: var(--arn); padding: 0;
+  border: 1px solid var(--rule-2); background: var(--bg-2); cursor: pointer; scroll-snap-align: center; opacity: .5;
+  transition: opacity .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);
+}
+.deck__thumb canvas { display: block; width: 100%; height: 100%; }
+.deck__thumb span { position: absolute; left: .4rem; bottom: .3rem; font-family: var(--mono); font-size: .6rem; letter-spacing: .14em; color: #fff; text-shadow: 0 1px 2px #000, 0 0 6px #000; }
+.deck__thumb:hover { opacity: .9; }
+.deck__thumb[aria-selected="true"] { opacity: 1; border-color: var(--vi); box-shadow: 0 0 0 1px var(--vi), 0 0 16px rgba(143,107,255,.35); }
+.deck__thumb.has-clip::after { content: "▶"; position: absolute; right: .4rem; bottom: .3rem; font-size: .55rem; color: var(--vi); text-shadow: 0 1px 2px #000; }
+.deck__hint { margin-top: var(--sp-4); max-width: none; color: var(--ink-3); }
+.deck__hint kbd { font: inherit; color: var(--ink-2); border: 1px solid var(--rule-2); padding: .05em .45em; }
+
+/* Theatre: the Fullscreen API where there is one, a fixed overlay where there is not (iPhone). */
+.deck__viewer:fullscreen, .deck__viewer.is-theatre {
+  position: fixed; inset: 0; z-index: 70; display: grid; grid-template-rows: auto auto; align-content: center;
+  padding: var(--sp-5) var(--sp-5) calc(var(--sp-5) + var(--sab)); background: #000; overflow: auto;
+}
+.deck__viewer:fullscreen .deck__stage, .deck__viewer.is-theatre .deck__stage,
+.deck__viewer:fullscreen .deck__bar, .deck__viewer.is-theatre .deck__bar { width: min(100%, calc((100vh - 8rem) * var(--arn))); margin-inline: auto; }
+.deck__viewer:fullscreen .deck__bar, .deck__viewer.is-theatre .deck__bar { border-bottom: 0; }
+.deck__viewer:fullscreen .deck__thumbs, .deck__viewer.is-theatre .deck__thumbs { display: none; }
+html.is-theatre, html.is-theatre body { overflow: hidden; }
+
+/* The clips section: the site's mechanics strip, each caption naming the slide it sits on. */
+.clips .strip figcaption span, .clips__reel figcaption span { color: var(--vi); }
+.clips__reel { margin: var(--sp-6) 0 0; border: 1px solid var(--rule); background: var(--bg-2); }
+.clips__reel video { width: 100%; aspect-ratio: 16 / 9; background: #000; }
+.clips__reel figcaption { padding: var(--sp-3) var(--sp-4); display: flex; justify-content: space-between; gap: var(--sp-3); font-family: var(--mono); font-size: var(--step--2); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+@media (min-width: 62em) { .clips__reel { width: min(100%, 58rem); margin-inline: auto; } }
+@media print { .deck__arrow, .deck__thumbs, .deck__hint, .deck__tools { display: none !important; } }

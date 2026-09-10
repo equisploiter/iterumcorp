@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>(function(){try{var p=location.pathname;if(/\/es\//.test(p))return;var l=localStorage.getItem('lang');if(l==='en')return;var n=((navigator.languages&&navigator.languages[0])||navigator.language||'');if(l==='es'||/^es\b/i.test(n)){var m={'purpose.html':'proposito.html','contact.html':'contacto.html'};var f=p.split('/').pop()||'index.html';location.replace('es/'+(m[f]||f)+location.hash)}}catch(e){}})()</script>
+  <title>Singular · Pitch for SAGA · Iterum Corporation</title>
+  <meta name="description" content="The Singular pitch deck prepared for SAGA, slide by slide: the game, its systems, where it stands, the team, the production plan and the ask. The gameplay clips play inside their slides.">
+  <!-- A pitch for one publisher: reachable from the menu, kept out of search results and the sitemap. -->
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#070b0c">
+  <link rel="canonical" href="https://iterumcorp.org/pitch.html">
+  <link rel="alternate" hreflang="es" href="https://iterumcorp.org/es/pitch.html">
+  <link rel="alternate" hreflang="en" href="https://iterumcorp.org/pitch.html">
+  <link rel="alternate" hreflang="x-default" href="https://iterumcorp.org/pitch.html">
+  <link rel="icon" href="assets/img/emblem.png" type="image/png">
+  <link rel="preload" href="assets/fonts/SpaceGrotesk-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/img/emblem.png" as="image">
+  <link rel="modulepreload" href="assets/vendor/pdfjs/pdf.min.js">
+  <link rel="stylesheet" href="style.css">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Iterum Corporation">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="es_ES">
+  <meta property="og:title" content="Singular · Pitch for SAGA · Iterum Corporation">
+  <meta property="og:description" content="The Singular pitch deck for SAGA: the game, the team, the plan and the ask, slide by slide.">
+  <meta property="og:url" content="https://iterumcorp.org/pitch.html">
+  <meta property="og:image" content="https://iterumcorp.org/assets/img/og-1200x630.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Singular",
+    "url": "https://iterumcorp.org/singular.html",
+    "image": "https://iterumcorp.org/assets/img/og-1200x630.jpg",
+    "description": "A top-down action roguelike in pixel art where blood is your only resource.",
+    "genre": ["Roguelike", "Action"],
+    "gamePlatform": ["PC", "Steam Deck"],
+    "operatingSystem": "Windows",
+    "applicationCategory": "Game",
+    "inLanguage": ["es", "en"],
+    "author": { "@type": "Organization", "name": "Iterum Corporation", "url": "https://iterumcorp.org/" }
+  }
+  </script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="/" aria-label="Iterum Corporation, home">
+      <img src="assets/img/emblem.png" alt="" width="30" height="30">
+      <span>Iterum</span><small>Corporation</small>
+    </a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="singular.html">Singular</a>
+      <a href="purpose.html">Purpose</a>
+      <a href="press.html">Press</a>
+      <a href="pitch.html" aria-current="page">Pitch for SAGA</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav__end">
+      <a class="nav__lang" href="es/pitch.html" hreflang="es" lang="es" data-lang-switch aria-label="Leer este sitio en español">ES</a>
+      <a class="btn btn--primary btn--sm nav__cta" href="contact.html">Get in touch</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+    </div>
+    <div class="nav__menu" id="menu">
+      <a href="singular.html">Singular</a>
+      <a href="purpose.html">Purpose</a>
+      <a href="press.html">Press</a>
+      <a href="pitch.html">Pitch for SAGA</a>
+      <a href="contact.html">Contact</a>
+      <a href="contact.html" class="cy">Get in touch</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- The press presentation (seal, HUD, sigils, the code stamped over the wordmark), addressed to
+       one publisher. The readouts name the recipient; the deck itself follows under the fold. -->
+  <section class="hero hero--mark hero--tba hero--pitch" aria-labelledby="h1">
+    <div class="hero__engraving" aria-hidden="true">
+      <img src="assets/img/dore-babel.webp" srcset="assets/img/dore-babel-720.webp 720w, assets/img/dore-babel.webp 1200w, assets/img/dore-babel-1600.webp 1600w" sizes="100vw" alt="" decoding="async" width="1200" height="1515">
+    </div>
+    <div class="hero__hud" aria-hidden="true" translate="no">
+      <span class="box box--vi" style="--t: 11%; --x: 6%;  --s: 4.2rem"></span>
+      <span class="box box--bk" style="--t: 19%; --x: 84%; --s: 2.8rem"></span>
+      <span class="box box--bk" style="--t: 46%; --x: 3%;  --s: 2.2rem"></span>
+      <span class="box box--vi" style="--t: 53%; --x: 89%; --s: 3.6rem"></span>
+      <span class="box box--vi" style="--t: 74%; --x: 13%; --s: 3rem"></span>
+      <span class="box box--bk" style="--t: 82%; --x: 76%; --s: 2.4rem"></span>
+      <span class="box box--bk" style="--t: 5%;  --x: 34%; --s: 1.6rem"></span>
+      <span class="box box--vi" style="--t: 90%; --x: 60%; --s: 1.8rem"></span>
+
+      <span class="datum datum--vi" style="--t: 22.5%; --x: 6%">ITR 0001</span>
+      <span class="datum datum--bk" style="--t: 15.5%; --x: 84%">SIG 0.982</span>
+      <span class="datum datum--bk" style="--t: 42.5%; --x: 3%">LOOP 998/1000</span>
+      <span class="datum datum--vi" style="--t: 64%;   --x: 89%">REL ————</span>
+      <span class="datum datum--vi" style="--t: 70.5%; --x: 13%">PUB SAGA</span>
+      <span class="datum datum--bk" style="--t: 87.5%; --x: 76%">SEQ 0x1F4B</span>
+      <span class="datum datum--bk" style="--t: 27%;   --x: 68%">DECK READY</span>
+      <span class="datum datum--vi" style="--t: 57%;   --x: 22%">PWR 87%</span>
+
+      <span class="blip blip--vi" style="--t: 33%; --x: 12%"></span>
+      <span class="blip blip--bk" style="--t: 8%;  --x: 66%"></span>
+      <span class="blip blip--vi" style="--t: 68%; --x: 94%"></span>
+      <span class="blip blip--bk" style="--t: 94%; --x: 28%"></span>
+
+      <span class="tick tick--vi" style="--t: 14%; --x: 22%"></span>
+      <span class="tick tick--bk" style="--t: 38%; --x: 8%"></span>
+      <span class="tick tick--bk" style="--t: 12%; --x: 71%"></span>
+      <span class="tick tick--vi" style="--t: 43%; --x: 90%"></span>
+      <span class="tick tick--bk" style="--t: 62%; --x: 20%"></span>
+      <span class="tick tick--vi" style="--t: 79%; --x: 88%"></span>
+      <span class="tick tick--bk" style="--t: 92%; --x: 34%"></span>
+      <span class="tick tick--vi" style="--t: 58%; --x: 78%"></span>
+    </div>
+    <div class="hero__sigils" aria-hidden="true">
+      <img class="sigil sigil--l" src="assets/img/emblem.png" alt="" width="1000" height="1000" decoding="async">
+      <img class="sigil sigil--r" src="assets/img/emblem.png" alt="" width="1000" height="1000" decoding="async">
+    </div>
+    <div class="wrap hero__in">
+      <div class="mark" aria-hidden="true">
+        <img class="mark__ghost" src="assets/img/emblem.png" alt="" width="1000" height="1000" decoding="async">
+        <span class="mark__halo"></span>
+        <img class="mark__seal" src="assets/img/emblem.png" alt="" width="1000" height="1000" fetchpriority="high">
+        <span class="mark__ping"></span>
+      </div>
+      <h1 id="h1" class="hero__wordmark">
+        <span class="void__code" data-code="SAGA" translate="no">SAGA</span>
+        <span>Pitch</span>
+      </h1>
+      <p class="hero__tagline"><span>Singular, slide by slide</span>The deck we prepared for SAGA: what the game is, how it plays, where it stands, who makes it and what it needs. Every clip the slides refer to plays right inside them.</p>
+      <div class="void__req">
+        <p class="meta">Prepared for</p>
+        <p class="void__req__val">SAGA · publisher pitch</p>
+      </div>
+      <div class="void__actions">
+        <a class="btn btn--primary" href="#deck">Open the deck <span aria-hidden="true">↓</span></a>
+        <a class="btn btn--ghost" href="assets/pitch/void-singularcorp.pdf" download>Download PDF</a>
+        <a class="btn btn--ghost" href="contact.html">Get in touch <span class="arr" aria-hidden="true">→</span></a>
+      </div>
+      <p class="meta hero__stamp">Iterum · dossier 0001 · pitch deck</p>
+    </div>
+  </section>
+
+  <!-- THE DECK. deck.js draws assets/pitch/void-singularcorp.pdf slide by slide into the stage; the
+       PDF path is read from the download link below (data-deck-src), so replacing the file is enough.
+       Optional: data-deck-last="22" on the viewer caps the deck at that slide. -->
+  <section class="section deck" id="deck" aria-labelledby="deck-title">
+    <div class="wrap">
+      <div class="deck__head">
+        <div>
+          <p class="meta">Deck · <b>for SAGA</b></p>
+          <h2 id="deck-title">The pitch, slide by slide.</h2>
+        </div>
+        <p>Move with the arrows, the keys or a swipe. A slide marked with a play sign holds a clip: PowerPoint could only export a still frame, so here the clip itself plays on top of the slide.</p>
+      </div>
+
+      <div class="deck__viewer" data-deck tabindex="0" aria-label="Singular pitch deck">
+        <div class="deck__stage">
+          <div class="deck__slide" data-slide>
+            <div class="deck__media"></div>
+          </div>
+          <div class="deck__status">
+            <span>Loading the deck</span>
+            <i></i>
+            <p class="deck__error" hidden>The deck could not be drawn in this browser. <a href="assets/pitch/void-singularcorp.pdf">Download the PDF</a>.</p>
+            <noscript><p class="deck__noscript">This viewer needs JavaScript. <a href="assets/pitch/void-singularcorp.pdf">Download the deck as a PDF</a>.</p></noscript>
+          </div>
+          <button class="deck__arrow deck__arrow--prev" type="button" data-deck-prev aria-label="Previous slide" disabled>←</button>
+          <button class="deck__arrow deck__arrow--next" type="button" data-deck-next aria-label="Next slide" disabled>→</button>
+        </div>
+        <div class="deck__bar">
+          <div class="deck__count" aria-live="polite"><span data-deck-page-n>01</span> / <span data-deck-total>—</span></div>
+          <div class="deck__progress"><i></i></div>
+          <div class="deck__tools">
+            <button class="btn btn--ghost" type="button" data-deck-fs aria-pressed="false"><span>Fullscreen</span><span hidden>Exit fullscreen</span></button>
+            <a class="btn btn--ghost" href="assets/pitch/void-singularcorp.pdf" data-deck-src download>PDF</a>
+          </div>
+        </div>
+        <div class="deck__thumbs" role="tablist" aria-label="Slides"></div>
+        <template>
+          <button class="deck__thumb" type="button" role="tab" aria-label="Slide"><canvas></canvas><span>00</span></button>
+        </template>
+      </div>
+      <p class="meta deck__hint"><kbd>←</kbd> <kbd>→</kbd> move · <kbd>F</kbd> fullscreen · swipe on touch · <kbd>Esc</kbd> exits</p>
+    </div>
+  </section>
+
+  <!-- THE CLIPS. Each figure names the slide it belongs to and where on it the still sits
+       (data-deck-box: left, top, width, height, as % of the page). deck.js lays the clip over the
+       slide; the section itself is the plain gallery, and the fallback when the deck cannot draw.
+       New PDF? `python scripts/deck-boxes.py assets/pitch/void-singularcorp.pdf` prints the boxes. -->
+  <section class="section clips plate plate--right plate--soft" id="clips" style="--plate-pos: 60% 15%">
+    <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-jordan.webp" srcset="assets/img/dore-jordan-720.webp 720w, assets/img/dore-jordan.webp 1200w, assets/img/dore-jordan-1600.webp 1600w" sizes="100vw" alt="" loading="lazy" decoding="async" width="1200" height="1515"></div>
+    <div class="wrap">
+      <div class="section__head reveal">
+        <h2>Every clip in the deck</h2>
+        <p>The five clips the slides refer to, in one place: four mechanics and the gameplay reel. Each of them also plays inside its slide above.</p>
+      </div>
+      <div class="strip strip--wide reveal">
+        <figure data-deck-page="6" data-deck-box="21.88 29.26 23.44 28.33">
+          <img src="assets/img/mech-attack.gif" alt="Ari attacking in melee and at range, the floor covered in blood" width="800" height="450" loading="lazy">
+          <figcaption>Attack <span>slide 06</span></figcaption>
+        </figure>
+        <figure data-deck-page="6" data-deck-box="56.04 29.26 23.44 28.33">
+          <img src="assets/img/mech-dash.gif" alt="Ari dashing through a horde" width="800" height="450" loading="lazy">
+          <figcaption>Dash <span>slide 06</span></figcaption>
+        </figure>
+        <figure data-deck-page="6" data-deck-box="20.52 64.44 23.44 28.15">
+          <img src="assets/img/mech-heal.gif" alt="Ari healing on a pool of blood" width="800" height="450" loading="lazy">
+          <figcaption>Healing <span>slide 06</span></figcaption>
+        </figure>
+        <figure data-deck-page="6" data-deck-box="55.94 64.44 23.44 27.78">
+          <img src="assets/img/mech-overclock.gif" alt="Ari in OverClock, the bar in the top left filling up" width="800" height="450" loading="lazy">
+          <figcaption>OverClock <span>slide 06</span></figcaption>
+        </figure>
+      </div>
+      <figure class="clips__reel reveal" data-deck-page="4" data-deck-box="9.48 9.44 81.04 81.11">
+        <video controls loop playsinline preload="metadata" poster="assets/img/reel-poster.jpg" width="1280" height="720" disablepictureinpicture disableremoteplayback aria-label="Singular gameplay reel: Ari fighting through Level 1">
+          <source src="assets/video/singular-reel.mp4" type="video/mp4">
+        </video>
+        <figcaption>Gameplay reel <span>slide 04</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer plate plate--full">
+  <div class="plate__img" aria-hidden="true"><img src="assets/img/dore-flood.webp" srcset="assets/img/dore-flood-720.webp 720w, assets/img/dore-flood.webp 1200w, assets/img/dore-flood-1600.webp 1600w" sizes="100vw" alt="" loading="lazy" decoding="async" width="1200" height="1494"></div>
+  <div class="ticker" aria-hidden="true"><div class="ticker__in"><span><b>Pitch</b> · prepared for SAGA · Singular · in development · <b>Iterum Corporation</b> · dossier 0001 · looking for a publisher</span><span><b>Pitch</b> · prepared for SAGA · Singular · in development · <b>Iterum Corporation</b> · dossier 0001 · looking for a publisher</span></div></div>
+  <div class="wrap">
+    <div class="orn" aria-hidden="true"><i></i></div>
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="brand" href="/"><img src="assets/img/emblem.png" alt="" width="30" height="30"><span>Iterum</span><small>Corporation</small></a>
+        <p>Independent game studio. First title: Singular.</p>
+      </div>
+      <div>
+        <span class="meta">Singular</span>
+        <ul>
+          <li><a href="singular.html">The game</a></li>
+          <li><a href="singular.html#combat">Combat</a></li>
+          <li><a href="singular.html#world">World</a></li>
+          <li><a href="singular.html#access">Request access</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="meta">Site</span>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="purpose.html">Purpose</a></li>
+          <li><a href="press.html">Press kit</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <span class="meta">Contact</span>
+        <ul>
+          <li><a href="mailto:diego@iterumcorp.org">diego@iterumcorp.org</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__legal">
+      © 2026 Iterum Corporation. All rights reserved. Singular is a trademark of Iterum Corporation. <a href="legal.html">Legal notice and privacy</a>.<br> Previous iterations of this site <span class="redacted" tabindex="0">are not available</span>.
+    </div>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+<script type="module" src="deck.js"></script>
+</body>
+</html>
