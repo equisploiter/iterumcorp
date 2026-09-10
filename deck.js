@@ -37,7 +37,7 @@ async function boot(viewer) {
   var progress = $('.deck__progress i');
   // Arrows over the slide (pointer devices) and step buttons in the bar (touch): same job.
   var prevBtns = viewer.querySelectorAll('[data-deck-prev]'), nextBtns = viewer.querySelectorAll('[data-deck-next]'), fsBtn = $('[data-deck-fs]');
-  var thumbs = $('.deck__thumbs'), thumbTpl = $('template');
+  var thumbs = $('.deck__thumbs'), thumbTpl = $('[data-deck-thumb]'), volTpl = $('[data-deck-vol]');
   var url = $('[data-deck-src]').href;   // the download link, already rewritten for /es/
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var pad = function (n) { return String(n).padStart(2, '0'); };
@@ -155,12 +155,25 @@ async function boot(viewer) {
         el = document.createElement('img');
         el.src = src.currentSrc || src.src; el.alt = src.alt || ''; el.decoding = 'async';
       }
-      el.style.setProperty('--x', box[0] + '%'); el.style.setProperty('--y', box[1] + '%');
-      el.style.setProperty('--w', box[2] + '%'); el.style.setProperty('--h', box[3] + '%');
-      media.appendChild(el);
-      if (el.tagName === 'VIDEO' && !reduce) {
-        var p = el.play();
-        if (p && p.catch) p.catch(function () { el.controls = true; });   // autoplay refused: hand over the controls
+      var place = function (node) {
+        node.style.setProperty('--x', box[0] + '%'); node.style.setProperty('--y', box[1] + '%');
+        node.style.setProperty('--w', box[2] + '%'); node.style.setProperty('--h', box[3] + '%');
+        media.appendChild(node);
+      };
+      place(el);
+      if (el.tagName === 'VIDEO') {
+        if (!reduce) {
+          var p = el.play();
+          if (p && p.catch) p.catch(function () { el.controls = true; });   // autoplay refused: hand over the controls
+        }
+        // The speaker: the clip runs muted, this is the one thing that turns its sound on.
+        if (volTpl) {
+          var vb = volTpl.content.firstElementChild.cloneNode(true);
+          vb.classList.add('deck__vol');
+          place(vb);
+          if (window.iterumSound) window.iterumSound(vb, el);
+          else vb.addEventListener('click', function () { el.muted = !el.muted; vb.setAttribute('aria-pressed', el.muted ? 'false' : 'true'); });
+        }
       }
     });
   }

@@ -255,6 +255,24 @@ img[loading="lazy"] { transition: opacity .7s var(--ease); }
 .btn--primary::before { content: ""; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%); transform: translateX(-120%); transition: transform .7s var(--ease); }
 .btn--primary:hover::before { transform: translateX(120%); }
 
+/* Sound toggle over an autoplaying reel. The clip starts muted (browsers allow autoplay no other
+   way) and this speaker is the one thing that turns the sound on. site.js wires [data-vol] to the
+   video beside it; deck.js builds the same button over the reel inside the deck. */
+.vol {
+  position: absolute; right: .75rem; bottom: .75rem; z-index: 4;
+  display: inline-flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; padding: 0;
+  border: 1px solid var(--rule-2); background: color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  color: var(--ink); cursor: pointer; transition: color .25s var(--ease), border-color .25s var(--ease);
+}
+.vol svg { width: 1.1rem; height: 1.1rem; }
+.vol__body { fill: currentColor; }
+.vol__on, .vol__off { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.vol__on { display: none; }
+.vol[aria-pressed="true"] .vol__on { display: block; }
+.vol[aria-pressed="true"] .vol__off { display: none; }
+.vol:hover, .vol[aria-pressed="true"] { color: var(--cy); border-color: var(--cy); }
+
 /* Scroll reveal (JS adds .is-in). Now with a soft focus pull. */
 .reveal { opacity: 0; transform: translateY(18px); filter: blur(6px); transition: opacity .8s var(--ease), transform .8s var(--ease), filter .8s var(--ease); }
 .reveal.is-in { opacity: 1; transform: none; filter: none; }
@@ -1163,6 +1181,9 @@ body.is-purpose .purpose { border-top: 0; }
 .deck__media { position: absolute; inset: 0; pointer-events: none; }
 .deck__media > * { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h); max-width: none; object-fit: cover; background: #000; pointer-events: auto; }
 .deck__media > img { pointer-events: none; }
+/* The speaker over the reel on its slide: anchored to the clip's own corner, in the deck's purple. */
+.deck__media > .deck__vol { left: calc(var(--x) + var(--w) - 2.4rem - .6rem); top: calc(var(--y) + var(--h) - 2.4rem - .6rem); width: 2.4rem; height: 2.4rem; object-fit: unset; }
+.deck__media > .deck__vol:hover, .deck__media > .deck__vol[aria-pressed="true"] { color: var(--vi); border-color: var(--vi); }
 /* Loading readout, centred on the empty stage until the first slide lands. */
 .deck__status {
   position: absolute; left: 50%; top: 50%; z-index: 2; transform: translate(-50%, -50%);

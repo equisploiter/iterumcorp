@@ -192,8 +192,15 @@
           </div>
         </div>
         <div class="deck__thumbs" role="tablist" aria-label="Diapositivas"></div>
-        <template>
+        <template data-deck-thumb>
           <button class="deck__thumb" type="button" role="tab" aria-label="Diapositiva"><canvas></canvas><span>00</span></button>
+        </template>
+        <!-- The speaker deck.js puts over the reel on its slide: the clip autoplays muted, this turns the sound on. -->
+        <template data-deck-vol>
+          <button class="vol" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="vol__body" d="M3 9v6h4l5 4V5L7 9z"/><path class="vol__on" d="M15.5 8.5a4.5 4.5 0 0 1 0 7M18.5 5.5a8.5 8.5 0 0 1 0 13"/><path class="vol__off" d="M16 9l5 6M21 9l-5 6"/></svg>
+            <span class="sr-only">Sonido</span>
+          </button>
         </template>
       </div>
       <p class="meta deck__hint deck__hint--keys"><kbd>←</kbd> <kbd>→</kbd> mover · <kbd>F</kbd> pantalla completa · desliza en pantalla táctil · <kbd>Esc</kbd> sale</p>
@@ -231,7 +238,8 @@
         </figure>
       </div>
       <figure class="clips__reel reveal" data-deck-page="4" data-deck-box="9.48 9.44 81.04 81.11">
-        <video controls loop playsinline preload="metadata" poster="../assets/img/reel-poster.jpg" width="1280" height="720" disablepictureinpicture disableremoteplayback aria-label="Vídeo de gameplay de Singular: Ari abriéndose paso por el Nivel 1">
+        <!-- Starts muted like every copy of the reel; the player's own speaker turns the sound on. -->
+        <video controls muted loop playsinline preload="metadata" poster="../assets/img/reel-poster.jpg" width="1280" height="720" disablepictureinpicture disableremoteplayback aria-label="Vídeo de gameplay de Singular: Ari abriéndose paso por el Nivel 1">
           <source src="../assets/video/singular-reel.mp4" type="video/mp4">
         </video>
         <figcaption>Reel de gameplay <span>diapositiva 04</span></figcaption>

@@ -18,6 +18,29 @@
     else { img.addEventListener('load', done, { once: true }); img.addEventListener('error', done, { once: true }); }
   });
 
+  // Sound. Every copy of the gameplay reel autoplays muted (browsers allow it no other way); the
+  // speaker button beside it is the one thing that turns the sound on, and it never plays sound
+  // by itself. Exposed as window.iterumSound for deck.js, which builds its button on the fly.
+  var sound = window.iterumSound = function (btn, video) {
+    var sync = function () { btn.setAttribute('aria-pressed', video.muted ? 'false' : 'true'); };
+    btn.addEventListener('click', function (e) {
+      e.preventDefault(); e.stopPropagation();
+      video.muted = !video.muted;
+      if (!video.muted) {
+        video.volume = 1;
+        var p = video.play();
+        if (p && p.catch) p.catch(function () {});
+      }
+      sync();
+    });
+    video.addEventListener('volumechange', sync);
+    sync();
+  };
+  document.querySelectorAll('[data-vol]').forEach(function (b) {
+    var v = b.parentNode.querySelector('video');
+    if (v) sound(b, v);
+  });
+
   // Mobile nav
   var nav = document.querySelector('.nav');
   var btn = document.querySelector('.nav__toggle');
