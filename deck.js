@@ -102,7 +102,7 @@ async function boot(viewer) {
     if (n === cur) return;
     var from = cur; cur = n;
     chrome();
-    if (from) { try { history.replaceState(null, '', '#s' + n); } catch (e) {} }
+    if (from) { try { history.replaceState(history.state, '', '#s' + n); } catch (e) {} }   // keeps the theatre's mark, if any
     var t = ++token, c;
     try { c = await render(n, stage.clientWidth); } catch (e) { fail(viewer, e); return; }
     if (t !== token) return;
@@ -218,7 +218,7 @@ async function boot(viewer) {
     var t = e.target;
     if (t && (/^(input|textarea|select)$/i.test(t.tagName) || t.isContentEditable)) return;
     var fs = isFs();
-    if (e.key === 'Escape' && viewer.classList.contains('is-theatre')) { theatre(false); return; }
+    if (e.key === 'Escape' && viewer.classList.contains('is-theatre')) { closeTheatre(); return; }
     if (!inView && !fs) return;
     switch (e.key) {
       case 'ArrowRight': next(); break;
@@ -234,9 +234,7 @@ async function boot(viewer) {
   });
 
   // Swipe: a horizontal drag on the stage turns the slide; vertical scrolling is left to the page.
-  // On a phone held upright in the theatre the body is turned on its side (see the CSS), so the
-  // axes swap. A plain tap on a touch screen opens the theatre: the slide is too small to read.
-  var turned = function () { return isFs() && matchMedia('(max-width: 47.99em) and (orientation: portrait)').matches; };
+  // A plain tap on a touch screen opens the theatre, where the slide gets the whole screen.
   var px = null, py = 0, dx = 0, dragging = false;
   stage.addEventListener('pointerdown', function (e) {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
@@ -247,7 +245,6 @@ async function boot(viewer) {
   stage.addEventListener('pointermove', function (e) {
     if (px === null) return;
     var ex = e.clientX - px, ey = e.clientY - py;
-    if (turned()) { var t = ex; ex = ey; ey = -t; }
     dx = ex;
     if (!dragging && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(ey)) {
       dragging = true;
@@ -265,35 +262,76 @@ async function boot(viewer) {
   stage.addEventListener('pointerup', release);
   stage.addEventListener('pointercancel', release);
 
-  // Fullscreen, or a fixed "theatre" overlay where the API is missing (iPhone).
+  // Fullscreen on a desktop or a tablet; on a phone always the fixed "theatre" overlay, whatever
+  // the browser. One layout for Safari, Chrome and the rest: nothing is asked of the system, the
+  // screen is never locked to an orientation and the slide is never turned on its side. A phone
+  // held upright is told to turn, and turning it gives the slide the whole screen.
+  var phone = function () { return matchMedia('(pointer: coarse) and (max-width: 47.99em), (pointer: coarse) and (max-height: 47.99em)').matches; };
   function isFs() { return document.fullscreenElement === viewer || viewer.classList.contains('is-theatre'); }
-  // A phone in real fullscreen is asked to turn landscape (Android); where that is refused, the
-  // stylesheet turns the body instead and nothing here needs to know.
-  function landscape() {
-    if (!matchMedia('(max-width: 47.99em)').matches) return;
-    try { var p = screen.orientation.lock('landscape'); if (p && p.catch) p.catch(function () {}); } catch (e) {}
-  }
   function fsLabel() {
     var on = isFs();
     fsBtn.querySelectorAll('span').forEach(function (s, i) { s.hidden = on ? i === 0 : i === 1; });
     fsBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
   }
+  // Either way the viewer leaves the page's flow, and the browser's scroll anchoring may land the
+  // page somewhere else once it is back: its place on the screen is noted and put back.
+  var keptTop = null;
+  function keep() { keptTop = viewer.getBoundingClientRect().top; }
+  function restore() {
+    if (keptTop === null) return;
+    var d = viewer.getBoundingClientRect().top - keptTop; keptTop = null;
+    if (!d) return;
+    try { scrollTo({ top: scrollY + d, left: scrollX, behavior: 'instant' }); } catch (e) { scrollTo(scrollX, scrollY + d); }
+  }
+  // The theatre takes a history entry, so a phone's Back (or Safari's swipe back) closes it
+  // instead of leaving the page. The slide in hand survives the way out.
   function theatre(on) {
+    if (on === viewer.classList.contains('is-theatre')) return;
+    if (on) keep();
     viewer.classList.toggle('is-theatre', on);
     document.documentElement.classList.toggle('is-theatre', on);
-    fsLabel(); relayout();
+    if (on) { try { history.pushState({ deckTheatre: true }, '', location.href); } catch (e) {} }
+    else restore();
+    fsLabel(); relayout(); hint();
   }
+  // "Turn your phone": the badge is the stylesheet's (it shows on an upright phone in the
+  // theatre); this only starts its fade over again each time it comes up, so it is never already
+  // gone by the time there is someone to read it.
+  var turnEl = $('.deck__turn');
+  var upright = matchMedia('(max-width: 47.99em) and (orientation: portrait)');
+  function hint() {
+    if (!turnEl || !isFs() || !upright.matches) return;
+    turnEl.style.animation = 'none'; void turnEl.offsetWidth; turnEl.style.animation = '';
+  }
+  if (upright.addEventListener) upright.addEventListener('change', hint);
+  function closeTheatre() {
+    if (history.state && history.state.deckTheatre) history.back();   // popstate below does the closing
+    else theatre(false);
+  }
+  addEventListener('popstate', function () {
+    if (viewer.classList.contains('is-theatre')) {
+      theatre(false);
+      // The entry we came back to may carry an older slide: put the current one in its place
+      // before the hashchange that follows looks at it.
+      if (cur) { try { history.replaceState(null, '', '#s' + cur); } catch (e) {} }
+    } else if (history.state && history.state.deckTheatre) {
+      try { history.replaceState(null, '', location.href); } catch (e) {}   // a stale mark (forward, reload)
+    }
+  });
   function toggleFs() {
-    viewer.classList.add('is-tapped');   // retires the "tap to enlarge" badge
+    viewer.classList.add('is-tapped');   // retires the "tap for full screen" badge
     if (document.fullscreenElement === viewer) { document.exitFullscreen(); return; }
-    if (viewer.classList.contains('is-theatre')) { theatre(false); return; }
-    if (document.fullscreenEnabled && viewer.requestFullscreen) viewer.requestFullscreen().then(landscape, function () { theatre(true); });
-    else theatre(true);
+    if (viewer.classList.contains('is-theatre')) { closeTheatre(); return; }
+    if (!phone() && document.fullscreenEnabled && viewer.requestFullscreen) {
+      keep();
+      var p = viewer.requestFullscreen();
+      if (p && p.catch) p.catch(function () { keptTop = null; theatre(true); });
+    } else theatre(true);
   }
   fsBtn.addEventListener('click', toggleFs);
   document.addEventListener('fullscreenchange', function () {
-    if (!document.fullscreenElement) { try { screen.orientation.unlock(); } catch (e) {} }
-    fsLabel(); relayout();
+    if (!document.fullscreenElement) restore();
+    fsLabel(); relayout(); hint();
   });
 
   // Resize: redraw the slide in hand at the new width (the old canvas scales meanwhile).

@@ -1269,17 +1269,24 @@ body.is-purpose .purpose { border-top: 0; }
 .deck__hint { margin-top: var(--sp-4); max-width: none; color: var(--ink-3); }
 .deck__hint kbd { font: inherit; color: var(--ink-2); border: 1px solid var(--rule-2); padding: .05em .45em; }
 
-/* Theatre: the Fullscreen API where there is one, a fixed overlay where there is not (iPhone).
-   The stage and its bar sit in .deck__body, sized to whatever the screen allows; the thumbnails
-   and the badge stay out. */
+/* Theatre: the Fullscreen API on a desktop or a tablet, a fixed overlay on every phone (deck.js
+   decides; both states share these rules, so the two look the same). The stage and its bar sit in
+   .deck__body, sized to whatever the screen allows inside the safe area; the thumbnails and the
+   badge stay out. --fit is set twice on purpose: a custom property is not checked until it is
+   used, so the dvh version lives behind @supports instead of a plain fallback. */
 .deck__viewer:fullscreen, .deck__viewer.is-theatre {
   position: fixed; inset: 0; z-index: 70; margin: 0; padding: 0; background: #000; overflow: hidden;
   display: grid; place-items: center;
 }
 .deck__viewer:fullscreen .deck__body, .deck__viewer.is-theatre .deck__body {
-  --fit: min(100vw - 2rem, (100vh - 7rem) * var(--arn));
-  --fit: min(100dvw - 2rem, (100dvh - 7rem) * var(--arn));
+  --sa-x: calc(env(safe-area-inset-left, 0px) + env(safe-area-inset-right, 0px));
+  --sa-y: calc(env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px));
+  --room: 6rem;   /* the bar under the slide plus a margin; a phone on its side gets less */
+  --fit: min(100vw - 2rem - var(--sa-x), (100vh - var(--room) - var(--sa-y)) * var(--arn));
   width: var(--fit); display: grid; grid-template-rows: auto auto;
+}
+@supports (height: 1dvh) {
+  .deck__viewer:fullscreen .deck__body, .deck__viewer.is-theatre .deck__body { --fit: min(100dvw - 2rem - var(--sa-x), (100dvh - var(--room) - var(--sa-y)) * var(--arn)); }
 }
 .deck__viewer:fullscreen .deck__stage, .deck__viewer.is-theatre .deck__stage { border-inline: 1px solid var(--rule-2); touch-action: pinch-zoom; }
 .deck__viewer:fullscreen .deck__bar, .deck__viewer.is-theatre .deck__bar { border-bottom: 0; padding-inline: 0; }
@@ -1287,25 +1294,40 @@ body.is-purpose .purpose { border-top: 0; }
 .deck__viewer:fullscreen .deck__thumbs, .deck__viewer.is-theatre .deck__thumbs,
 .deck__viewer:fullscreen .deck__tap, .deck__viewer.is-theatre .deck__tap { display: none; }
 html.is-theatre, html.is-theatre body { overflow: hidden; }
-/* A phone held upright: the body is turned on its side so the slide takes the whole screen, the
-   bar under it. deck.js maps swipes to the turned axes; on Android the fullscreen request also
-   asks for landscape, in which case this rule never applies. */
-@media (max-width: 47.99em) and (orientation: portrait) {
-  .deck__viewer:fullscreen .deck__body, .deck__viewer.is-theatre .deck__body {
-    --fit: min(100vh - 1.5rem, (100vw - 4.5rem) * var(--arn));
-    --fit: min(100dvh - 1.5rem, (100dvw - 4.5rem) * var(--arn));
-    position: absolute; top: 0; left: 0;
-    width: 100vh; height: 100vw; width: 100dvh; height: 100dvw;
-    transform: rotate(90deg) translateY(-100%); transform-origin: top left;
-    align-content: center; justify-items: center;
-  }
-  .deck__viewer:fullscreen .deck__stage, .deck__viewer.is-theatre .deck__stage,
-  .deck__viewer:fullscreen .deck__bar, .deck__viewer.is-theatre .deck__bar { width: var(--fit); }
-  /* The bar goes on a diet so the slide gets the height: steps, counter and the way out. */
-  .deck__viewer:fullscreen .deck__bar, .deck__viewer.is-theatre .deck__bar { padding-block: var(--sp-2); justify-content: space-between; }
-  .deck__viewer:fullscreen .deck__progress, .deck__viewer.is-theatre .deck__progress,
+/* A short screen, which on a phone means it is being held on its side: the bar goes on a diet
+   (steps, counter, the way out) and the slide takes all the height that is left. */
+@media (max-height: 30em) {
+  .deck__viewer:fullscreen .deck__body, .deck__viewer.is-theatre .deck__body { --room: 4rem; }
+  .deck__viewer:fullscreen .deck__bar, .deck__viewer.is-theatre .deck__bar { padding-block: var(--sp-2); }
   .deck__viewer:fullscreen .deck__tools a, .deck__viewer.is-theatre .deck__tools a { display: none; }
 }
+/* A phone held upright: a 16:9 slide can only be as wide as the screen, so it takes the whole
+   width and the bar goes light under it. Nothing is turned on its side and nothing is asked of
+   the system, so this is what every browser shows; the badge at the foot says where the big
+   version is, and turning the phone gives it. */
+@media (max-width: 47.99em) and (orientation: portrait) {
+  .deck__viewer:fullscreen .deck__body, .deck__viewer.is-theatre .deck__body { --fit: min(100vw - var(--sa-x), (100vh - var(--room) - var(--sa-y)) * var(--arn)); }
+  @supports (height: 1dvh) {
+    .deck__viewer:fullscreen .deck__body, .deck__viewer.is-theatre .deck__body { --fit: min(100dvw - var(--sa-x), (100dvh - var(--room) - var(--sa-y)) * var(--arn)); }
+  }
+  /* One row for the bar: the steps and the way out, nothing else. */
+  .deck__viewer:fullscreen .deck__bar, .deck__viewer.is-theatre .deck__bar { flex-wrap: nowrap; padding-inline: var(--sp-3); justify-content: space-between; }
+  .deck__viewer:fullscreen .deck__stage, .deck__viewer.is-theatre .deck__stage { border-inline: 0; }
+  .deck__viewer:fullscreen .deck__progress, .deck__viewer.is-theatre .deck__progress,
+  .deck__viewer:fullscreen .deck__tools a, .deck__viewer.is-theatre .deck__tools a { display: none; }
+  .deck__viewer:fullscreen .deck__turn, .deck__viewer.is-theatre .deck__turn { display: block; }
+}
+/* "Turn your phone": at the foot of the screen while the slide is as wide as an upright phone
+   allows, gone after a few seconds. deck.js restarts it every time the theatre is opened. */
+.deck__turn {
+  display: none; position: absolute; left: 50%; bottom: calc(.9rem + env(safe-area-inset-bottom, 0px)); z-index: 5;
+  transform: translateX(-50%); padding: .45rem .8rem; white-space: nowrap; pointer-events: none;
+  border: 1px solid rgba(143,107,255,.55); background: color-mix(in srgb, var(--bg) 80%, transparent);
+  font-family: var(--mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--vi);
+  animation: deck-turn 6s var(--ease) both;
+}
+.deck__turn::before { content: "\21BB"; display: inline-block; margin-right: .5em; font-size: 1.2em; line-height: 0; vertical-align: -.05em; }
+@keyframes deck-turn { 0%, 75% { opacity: 1; } 100% { opacity: 0; } }
 /* The badge has done its job once the theatre has been opened. */
 .deck__viewer.is-tapped .deck__tap { display: none; }
 

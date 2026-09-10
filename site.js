@@ -1,14 +1,12 @@
 (function () {
-  // Language: remember an explicit choice so the head redirect (see <head>) respects it.
+  // Language: English is the default for everyone. Only an explicit ES/EN click is remembered,
+  // and the head redirect (see <head>) sends a returning visitor who chose ES to /es/.
+  // The browser language is deliberately ignored; landing on /es/ from a search is not a choice.
   document.querySelectorAll('[data-lang-switch]').forEach(function (a) {
     a.addEventListener('click', function () {
       try { localStorage.setItem('lang', a.getAttribute('hreflang') || 'en'); } catch (e) {}
     });
   });
-  try {
-    // Landing directly on /es/ (search, shared link) counts as a preference too.
-    if (/\/es\//.test(location.pathname) && !localStorage.getItem('lang')) localStorage.setItem('lang', 'es');
-  } catch (e) {}
 
   // Lazy images: reveal with a fade once decoded (see style.css `html.js img[loading="lazy"]`).
   document.documentElement.classList.add('js');

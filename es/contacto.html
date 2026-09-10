@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <script>(function(){try{var p=location.pathname;if(/\/es\//.test(p))return;var l=localStorage.getItem('lang');if(l==='en')return;var n=((navigator.languages&&navigator.languages[0])||navigator.language||'');if(l==='es'||/^es\b/i.test(n)){var m={'purpose.html':'proposito.html','contact.html':'contacto.html'};var f=p.split('/').pop()||'index.html';location.replace('es/'+(m[f]||f)+location.hash)}}catch(e){}})()</script>
+  <script>(function(){try{var p=location.pathname;if(/\/es\//.test(p)||localStorage.getItem('lang')!=='es')return;var m={'purpose.html':'proposito.html','contact.html':'contacto.html'};var f=p.split('/').pop()||'index.html';location.replace('es/'+(m[f]||f)+location.hash)}catch(e){}})()</script>
   <title>Contacto · Iterum Corporation</title>
   <meta name="description" content="Contacto de Iterum Corporation: consultas generales, prensa y colaboraciones. Respuesta en 24-48 h.">
   <meta name="theme-color" content="#070b0c">

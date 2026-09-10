@@ -18,7 +18,7 @@ How strings are detected: any element with direct text is one unit (its whole `i
 
 File names are translated too. `CONFIG.slugs` in `scripts/i18n.js` maps `purpose.html` → `proposito.html` and `contact.html` → `contacto.html`; the generator rewrites the links between pages, the canonical, the `og:url` and the sitemap accordingly. To rename another page, add the pair there and to the `m` map in the inline redirect script.
 
-In the browser: an `ES`/`EN` switcher in the header (it remembers the choice in `localStorage`), and an inline script in `<head>` redirects a first visit to `/es/` when the browser is set to Spanish. Every page carries its own `hreflang` es/en/x-default (x-default → English), `og:locale` and canonical.
+In the browser: an `ES`/`EN` switcher in the header (it remembers the choice in `localStorage`), and an inline script in `<head>` sends a visitor who chose `ES` earlier straight to `/es/`. The browser language is deliberately ignored: English is the default for everyone, and Spanish is shown only after an explicit `ES` click. Every page carries its own `hreflang` es/en/x-default (x-default → English), `og:locale` and canonical.
 
 Everything else in the HTML is English and identical in both languages: section `id`s and anchors (`#access`, `#bosses`, `#privacy`…), form field `name`s and `<option>` values. They are code, not content — the generator does not translate them, so a new anchor is written in English once and works for both.
 
@@ -54,7 +54,7 @@ Everything else in the HTML is English and identical in both languages: section 
 
 PowerPoint exports an embedded video or gif as its first frame, so the PDF only carries stills. The figures in the *clips* section of `pitch.html` carry `data-deck-page` (the slide) and `data-deck-box` (`left top width height`, in % of the page); `deck.js` lays each clip over its still while that slide is on screen. After replacing the PDF, `python scripts/deck-boxes.py assets/pitch/void-singularcorp.pdf` (needs `pip install pymupdf`) prints every image box per page; copy the new values into the figures, or drop a figure if its slide is gone. Clips that are not on any slide can stay in the section without those two attributes.
 
-On a phone the stage runs edge to edge and a tap on the slide opens the theatre: the slide is turned on its side so it fills the screen (Android is asked to rotate; iPhone gets the CSS rotation), swipes follow the turned axes, and the bar keeps the step buttons and the exit.
+On a phone the stage runs edge to edge and a tap on the slide opens the theatre: a fixed black overlay, the slide as wide as the screen allows with a light bar under it, swipe or the step buttons to move, Back or the exit button to leave. It is the same in every browser on purpose — the deck never asks the system to rotate the screen (`screen.orientation.lock` is Android-only and turns the whole page sideways in the hand) and never turns the slide with CSS (which looks broken to anyone who did not expect it). A phone held upright is simply told *Turn your phone*, and turning it gives the full landscape slide. Real fullscreen is used on desktops and tablets, where it behaves the same everywhere; `deck.js` picks the theatre for anything that is a phone (`pointer: coarse` and a short side under 48 em).
 
 ### PowerPoint show (.ppsx)
 
