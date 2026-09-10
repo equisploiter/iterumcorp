@@ -139,6 +139,7 @@
       <div class="void__actions">
         <a class="btn btn--primary" href="#deck">Open the deck <span aria-hidden="true">↓</span></a>
         <a class="btn btn--ghost" href="assets/pitch/void-singularcorp.pdf" download>Download PDF</a>
+        <a class="btn btn--ghost" href="assets/pitch/void-singularcorp.ppsx" download>Download PPT</a>
         <a class="btn btn--ghost" href="contact.html">Get in touch <span class="arr" aria-hidden="true">→</span></a>
       </div>
       <p class="meta hero__stamp">Iterum · dossier 0001 · pitch deck</p>
@@ -159,25 +160,34 @@
       </div>
 
       <div class="deck__viewer" data-deck tabindex="0" aria-label="Singular pitch deck">
-        <div class="deck__stage">
-          <div class="deck__slide" data-slide>
-            <div class="deck__media"></div>
+        <!-- .deck__body holds the stage and its bar: in fullscreen it is what a portrait phone turns on its side. -->
+        <div class="deck__body">
+          <div class="deck__stage">
+            <div class="deck__slide" data-slide>
+              <div class="deck__media"></div>
+            </div>
+            <div class="deck__status">
+              <span>Loading the deck</span>
+              <i></i>
+              <p class="deck__error" hidden>The deck could not be drawn in this browser. <a href="assets/pitch/void-singularcorp.pdf">Download the PDF</a>.</p>
+              <noscript><p class="deck__noscript">This viewer needs JavaScript. <a href="assets/pitch/void-singularcorp.pdf">Download the deck as a PDF</a>.</p></noscript>
+            </div>
+            <button class="deck__arrow deck__arrow--prev" type="button" data-deck-prev aria-label="Previous slide" disabled>←</button>
+            <button class="deck__arrow deck__arrow--next" type="button" data-deck-next aria-label="Next slide" disabled>→</button>
+            <span class="deck__tap" aria-hidden="true">Tap to enlarge</span>
           </div>
-          <div class="deck__status">
-            <span>Loading the deck</span>
-            <i></i>
-            <p class="deck__error" hidden>The deck could not be drawn in this browser. <a href="assets/pitch/void-singularcorp.pdf">Download the PDF</a>.</p>
-            <noscript><p class="deck__noscript">This viewer needs JavaScript. <a href="assets/pitch/void-singularcorp.pdf">Download the deck as a PDF</a>.</p></noscript>
-          </div>
-          <button class="deck__arrow deck__arrow--prev" type="button" data-deck-prev aria-label="Previous slide" disabled>←</button>
-          <button class="deck__arrow deck__arrow--next" type="button" data-deck-next aria-label="Next slide" disabled>→</button>
-        </div>
-        <div class="deck__bar">
-          <div class="deck__count" aria-live="polite"><span data-deck-page-n>01</span> / <span data-deck-total>—</span></div>
-          <div class="deck__progress"><i></i></div>
-          <div class="deck__tools">
-            <button class="btn btn--ghost" type="button" data-deck-fs aria-pressed="false"><span>Fullscreen</span><span hidden>Exit fullscreen</span></button>
-            <a class="btn btn--ghost" href="assets/pitch/void-singularcorp.pdf" data-deck-src download>PDF</a>
+          <div class="deck__bar">
+            <div class="deck__nav">
+              <button class="deck__step" type="button" data-deck-prev aria-label="Previous slide" disabled>←</button>
+              <div class="deck__count" aria-live="polite"><span data-deck-page-n>01</span> / <span data-deck-total>—</span></div>
+              <button class="deck__step" type="button" data-deck-next aria-label="Next slide" disabled>→</button>
+            </div>
+            <div class="deck__progress"><i></i></div>
+            <div class="deck__tools">
+              <button class="btn btn--ghost" type="button" data-deck-fs aria-pressed="false"><span>Fullscreen</span><span hidden>Exit fullscreen</span></button>
+              <a class="btn btn--ghost" href="assets/pitch/void-singularcorp.pdf" data-deck-src download>PDF</a>
+              <a class="btn btn--ghost" href="assets/pitch/void-singularcorp.ppsx" download>PPT</a>
+            </div>
           </div>
         </div>
         <div class="deck__thumbs" role="tablist" aria-label="Slides"></div>
@@ -185,7 +195,8 @@
           <button class="deck__thumb" type="button" role="tab" aria-label="Slide"><canvas></canvas><span>00</span></button>
         </template>
       </div>
-      <p class="meta deck__hint"><kbd>←</kbd> <kbd>→</kbd> move · <kbd>F</kbd> fullscreen · swipe on touch · <kbd>Esc</kbd> exits</p>
+      <p class="meta deck__hint deck__hint--keys"><kbd>←</kbd> <kbd>→</kbd> move · <kbd>F</kbd> fullscreen · swipe on touch · <kbd>Esc</kbd> exits</p>
+      <p class="meta deck__hint deck__hint--touch">Swipe to move · tap the slide to enlarge</p>
     </div>
   </section>
 

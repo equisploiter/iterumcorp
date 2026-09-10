@@ -35,7 +35,8 @@ async function boot(viewer) {
   var bar = $('.deck__status i');
   var pageEl = $('[data-deck-page-n]'), totalEl = $('[data-deck-total]');
   var progress = $('.deck__progress i');
-  var prevBtn = $('[data-deck-prev]'), nextBtn = $('[data-deck-next]'), fsBtn = $('[data-deck-fs]');
+  // Arrows over the slide (pointer devices) and step buttons in the bar (touch): same job.
+  var prevBtns = viewer.querySelectorAll('[data-deck-prev]'), nextBtns = viewer.querySelectorAll('[data-deck-next]'), fsBtn = $('[data-deck-fs]');
   var thumbs = $('.deck__thumbs'), thumbTpl = $('template');
   var url = $('[data-deck-src]').href;   // the download link, already rewritten for /es/
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -123,8 +124,8 @@ async function boot(viewer) {
   function chrome() {
     pageEl.textContent = pad(cur);
     progress.style.setProperty('--p', (cur / last).toFixed(4));
-    prevBtn.disabled = cur <= 1;
-    nextBtn.disabled = cur >= last;
+    prevBtns.forEach(function (b) { b.disabled = cur <= 1; });
+    nextBtns.forEach(function (b) { b.disabled = cur >= last; });
     thumbBtns.forEach(function (b, i) { b.setAttribute('aria-selected', i + 1 === cur ? 'true' : 'false'); });
     var b = thumbBtns[cur - 1];
     if (b) thumbs.scrollTo({ left: b.offsetLeft - (thumbs.clientWidth - b.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
@@ -191,8 +192,8 @@ async function boot(viewer) {
   }
 
   // ---- Controls ----
-  prevBtn.addEventListener('click', prev);
-  nextBtn.addEventListener('click', next);
+  prevBtns.forEach(function (b) { b.addEventListener('click', prev); });
+  nextBtns.forEach(function (b) { b.addEventListener('click', next); });
 
   // Keys work while the deck is on screen (or in fullscreen), never while typing.
   var inView = true;
@@ -220,25 +221,32 @@ async function boot(viewer) {
   });
 
   // Swipe: a horizontal drag on the stage turns the slide; vertical scrolling is left to the page.
+  // On a phone held upright in the theatre the body is turned on its side (see the CSS), so the
+  // axes swap. A plain tap on a touch screen opens the theatre: the slide is too small to read.
+  var turned = function () { return isFs() && matchMedia('(max-width: 47.99em) and (orientation: portrait)').matches; };
   var px = null, py = 0, dx = 0, dragging = false;
   stage.addEventListener('pointerdown', function (e) {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
     if (e.target.tagName === 'VIDEO' && e.target.controls) return;
+    if (e.target.closest('button')) return;
     px = e.clientX; py = e.clientY; dx = 0; dragging = false;
   });
   stage.addEventListener('pointermove', function (e) {
     if (px === null) return;
-    dx = e.clientX - px;
-    if (!dragging && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(e.clientY - py)) {
+    var ex = e.clientX - px, ey = e.clientY - py;
+    if (turned()) { var t = ex; ex = ey; ey = -t; }
+    dx = ex;
+    if (!dragging && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(ey)) {
       dragging = true;
       try { stage.setPointerCapture(e.pointerId); } catch (err) {}
     }
     if (dragging) slide.style.transform = 'translateX(' + (dx * .35).toFixed(1) + 'px)';
   });
-  var release = function () {
+  var release = function (e) {
     if (px === null) return;
     slide.style.transform = '';
-    if (dragging && Math.abs(dx) > Math.max(40, stage.clientWidth * .12)) { if (dx < 0) next(); else prev(); }
+    if (dragging) { if (Math.abs(dx) > Math.max(40, stage.clientWidth * .12)) { if (dx < 0) next(); else prev(); } }
+    else if (e.type === 'pointerup' && e.pointerType !== 'mouse' && !isFs()) toggleFs();
     px = null; dragging = false;
   };
   stage.addEventListener('pointerup', release);
@@ -246,6 +254,12 @@ async function boot(viewer) {
 
   // Fullscreen, or a fixed "theatre" overlay where the API is missing (iPhone).
   function isFs() { return document.fullscreenElement === viewer || viewer.classList.contains('is-theatre'); }
+  // A phone in real fullscreen is asked to turn landscape (Android); where that is refused, the
+  // stylesheet turns the body instead and nothing here needs to know.
+  function landscape() {
+    if (!matchMedia('(max-width: 47.99em)').matches) return;
+    try { var p = screen.orientation.lock('landscape'); if (p && p.catch) p.catch(function () {}); } catch (e) {}
+  }
   function fsLabel() {
     var on = isFs();
     fsBtn.querySelectorAll('span').forEach(function (s, i) { s.hidden = on ? i === 0 : i === 1; });
@@ -257,13 +271,17 @@ async function boot(viewer) {
     fsLabel(); relayout();
   }
   function toggleFs() {
+    viewer.classList.add('is-tapped');   // retires the "tap to enlarge" badge
     if (document.fullscreenElement === viewer) { document.exitFullscreen(); return; }
     if (viewer.classList.contains('is-theatre')) { theatre(false); return; }
-    if (document.fullscreenEnabled && viewer.requestFullscreen) viewer.requestFullscreen().then(null, function () { theatre(true); });
+    if (document.fullscreenEnabled && viewer.requestFullscreen) viewer.requestFullscreen().then(landscape, function () { theatre(true); });
     else theatre(true);
   }
   fsBtn.addEventListener('click', toggleFs);
-  document.addEventListener('fullscreenchange', function () { fsLabel(); relayout(); });
+  document.addEventListener('fullscreenchange', function () {
+    if (!document.fullscreenElement) { try { screen.orientation.unlock(); } catch (e) {} }
+    fsLabel(); relayout();
+  });
 
   // Resize: redraw the slide in hand at the new width (the old canvas scales meanwhile).
   var rt;

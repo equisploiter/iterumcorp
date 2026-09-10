@@ -1191,11 +1191,43 @@ body.is-purpose .purpose { border-top: 0; }
 @media (hover: none) { .deck__arrow { opacity: 1; } }
 .deck__arrow:hover { color: var(--vi); border-color: var(--vi); }
 .deck__arrow[disabled] { opacity: 0 !important; pointer-events: none; }
+/* Touch: the step buttons in the bar do the arrows' job, and the badge says the slide opens up. */
+.deck__nav { display: flex; align-items: center; gap: var(--sp-2); flex: none; }
+.deck__step {
+  display: none; align-items: center; justify-content: center; width: 2.2rem; height: 2.2rem; padding: 0;
+  border: 1px solid var(--rule-2); background: transparent; color: var(--ink); font-family: var(--mono); font-size: var(--step--1); cursor: pointer;
+  transition: color .25s var(--ease), border-color .25s var(--ease), opacity .25s var(--ease);
+}
+.deck__step:hover { color: var(--vi); border-color: var(--vi); }
+.deck__step[disabled] { opacity: .3; pointer-events: none; }
+.deck__tap {
+  display: none; position: absolute; right: .9rem; bottom: .8rem; z-index: 4; padding: .3rem .55rem; pointer-events: none;
+  border: 1px solid rgba(143,107,255,.55); background: color-mix(in srgb, var(--bg) 78%, transparent);
+  font-family: var(--mono); font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; color: var(--vi);
+}
+.deck__hint--touch { display: none; }
+@media (hover: none) {
+  .deck__step { display: inline-flex; }
+  .deck__tap { display: block; }
+  .deck__hint--keys { display: none; }
+  .deck__hint--touch { display: block; }
+}
+/* Phones: the stage runs edge to edge (every pixel counts), the arrows leave the slide alone, and
+   the tools drop to their own row under the counter. */
+@media (max-width: 47.99em) {
+  .deck__viewer { margin-inline: calc(var(--gutter) * -1); }
+  .deck__stage { border-inline: 0; }
+  .deck__arrow { display: none; }
+  .deck__bar { flex-wrap: wrap; padding-inline: var(--gutter); }
+  .deck__tools { flex-basis: 100%; }
+  .deck__thumbs { padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
+  .deck__thumb { width: 6.5rem; }
+}
 
 .deck__bar { display: flex; align-items: center; gap: var(--sp-4); padding: var(--sp-3) 0; border-bottom: 1px solid var(--rule); }
 .deck__count { flex: none; min-width: 6.5ch; font-family: var(--mono); font-size: var(--step--1); letter-spacing: .14em; color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .deck__count span:first-child { color: var(--vi); }
-.deck__progress { flex: 1; height: 1px; background: var(--rule-2); }
+.deck__progress { flex: 1 1 3rem; height: 1px; background: var(--rule-2); }
 .deck__progress i { display: block; height: 100%; transform-origin: left; transform: scaleX(var(--p, 0)); background: linear-gradient(90deg, var(--vi), color-mix(in srgb, var(--vi) 55%, var(--cy))); box-shadow: 0 0 8px rgba(143,107,255,.5); transition: transform .45s var(--ease); }
 .deck__tools { display: flex; gap: var(--sp-2); flex: none; }
 .deck__tools .btn { min-height: 2.2rem; padding: .45rem .8rem; font-size: var(--step--2); }
@@ -1216,16 +1248,45 @@ body.is-purpose .purpose { border-top: 0; }
 .deck__hint { margin-top: var(--sp-4); max-width: none; color: var(--ink-3); }
 .deck__hint kbd { font: inherit; color: var(--ink-2); border: 1px solid var(--rule-2); padding: .05em .45em; }
 
-/* Theatre: the Fullscreen API where there is one, a fixed overlay where there is not (iPhone). */
+/* Theatre: the Fullscreen API where there is one, a fixed overlay where there is not (iPhone).
+   The stage and its bar sit in .deck__body, sized to whatever the screen allows; the thumbnails
+   and the badge stay out. */
 .deck__viewer:fullscreen, .deck__viewer.is-theatre {
-  position: fixed; inset: 0; z-index: 70; display: grid; grid-template-rows: auto auto; align-content: center;
-  padding: var(--sp-5) var(--sp-5) calc(var(--sp-5) + var(--sab)); background: #000; overflow: auto;
+  position: fixed; inset: 0; z-index: 70; margin: 0; padding: 0; background: #000; overflow: hidden;
+  display: grid; place-items: center;
 }
-.deck__viewer:fullscreen .deck__stage, .deck__viewer.is-theatre .deck__stage,
-.deck__viewer:fullscreen .deck__bar, .deck__viewer.is-theatre .deck__bar { width: min(100%, calc((100vh - 8rem) * var(--arn))); margin-inline: auto; }
-.deck__viewer:fullscreen .deck__bar, .deck__viewer.is-theatre .deck__bar { border-bottom: 0; }
-.deck__viewer:fullscreen .deck__thumbs, .deck__viewer.is-theatre .deck__thumbs { display: none; }
+.deck__viewer:fullscreen .deck__body, .deck__viewer.is-theatre .deck__body {
+  --fit: min(100vw - 2rem, (100vh - 7rem) * var(--arn));
+  --fit: min(100dvw - 2rem, (100dvh - 7rem) * var(--arn));
+  width: var(--fit); display: grid; grid-template-rows: auto auto;
+}
+.deck__viewer:fullscreen .deck__stage, .deck__viewer.is-theatre .deck__stage { border-inline: 1px solid var(--rule-2); touch-action: pinch-zoom; }
+.deck__viewer:fullscreen .deck__bar, .deck__viewer.is-theatre .deck__bar { border-bottom: 0; padding-inline: 0; }
+.deck__viewer:fullscreen .deck__tools, .deck__viewer.is-theatre .deck__tools { flex-basis: auto; }
+.deck__viewer:fullscreen .deck__thumbs, .deck__viewer.is-theatre .deck__thumbs,
+.deck__viewer:fullscreen .deck__tap, .deck__viewer.is-theatre .deck__tap { display: none; }
 html.is-theatre, html.is-theatre body { overflow: hidden; }
+/* A phone held upright: the body is turned on its side so the slide takes the whole screen, the
+   bar under it. deck.js maps swipes to the turned axes; on Android the fullscreen request also
+   asks for landscape, in which case this rule never applies. */
+@media (max-width: 47.99em) and (orientation: portrait) {
+  .deck__viewer:fullscreen .deck__body, .deck__viewer.is-theatre .deck__body {
+    --fit: min(100vh - 1.5rem, (100vw - 4.5rem) * var(--arn));
+    --fit: min(100dvh - 1.5rem, (100dvw - 4.5rem) * var(--arn));
+    position: absolute; top: 0; left: 0;
+    width: 100vh; height: 100vw; width: 100dvh; height: 100dvw;
+    transform: rotate(90deg) translateY(-100%); transform-origin: top left;
+    align-content: center; justify-items: center;
+  }
+  .deck__viewer:fullscreen .deck__stage, .deck__viewer.is-theatre .deck__stage,
+  .deck__viewer:fullscreen .deck__bar, .deck__viewer.is-theatre .deck__bar { width: var(--fit); }
+  /* The bar goes on a diet so the slide gets the height: steps, counter and the way out. */
+  .deck__viewer:fullscreen .deck__bar, .deck__viewer.is-theatre .deck__bar { padding-block: var(--sp-2); justify-content: space-between; }
+  .deck__viewer:fullscreen .deck__progress, .deck__viewer.is-theatre .deck__progress,
+  .deck__viewer:fullscreen .deck__tools a, .deck__viewer.is-theatre .deck__tools a { display: none; }
+}
+/* The badge has done its job once the theatre has been opened. */
+.deck__viewer.is-tapped .deck__tap { display: none; }
 
 /* The clips section: the site's mechanics strip, each caption naming the slide it sits on. */
 .clips .strip figcaption span, .clips__reel figcaption span { color: var(--vi); }

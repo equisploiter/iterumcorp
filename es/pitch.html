@@ -140,6 +140,7 @@
       <div class="void__actions">
         <a class="btn btn--primary" href="#deck">Abrir el deck <span aria-hidden="true">↓</span></a>
         <a class="btn btn--ghost" href="../assets/pitch/void-singularcorp.pdf" download>Descargar PDF</a>
+        <a class="btn btn--ghost" href="../assets/pitch/void-singularcorp.ppsx" download>Descargar PPT</a>
         <a class="btn btn--ghost" href="contacto.html">Ponte en contacto <span class="arr" aria-hidden="true">→</span></a>
       </div>
       <p class="meta hero__stamp">Iterum · expediente 0001 · pitch deck</p>
@@ -160,25 +161,34 @@
       </div>
 
       <div class="deck__viewer" data-deck tabindex="0" aria-label="Pitch deck de Singular">
-        <div class="deck__stage">
-          <div class="deck__slide" data-slide>
-            <div class="deck__media"></div>
+        <!-- .deck__body holds the stage and its bar: in fullscreen it is what a portrait phone turns on its side. -->
+        <div class="deck__body">
+          <div class="deck__stage">
+            <div class="deck__slide" data-slide>
+              <div class="deck__media"></div>
+            </div>
+            <div class="deck__status">
+              <span>Cargando el deck</span>
+              <i></i>
+              <p class="deck__error" hidden>No se ha podido dibujar el deck en este navegador. <a href="../assets/pitch/void-singularcorp.pdf">Descarga el PDF</a>.</p>
+              <noscript><p class="deck__noscript">Este visor necesita JavaScript. <a href="../assets/pitch/void-singularcorp.pdf">Descarga el deck en PDF</a>.</p></noscript>
+            </div>
+            <button class="deck__arrow deck__arrow--prev" type="button" data-deck-prev aria-label="Diapositiva anterior" disabled>←</button>
+            <button class="deck__arrow deck__arrow--next" type="button" data-deck-next aria-label="Diapositiva siguiente" disabled>→</button>
+            <span class="deck__tap" aria-hidden="true">Toca para ampliar</span>
           </div>
-          <div class="deck__status">
-            <span>Cargando el deck</span>
-            <i></i>
-            <p class="deck__error" hidden>No se ha podido dibujar el deck en este navegador. <a href="../assets/pitch/void-singularcorp.pdf">Descarga el PDF</a>.</p>
-            <noscript><p class="deck__noscript">Este visor necesita JavaScript. <a href="../assets/pitch/void-singularcorp.pdf">Descarga el deck en PDF</a>.</p></noscript>
-          </div>
-          <button class="deck__arrow deck__arrow--prev" type="button" data-deck-prev aria-label="Diapositiva anterior" disabled>←</button>
-          <button class="deck__arrow deck__arrow--next" type="button" data-deck-next aria-label="Diapositiva siguiente" disabled>→</button>
-        </div>
-        <div class="deck__bar">
-          <div class="deck__count" aria-live="polite"><span data-deck-page-n>01</span> / <span data-deck-total>—</span></div>
-          <div class="deck__progress"><i></i></div>
-          <div class="deck__tools">
-            <button class="btn btn--ghost" type="button" data-deck-fs aria-pressed="false"><span>Pantalla completa</span><span hidden>Salir de pantalla completa</span></button>
-            <a class="btn btn--ghost" href="../assets/pitch/void-singularcorp.pdf" data-deck-src download>PDF</a>
+          <div class="deck__bar">
+            <div class="deck__nav">
+              <button class="deck__step" type="button" data-deck-prev aria-label="Diapositiva anterior" disabled>←</button>
+              <div class="deck__count" aria-live="polite"><span data-deck-page-n>01</span> / <span data-deck-total>—</span></div>
+              <button class="deck__step" type="button" data-deck-next aria-label="Diapositiva siguiente" disabled>→</button>
+            </div>
+            <div class="deck__progress"><i></i></div>
+            <div class="deck__tools">
+              <button class="btn btn--ghost" type="button" data-deck-fs aria-pressed="false"><span>Pantalla completa</span><span hidden>Salir de pantalla completa</span></button>
+              <a class="btn btn--ghost" href="../assets/pitch/void-singularcorp.pdf" data-deck-src download>PDF</a>
+              <a class="btn btn--ghost" href="../assets/pitch/void-singularcorp.ppsx" download>PPT</a>
+            </div>
           </div>
         </div>
         <div class="deck__thumbs" role="tablist" aria-label="Diapositivas"></div>
@@ -186,7 +196,8 @@
           <button class="deck__thumb" type="button" role="tab" aria-label="Diapositiva"><canvas></canvas><span>00</span></button>
         </template>
       </div>
-      <p class="meta deck__hint"><kbd>←</kbd> <kbd>→</kbd> mover · <kbd>F</kbd> pantalla completa · desliza en pantalla táctil · <kbd>Esc</kbd> sale</p>
+      <p class="meta deck__hint deck__hint--keys"><kbd>←</kbd> <kbd>→</kbd> mover · <kbd>F</kbd> pantalla completa · desliza en pantalla táctil · <kbd>Esc</kbd> sale</p>
+      <p class="meta deck__hint deck__hint--touch">Desliza para moverte · toca la diapositiva para ampliarla</p>
     </div>
   </section>
 

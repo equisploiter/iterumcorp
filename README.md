@@ -37,7 +37,7 @@ Everything else in the HTML is English and identical in both languages: section 
 - `assets/video/` — `singular-reel.mp4`: the gameplay reel in the Singular gameplay band, under "You heal and reload…", and inside the Singular card on the home page (source `Publish.mp4`, 1920 × 1080 / 60 fps / 650 MB, re-encoded to 1280 × 720 / 30 fps, H.264 CRF 30, no audio, ~22 MB). Autoplays muted and looped; visitors with reduced motion keep the poster
 - `assets/fonts/` — self-hosted Space Grotesk + IBM Plex Mono (`fonts.css`)
 - `assets/press/` — downloadable press-kit zips
-- `assets/pitch/` — `void-singularcorp.pdf`, the deck shown on `pitch.html` · `assets/vendor/pdfjs/` — pdf.js 6.3 (ESM build + worker, see `VERSION.txt`)
+- `assets/pitch/` — `void-singularcorp.pdf`, the deck shown on `pitch.html`, and `void-singularcorp.ppsx`, the read-only PowerPoint show built from it by `scripts/deck-ppsx.py` · `assets/vendor/pdfjs/` — pdf.js 6.3 (ESM build + worker, see `VERSION.txt`)
 - `legal.html` — legal notice, privacy and cookies (linked from the footer and the consent checkboxes)
 - `es/` — **generated** Spanish pages · `i18n/es.json` — EN→ES dictionary · `scripts/i18n.js` — extract/build/check · `sitemap.xml` — generated, with hreflang alternates
 - `CNAME`, `.nojekyll`, `robots.txt` — GitHub Pages
@@ -53,6 +53,19 @@ Everything else in the HTML is English and identical in both languages: section 
 `pitch.html` renders `assets/pitch/void-singularcorp.pdf` slide by slide in the browser (pdf.js, vendored, no CDN). The page reads the PDF path from its download link, so **to update the deck, overwrite the PDF with the same name** and nothing else changes. To rename it, change the three `assets/pitch/…` links in `pitch.html` and run `npm run build`.
 
 PowerPoint exports an embedded video or gif as its first frame, so the PDF only carries stills. The figures in the *clips* section of `pitch.html` carry `data-deck-page` (the slide) and `data-deck-box` (`left top width height`, in % of the page); `deck.js` lays each clip over its still while that slide is on screen. After replacing the PDF, `python scripts/deck-boxes.py assets/pitch/void-singularcorp.pdf` (needs `pip install pymupdf`) prints every image box per page; copy the new values into the figures, or drop a figure if its slide is gone. Clips that are not on any slide can stay in the section without those two attributes.
+
+On a phone the stage runs edge to edge and a tap on the slide opens the theatre: the slide is turned on its side so it fills the screen (Android is asked to rotate; iPhone gets the CSS rotation), swipes follow the turned axes, and the bar keeps the step buttons and the exit.
+
+### PowerPoint show (.ppsx)
+
+The PDF cannot carry the gifs, so the page also offers `assets/pitch/void-singularcorp.ppsx`, built by `scripts/deck-ppsx.py` from the PDF plus the same clips section: every page becomes a slide-sized picture (nothing can be retyped), the gifs sit over their stills and animate in the show, the reel is embedded as video (plays on click). It is saved as a *show* (opens straight into the slideshow), marked as final, and carries a password to modify, so PowerPoint opens it read-only unless the password is typed. Rebuild it after every change to the PDF or the clips:
+
+```
+python -m pip install pymupdf python-pptx pillow      # once
+python scripts/deck-ppsx.py --password "…"           # add --last 22 to stop at "Thank you"
+```
+
+What that protection is not: DRM. Whoever has the file can still take screenshots or drag the pictures out. A file nobody can alter at all would be a video export of the deck.
 
 Handy: `pitch.html#s6` opens on slide 6; `data-deck-last="22"` on the `.deck__viewer` element hides everything after slide 22 (backup slides exported after "Thank you"). The page is `noindex` and left out of the sitemap because it is addressed to one publisher; remove the `robots` meta and the `noSitemap` entry in `scripts/i18n.js` to publish it openly.
 
