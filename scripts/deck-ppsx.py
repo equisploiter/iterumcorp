@@ -77,7 +77,17 @@ class PowerPoint:
     def run(self, pptx, hide, job):
         """Open the deck, make the shapes in `hide` ({slide_no: {shape_id}}) invisible in memory,
         return job(pres), close."""
-        pres = self.app.Presentations.Open(os.path.abspath(pptx), True, False, False)   # ReadOnly, Untitled, WithWindow
+        path = os.path.abspath(pptx)
+        try:
+            pres = self.app.Presentations.Open(path, True, False, False)   # ReadOnly, Untitled, WithWindow
+        except Exception:
+            # Some PowerPoint builds refuse every windowless open ("could not open the file"): open it
+            # in a window instead, minimised so it stays out of the way.
+            pres = self.app.Presentations.Open(path, True, False, True)
+            try:
+                pres.Windows(1).WindowState = 2  # ppWindowMinimized
+            except Exception:
+                pass
         try:
             for i, ids in (hide or {}).items():
                 for shp in pres.Slides(i).Shapes:

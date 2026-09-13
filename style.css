@@ -1150,6 +1150,10 @@ body.is-purpose .purpose { border-top: 0; }
 .deck__head h2 { margin-top: var(--sp-4); font-size: var(--step-3); max-width: 18ch; }
 .deck__head p:not(.meta) { color: var(--ink-2); max-width: 46ch; }
 .deck__head .meta b { color: var(--vi); }
+/* The note under the title: this deck leaves the budgets out, the full one is sent by email. */
+.deck__head p.deck__access { margin-top: var(--sp-4); padding-left: var(--sp-3); border-left: 1px solid var(--vi); font-size: var(--step--1); color: var(--ink-3); max-width: 44ch; }
+.deck__access a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.deck__access a:hover { color: var(--vi); }
 @media (min-width: 62em) {
   .deck__head { grid-template-columns: 1fr 1fr; gap: var(--sp-8); align-items: end; }
 }
