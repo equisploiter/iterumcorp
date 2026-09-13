@@ -50,22 +50,28 @@ Everything else in the HTML is English and identical in both languages: section 
 
 ## Pitch deck
 
-`pitch.html` renders `assets/pitch/void-singularcorp.pdf` slide by slide in the browser (pdf.js, vendored, no CDN). The page reads the PDF path from its download link, so **to update the deck, overwrite the PDF with the same name** and nothing else changes. To rename it, change the three `assets/pitch/…` links in `pitch.html` and run `npm run build`.
+`pitch.html` renders `assets/pitch/void-singularcorp.pdf` slide by slide in the browser (pdf.js, vendored, no CDN). The deck itself lives outside the repo (`Documents\Singular 26 Pitch.pptx`, 700 MB with the reel embedded); the PDF is PowerPoint's own export of it (File → Save as → PDF, or `scripts/deck-ppsx.py` leaves one next to the show). The page reads the PDF path from its download link, so **to update the deck, overwrite the PDF with the same name**. To rename it, change the `assets/pitch/…` links in `pitch.html` and run `npm run build`.
 
-PowerPoint exports an embedded video or gif as its first frame, so the PDF only carries stills. The figures in the *clips* section of `pitch.html` carry `data-deck-page` (the slide) and `data-deck-box` (`left top width height`, in % of the page); `deck.js` lays each clip over its still while that slide is on screen. After replacing the PDF, `python scripts/deck-boxes.py assets/pitch/void-singularcorp.pdf` (needs `pip install pymupdf`) prints every image box per page; copy the new values into the figures, or drop a figure if its slide is gone. Clips that are not on any slide can stay in the section without those two attributes.
+PowerPoint exports an embedded video or gif as its first frame, so the PDF only carries stills. The figures in the *clips* section of `pitch.html` carry `data-deck-page` (the slide), `data-deck-box` (`left top width height`, in % of the slide) and, when the deck crops a gif, `data-deck-crop`; when the deck rounds its corners ("crop to shape") `data-deck-round` carries PowerPoint's radius, and `data-deck-line` the width of its outline (the clip is tucked inside the outline the render already shows). `deck.js` lays each clip over its still while that slide is on screen, stretched, cropped and rounded exactly as PowerPoint shows it. The big clips are the site's own gifs and the reel; the small sprites and icons the deck animates sit in a `<template data-deck-extra>` (no cards) and live in `assets/img/deck/`. After changing the deck:
 
-On a phone the stage runs edge to edge and a tap on the slide opens the theatre: a fixed black overlay, the slide as wide as the screen allows with a light bar under it, swipe or the step buttons to move, Back or the exit button to leave. It is the same in every browser on purpose — the deck never asks the system to rotate the screen (`screen.orientation.lock` is Android-only and turns the whole page sideways in the hand) and never turns the slide with CSS (which looks broken to anyone who did not expect it). A phone held upright is simply told *Turn your phone*, and turning it gives the full landscape slide. Real fullscreen is used on desktops and tablets, where it behaves the same everywhere; `deck.js` picks the theatre for anything that is a phone (`pointer: coarse` and a short side under 48 em).
+```
+python scripts/deck-boxes.py "C:/Users/usuario/Documents/Singular 26 Pitch.pptx" --extract assets/img/deck
+```
+
+prints every animated gif and video with the attributes to paste into the figures, and pulls the gifs out of the .pptx (existing files are left alone). The old form, `python scripts/deck-boxes.py <pdf>`, lists image boxes from a PDF instead.
+
+On a phone the stage runs edge to edge and a tap on the slide opens the theatre: the slide is turned on its side so it fills the screen (Android is asked to rotate; iPhone gets the CSS rotation), swipes follow the turned axes, and the bar keeps the step buttons and the exit.
 
 ### PowerPoint show (.ppsx)
 
-The PDF cannot carry the gifs, so the page also offers `assets/pitch/void-singularcorp.ppsx`, built by `scripts/deck-ppsx.py` from the PDF plus the same clips section: every page becomes a slide-sized picture (nothing can be retyped), the gifs sit over their stills and animate in the show, the reel is embedded as video, with its audio (plays on click). It is saved as a *show* (opens straight into the slideshow), marked as final, and carries a password to modify, so PowerPoint opens it read-only unless the password is typed. Rebuild it after every change to the PDF or the clips:
+The PDF cannot carry the gifs, so the page also offers `assets/pitch/void-singularcorp.ppsx`, built by `scripts/deck-ppsx.py` from the deck itself (`Documents\Singular 26 Pitch.pptx`, kept outside the repo): PowerPoint renders every visible slide to a picture (nothing can be retyped), the animated gifs and the embedded reel are put back over their stills in their exact place, with the deck's own rounded corners and outlines (the reel re-encoded to 720p/30 with its audio, so the 650 MB original never ships), and the file is saved as a *show* (opens straight into the slideshow), marked as final, with a password to modify, so PowerPoint opens it read-only unless the password is typed. Rebuild it after every change to the deck:
 
 ```
-python -m pip install pymupdf python-pptx pillow      # once
-python scripts/deck-ppsx.py --password "…"           # add --last 22 to stop at "Thank you"
+python -m pip install python-pptx pillow pywin32 imageio-ffmpeg      # once
+python scripts/deck-ppsx.py --pptx "C:/Users/usuario/Documents/Singular 26 Pitch.pptx" --password "…"
 ```
 
-What that protection is not: DRM. Whoever has the file can still take screenshots or drag the pictures out. A file nobody can alter at all would be a video export of the deck.
+It needs PowerPoint on the machine (it drives it invisibly and closes it again). Without PowerPoint, `--pdf assets/pitch/void-singularcorp.pdf` builds the same kind of file from the PDF plus the clips section of `pitch.html`. What that protection is not: DRM. Whoever has the file can still take screenshots or drag the pictures out. A file nobody can alter at all would be a video export of the deck.
 
 Handy: `pitch.html#s6` opens on slide 6; `data-deck-last="22"` on the `.deck__viewer` element hides everything after slide 22 (backup slides exported after "Thank you"). The page is `noindex` and left out of the sitemap because it is addressed to one publisher; remove the `robots` meta and the `noSitemap` entry in `scripts/i18n.js` to publish it openly.
 

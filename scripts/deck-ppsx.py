@@ -2,33 +2,49 @@
 """
 deck-ppsx · iterumcorp.org
 
-Builds the PowerPoint show (.ppsx) offered next to the PDF on pitch.html.
+Builds the read-only PowerPoint show (.ppsx) offered next to the PDF on pitch.html.
 
-  · Every page of the PDF becomes one slide-sized picture, so nothing on it can be retyped.
-  · The clips listed in pitch.html (data-deck-page / data-deck-box) are placed over their still
-    frames as real gifs (they animate in the show) and as embedded video (plays on click).
+  · Every slide becomes one slide-sized picture, so nothing on it can be retyped.
+  · The animated gifs and the videos are put back over their still frames as real media, in
+    their exact place, so they play in the show (video: on click).
   · The file is saved as a *show* (opens straight into the slideshow) with a "password to
-    modify": PowerPoint opens it read-only unless the password is typed, and it is marked as
-    final. This is the strongest protection an Office file has; it is not DRM — someone can still
-    copy the pictures out or screen-record. For a file nobody can alter at all, export a video.
+    modify" (PowerPoint opens it read-only unless the password is typed) and marked as final.
+    This is the strongest protection an Office file has; it is not DRM — someone can still
+    take screenshots or drag the pictures out. A file nobody can alter at all is a video.
 
-    python scripts/deck-ppsx.py --password "…" [--pdf assets/pitch/void-singularcorp.pdf]
-        [--html pitch.html] [--out assets/pitch/void-singularcorp.ppsx] [--last N] [--scale 2]
+Two sources:
 
-Needs PyMuPDF, python-pptx and Pillow:  python -m pip install pymupdf python-pptx pillow
+  --pptx "…/Singular 26 Pitch.pptx"   PowerPoint itself renders the slides (Windows, PowerPoint
+                                      installed), the gifs and videos come out of the .pptx with
+                                      their geometry. Hidden slides are skipped. Videos over
+                                      --video-max-mb are re-encoded to 720p/30 (needs ffmpeg:
+                                      `pip install imageio-ffmpeg`).
+  --pdf assets/pitch/void-singularcorp.pdf
+                                      Fallback without PowerPoint: the PDF pages are rendered and
+                                      the clips listed in pitch.html (data-deck-page / data-deck-box)
+                                      are laid over their stills.
+
+    python scripts/deck-ppsx.py --pptx "C:/…/Singular 26 Pitch.pptx" --password "…"
+    python scripts/deck-ppsx.py --pdf assets/pitch/void-singularcorp.pdf --password "…"
+        [--out assets/pitch/void-singularcorp.ppsx] [--last N] [--width 1920] [--video-max-mb 60]
+
+Needs python-pptx and Pillow; PyMuPDF for --pdf; pywin32 for --pptx:
+    python -m pip install python-pptx pillow pymupdf pywin32 imageio-ffmpeg
 """
-import argparse, base64, hashlib, io, os, re, secrets, struct, sys, tempfile, zipfile
+import argparse, base64, hashlib, io, os, re, secrets, shutil, struct, subprocess, sys, tempfile, zipfile
 
 try:
-    import fitz  # PyMuPDF
     from PIL import Image
     from pptx import Presentation
     from pptx.util import Emu
 except ImportError as e:
-    sys.exit("missing dependency (%s): python -m pip install pymupdf python-pptx pillow" % e)
+    sys.exit("missing dependency (%s): python -m pip install python-pptx pillow" % e)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SPIN = 100000
+NS_A = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
+NS_P = "{http://schemas.openxmlformats.org/presentationml/2006/main}"
+NS_R = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}"
 CUSTOM_XML = ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
               '<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties" '
               'xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">'
@@ -36,8 +52,137 @@ CUSTOM_XML = ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
               '</Properties>')
 
 
+# ---------------------------------------------------------------------------------------------
+# Source A: a .pptx, rendered by PowerPoint
+# ---------------------------------------------------------------------------------------------
+def render_with_powerpoint(pptx, outdir, width):
+    """Export every visible slide to PNG through PowerPoint (COM). Returns {slide_no: png_path}."""
+    try:
+        import win32com.client
+    except ImportError:
+        sys.exit("--pptx needs PowerPoint and pywin32: python -m pip install pywin32")
+    tl = subprocess.run(["tasklist"], capture_output=True, text=True).stdout.upper()
+    was_running = "POWERPNT.EXE" in tl          # then it is the user's PowerPoint: never quit it
+    app = win32com.client.Dispatch("PowerPoint.Application")
+    app.DisplayAlerts = 1                        # ppAlertsNone
+    pres = app.Presentations.Open(os.path.abspath(pptx), True, False, False)   # ReadOnly, Untitled, WithWindow
+    out = {}
+    try:
+        h = round(width * pres.PageSetup.SlideHeight / pres.PageSetup.SlideWidth)
+        for i in range(1, pres.Slides.Count + 1):
+            s = pres.Slides(i)
+            if s.SlideShowTransition.Hidden == -1:
+                continue
+            p = os.path.normpath(os.path.join(outdir, "slide%02d.png" % i))
+            s.Export(p, "PNG", width, h)
+            out[i] = p
+    finally:
+        pres.Close()
+        if not was_running:
+            app.Quit()
+    return out
+
+
+def media_from_pptx(pptx):
+    """The animated gifs and embedded videos of every slide: {slide_no: [item]} with EMU geometry."""
+    prs = Presentation(pptx)
+    items = {}
+    for i, slide in enumerate(prs.slides, 1):
+        if slide._element.get("show") == "0":
+            continue
+        for sh in slide.shapes:
+            box = (sh.left, sh.top, sh.width, sh.height)
+            if None in box:
+                continue
+            vf = sh._element.find(".//" + NS_A + "videoFile")
+            if vf is not None:
+                rid = vf.get(NS_R + "link")
+                rel = sh.part.rels.get(rid) if rid else None
+                if rel is None or rel.is_external:
+                    print("  ! slide %02d: linked (not embedded) video skipped: %s" % (i, rel.target_ref if rel else "?"))
+                    continue
+                poster = None
+                try:
+                    pf = sh.poster_frame
+                    poster = pf.blob if pf is not None else None
+                except Exception:
+                    pass
+                items.setdefault(i, []).append({"kind": "video", "blob": rel.target_part.blob, "box": box, "poster": poster,
+                                                "mime": getattr(rel.target_part, "content_type", "video/mp4")})
+                continue
+            try:
+                img = sh.image
+            except Exception:
+                continue                          # not a picture, or a linked / SVG one
+            if img.content_type != "image/gif":
+                continue
+            try:
+                frames = getattr(Image.open(io.BytesIO(img.blob)), "n_frames", 1)
+            except Exception:
+                frames = 1
+            if frames < 2:
+                continue                          # a still gif is already in the render
+            # The deck's own look for the picture: "crop to shape" (rounded corners…) and its outline.
+            sp = sh._element.find(".//" + NS_P + "spPr")
+            geom = sp.find(NS_A + "prstGeom") if sp is not None else None
+            ln = sp.find(NS_A + "ln") if sp is not None else None
+            items.setdefault(i, []).append({"kind": "gif", "blob": img.blob, "box": box,
+                                            "crop": (sh.crop_left, sh.crop_right, sh.crop_top, sh.crop_bottom),
+                                            "geom": geom, "ln": ln})
+    return prs.slide_width, prs.slide_height, items
+
+
+def dress(pic, geom, ln):
+    """Give a new picture the source picture's shape geometry and outline (deep copies of the XML)."""
+    import copy
+    sp = pic._element.spPr
+    if geom is not None and geom.get("prst") not in (None, "rect"):
+        old = sp.find(NS_A + "prstGeom")
+        new = copy.deepcopy(geom)
+        if old is not None:
+            sp.replace(old, new)
+        else:
+            sp.append(new)
+    if ln is not None:
+        old = sp.find(NS_A + "ln")
+        if old is not None:
+            sp.remove(old)
+        sp.append(copy.deepcopy(ln))     # after prstGeom and any fill: the order CT_ShapeProperties wants
+
+
+def ffmpeg_exe():
+    try:
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except ImportError:
+        return shutil.which("ffmpeg")
+
+
+def shrink_video(blob, workdir, max_mb):
+    """Re-encode a video that is too big to ship (720p, 30 fps, H.264, AAC). Returns a file path."""
+    src = os.path.join(workdir, "video-src.mp4")
+    with open(src, "wb") as f:
+        f.write(blob)
+    if len(blob) <= max_mb * 1e6:
+        return src
+    ff = ffmpeg_exe()
+    if not ff:
+        print("  ! video is %.0f MB and no ffmpeg found (pip install imageio-ffmpeg): embedding it as is" % (len(blob) / 1e6))
+        return src
+    dst = os.path.join(workdir, "video-720p.mp4")
+    print("  re-encoding a %.0f MB video to 720p/30 …" % (len(blob) / 1e6))
+    subprocess.run([ff, "-y", "-hide_banner", "-loglevel", "error", "-i", src, "-vf", "scale=1280:-2", "-r", "30",
+                    "-c:v", "libx264", "-crf", "30", "-preset", "medium", "-pix_fmt", "yuv420p",
+                    "-c:a", "aac", "-b:a", "128k", "-ac", "2", "-movflags", "+faststart", dst], check=True)
+    print("  → %.1f MB" % (os.path.getsize(dst) / 1e6))
+    return dst
+
+
+# ---------------------------------------------------------------------------------------------
+# Source B: the PDF plus the clips section of pitch.html
+# ---------------------------------------------------------------------------------------------
 def clips_from_html(path):
-    """The figures of the clips section: {page: [{box, src, poster, video}]}."""
+    """The figures of the clips section: {page: [{box(% of page), src, poster, video}]}."""
     html = open(path, encoding="utf-8").read()
     clips = {}
     for m in re.finditer(r'<figure\b[^>]*\bdata-deck-page="(\d+)"[^>]*\bdata-deck-box="([^"]+)"[^>]*>([\s\S]*?)</figure>', html):
@@ -46,45 +191,67 @@ def clips_from_html(path):
         poster = re.search(r'\bposter="([^"]+)"', body)
         if not src or len(box) != 4:
             continue
-        clips.setdefault(page, []).append({
-            "box": box, "src": src.group(1), "poster": poster.group(1) if poster else None,
-            "video": bool(re.search(r"<video\b", body)),
-        })
+        clips.setdefault(page, []).append({"box": box, "src": src.group(1), "poster": poster.group(1) if poster else None,
+                                           "video": bool(re.search(r"<video\b", body))})
     return clips
 
 
-def build(pdf, clips, last, scale):
+def render_pdf(pdf, outdir, width):
+    try:
+        import fitz
+    except ImportError:
+        sys.exit("--pdf needs PyMuPDF: python -m pip install pymupdf")
     doc = fitz.open(pdf)
-    n = min(len(doc), last) if last else len(doc)
-    prs = Presentation()
+    out = {}
     r = doc[0].rect
-    prs.slide_width = Emu(12192000)                                   # 13.333 in, the 16:9 default
-    prs.slide_height = Emu(round(12192000 * r.height / r.width))
-    W, H = prs.slide_width, prs.slide_height
+    for i, page in enumerate(doc, 1):
+        pix = page.get_pixmap(matrix=fitz.Matrix(width / r.width, width / r.width), alpha=False)
+        p = os.path.join(outdir, "slide%02d.png" % i)
+        pix.save(p)
+        out[i] = p
+    return out, r.width / r.height
+
+
+# ---------------------------------------------------------------------------------------------
+# Build + protect
+# ---------------------------------------------------------------------------------------------
+def cover_crop(pic, iw, ih):
+    """Crop a picture so it covers its box like object-fit: cover."""
+    if iw / ih > pic.width / pic.height:
+        cut = (1 - (pic.width / pic.height) / (iw / ih)) / 2
+        pic.crop_left = pic.crop_right = cut
+    else:
+        cut = (1 - (iw / ih) / (pic.width / pic.height)) / 2
+        pic.crop_top = pic.crop_bottom = cut
+
+
+def build(renders, W, H, media, last, workdir):
+    prs = Presentation()
+    prs.slide_width, prs.slide_height = Emu(W), Emu(H)
     blank = prs.slide_layouts[6]
-    for i in range(n):
-        pix = doc[i].get_pixmap(matrix=fitz.Matrix(scale, scale), alpha=False)
-        img = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
+    n = 0
+    for no in sorted(renders):
+        if last and no > last:
+            break
+        img = Image.open(renders[no]).convert("RGB")
         buf = io.BytesIO(); img.save(buf, "JPEG", quality=86, optimize=True); buf.seek(0)
         slide = prs.slides.add_slide(blank)
-        slide.shapes.add_picture(buf, 0, 0, W, H)
-        for c in clips.get(i + 1, []):
-            x, y, w, h = c["box"]
-            left, top, width, height = (Emu(round(W * x / 100)), Emu(round(H * y / 100)), Emu(round(W * w / 100)), Emu(round(H * h / 100)))
-            src = os.path.join(ROOT, c["src"])
-            if c["video"]:
-                poster = os.path.join(ROOT, c["poster"]) if c["poster"] else None
-                slide.shapes.add_movie(src, left, top, width, height, poster_frame_image=poster, mime_type="video/mp4")
+        slide.shapes.add_picture(buf, 0, 0, prs.slide_width, prs.slide_height)
+        for m in media.get(no, []):
+            left, top, width, height = (Emu(v) for v in m["box"])
+            if m["kind"] == "video":
+                poster = io.BytesIO(m["poster"]) if m.get("poster") else None
+                slide.shapes.add_movie(m["path"], left, top, width, height, poster_frame_image=poster, mime_type=m.get("mime", "video/mp4"))
             else:
-                pic = slide.shapes.add_picture(src, left, top, width, height)
-                iw, ih = Image.open(src).size                            # cover the box, like the web page
-                if iw / ih > width / height:
-                    cut = (1 - (width / height) / (iw / ih)) / 2
-                    pic.crop_left = pic.crop_right = cut
-                else:
-                    cut = (1 - (iw / ih) / (width / height)) / 2
-                    pic.crop_top = pic.crop_bottom = cut
-        print("  slide %02d%s" % (i + 1, "  + %d clip(s)" % len(clips[i + 1]) if clips.get(i + 1) else ""))
+                pic = slide.shapes.add_picture(io.BytesIO(m["blob"]), left, top, width, height)
+                if "crop" in m:                               # the deck's own crop
+                    pic.crop_left, pic.crop_right, pic.crop_top, pic.crop_bottom = m["crop"]
+                else:                                         # a web clip over a still: cover the box
+                    iw, ih = Image.open(io.BytesIO(m["blob"])).size
+                    cover_crop(pic, iw, ih)
+                dress(pic, m.get("geom"), m.get("ln"))       # rounded corners, outline: as in the deck
+        n += 1
+        print("  slide %02d%s" % (no, "  + %d clip(s)" % len(media[no]) if media.get(no) else ""))
     prs.core_properties.title = "Singular · Pitch"
     prs.core_properties.author = "Iterum Corporation"
     return prs, n
@@ -127,24 +294,63 @@ def finish(tmp, out, password):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--pdf", default="assets/pitch/void-singularcorp.pdf")
-    ap.add_argument("--html", default="pitch.html")
+    src = ap.add_mutually_exclusive_group()
+    src.add_argument("--pptx", help="the deck itself; PowerPoint renders the slides")
+    src.add_argument("--pdf", help="the PDF export plus the clips of pitch.html (default: assets/pitch/void-singularcorp.pdf)")
+    ap.add_argument("--html", default="pitch.html", help="where the clips come from in --pdf mode")
     ap.add_argument("--out", default="assets/pitch/void-singularcorp.ppsx")
     ap.add_argument("--password", default=None, help="password to modify (a random one is made and printed if omitted)")
-    ap.add_argument("--last", type=int, default=None, help="stop after this page")
-    ap.add_argument("--scale", type=float, default=2.0, help="render scale over the PDF points (2 = 1920x1080 for a 16:9 deck)")
+    ap.add_argument("--last", type=int, default=None, help="stop after this slide")
+    ap.add_argument("--width", type=int, default=1920, help="pixel width of the rendered slides")
+    ap.add_argument("--video-max-mb", type=float, default=60, help="--pptx: videos bigger than this are re-encoded to 720p")
     a = ap.parse_args()
-    pdf, html, out = (os.path.join(ROOT, p) for p in (a.pdf, a.html, a.out))
+    if not a.pptx and not a.pdf:
+        a.pdf = "assets/pitch/void-singularcorp.pdf"
+    out = os.path.join(ROOT, a.out)
     password = a.password if a.password is not None else secrets.token_urlsafe(9)
-    clips = clips_from_html(html)
-    print("clips from %s: %s" % (a.html, {k: len(v) for k, v in clips.items()} or "none"))
-    prs, n = build(pdf, clips, a.last, a.scale)
-    fd, tmp = tempfile.mkstemp(suffix=".pptx"); os.close(fd)
+    work = tempfile.mkdtemp(prefix="deck-ppsx-")
     try:
+        if a.pptx:
+            pptx = os.path.abspath(a.pptx)
+            print("rendering %s with PowerPoint …" % os.path.basename(pptx))
+            renders = render_with_powerpoint(pptx, work, a.width)
+            W, H, media = media_from_pptx(pptx)
+            for items in media.values():
+                for m in items:
+                    if m["kind"] == "video":
+                        m["path"] = shrink_video(m["blob"], work, a.video_max_mb)
+                        del m["blob"]
+            print("%d visible slide(s), media on: %s" % (len(renders), {k: len(v) for k, v in media.items()} or "none"))
+        else:
+            pdf, html = os.path.join(ROOT, a.pdf), os.path.join(ROOT, a.html)
+            renders, ar = render_pdf(pdf, work, a.width)
+            W, H = 12192000, round(12192000 / ar)
+            media = {}
+            for page, clips in clips_from_html(html).items():
+                for c in clips:
+                    x, y, w, h = c["box"]
+                    box = (round(W * x / 100), round(H * y / 100), round(W * w / 100), round(H * h / 100))
+                    path = os.path.join(ROOT, c["src"])
+                    if c["video"]:
+                        poster = open(os.path.join(ROOT, c["poster"]), "rb").read() if c["poster"] else None
+                        media.setdefault(page, []).append({"kind": "video", "path": path, "box": box, "poster": poster, "mime": "video/mp4"})
+                    else:
+                        media.setdefault(page, []).append({"kind": "gif", "blob": open(path, "rb").read(), "box": box})
+            print("%d page(s), clips from %s: %s" % (len(renders), a.html, {k: len(v) for k, v in media.items()} or "none"))
+        prs, n = build(renders, W, H, media, a.last, work)
+        tmp = os.path.join(work, "deck.pptx")
         prs.save(tmp)
-        finish(tmp, out, password)
+        # Written beside the target and swapped in at the end, so a half-made file never replaces
+        # the good one; if the old file is open in PowerPoint, say so instead of failing halfway.
+        part = out + ".part"
+        finish(tmp, part, password)
+        try:
+            os.replace(part, out)
+        except PermissionError:
+            os.remove(part)
+            sys.exit("cannot replace %s: it is open in PowerPoint (or another program). Close it and run again." % a.out)
     finally:
-        os.remove(tmp)
+        shutil.rmtree(work, ignore_errors=True)
     print("wrote %s: %d slides, %.1f MB, password to modify: %s" % (a.out, n, os.path.getsize(out) / 1e6, password if password else "(none)"))
 
 

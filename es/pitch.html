@@ -211,40 +211,63 @@
   </section>
 
   <!-- THE CLIPS. Each figure names the slide it belongs to and where on it the still sits
-       (data-deck-box: left, top, width, height, as % of the page). deck.js lays the clip over the
+       (data-deck-box: left, top, width, height, as % of the slide). deck.js lays the clip over the
        slide; the section itself is the plain gallery, and the fallback when the deck cannot draw.
-       New PDF? `python scripts/deck-boxes.py assets/pitch/void-singularcorp.pdf` prints the boxes. -->
+       New deck? `python scripts/deck-boxes.py "<the .pptx>" --extract assets/img/deck` prints every
+       box (and crop) and pulls the gifs out; the PDF is PowerPoint's own export of the same file. -->
   <section class="section clips plate plate--right plate--soft" id="clips" style="--plate-pos: 60% 15%">
     <div class="plate__img" aria-hidden="true"><img src="../assets/img/dore-jordan.webp" srcset="../assets/img/dore-jordan-720.webp 720w, ../assets/img/dore-jordan.webp 1200w, ../assets/img/dore-jordan-1600.webp 1600w" sizes="100vw" alt="" loading="lazy" decoding="async" width="1200" height="1515"></div>
     <div class="wrap">
       <div class="section__head reveal">
         <h2>Todos los clips del deck</h2>
-        <p>Los cinco clips a los que aluden las diapositivas, en un solo sitio: cuatro mecánicas y el reel de gameplay. Cada uno se reproduce también dentro de su diapositiva, más arriba.</p>
+        <p>Los clips a los que aluden las diapositivas, en un solo sitio: las cuatro mecánicas, el combo de esquiva perfecta, un combate contra un jefe y el reel de gameplay. Cada uno se reproduce también dentro de su diapositiva, más arriba, igual que los sprites pequeños de las diapositivas de jefes, lore y arte.</p>
       </div>
       <div class="strip strip--wide reveal">
-        <figure data-deck-page="6" data-deck-box="21.88 29.26 23.44 28.33">
+        <figure data-deck-page="5" data-deck-box="15.83 23.81 31.67 31.67" data-deck-round="16667" data-deck-line="0.469">
           <img src="../assets/img/mech-attack.gif" alt="Ari atacando cuerpo a cuerpo y a distancia, con el suelo cubierto de sangre" width="800" height="450" loading="lazy">
-          <figcaption>Ataque <span>diapositiva 06</span></figcaption>
+          <figcaption>Ataque <span>diapositiva 05</span></figcaption>
         </figure>
-        <figure data-deck-page="6" data-deck-box="56.04 29.26 23.44 28.33">
+        <figure data-deck-page="5" data-deck-box="52.50 23.81 31.67 31.67" data-deck-round="16667" data-deck-line="0.469">
           <img src="../assets/img/mech-dash.gif" alt="Ari atravesando una horda con un dash" width="800" height="450" loading="lazy">
-          <figcaption>Dash <span>diapositiva 06</span></figcaption>
+          <figcaption>Dash <span>diapositiva 05</span></figcaption>
         </figure>
-        <figure data-deck-page="6" data-deck-box="20.52 64.44 23.44 28.15">
+        <figure data-deck-page="5" data-deck-box="15.83 62.67 31.67 31.67" data-deck-round="16667" data-deck-line="0.469">
           <img src="../assets/img/mech-heal.gif" alt="Ari curándose sobre un charco de sangre" width="800" height="450" loading="lazy">
-          <figcaption>Curación <span>diapositiva 06</span></figcaption>
+          <figcaption>Curación <span>diapositiva 05</span></figcaption>
         </figure>
-        <figure data-deck-page="6" data-deck-box="55.94 64.44 23.44 27.78">
+        <figure data-deck-page="5" data-deck-box="52.50 62.67 31.67 31.67" data-deck-round="16667" data-deck-line="0.469">
           <img src="../assets/img/mech-overclock.gif" alt="Ari en OverClock, con la barra de arriba a la izquierda llenándose" width="800" height="450" loading="lazy">
-          <figcaption>OverClock <span>diapositiva 06</span></figcaption>
+          <figcaption>OverClock <span>diapositiva 05</span></figcaption>
+        </figure>
+        <figure data-deck-page="6" data-deck-box="50.00 26.53 46.88 46.94" data-deck-round="16667" data-deck-line="0.469">
+          <img src="../assets/img/mech-combo.gif" alt="Ari encadenando una esquiva perfecta con un combo en OverClock" width="800" height="450" loading="lazy">
+          <figcaption>Combo de esquiva perfecta <span>diapositiva 06</span></figcaption>
+        </figure>
+        <figure data-deck-page="9" data-deck-box="19.35 21.35 61.31 61.31" data-deck-round="6000" data-deck-line="0.469">
+          <img src="../assets/img/boss-andromeda.gif" alt="Ari luchando contra un jefe en el Nivel 1" width="800" height="450" loading="lazy">
+          <figcaption>Combate contra un jefe <span>diapositiva 09</span></figcaption>
         </figure>
       </div>
-      <figure class="clips__reel reveal" data-deck-page="4" data-deck-box="9.48 9.44 81.04 81.11">
+      <!-- Sprites and icons the deck animates too (pulled out of the .pptx by scripts/deck-boxes.py). Kept in a
+           template so they play on their slides without becoming cards; data-deck-crop repeats the deck's crop. -->
+      <template data-deck-extra>
+        <figure data-deck-page="7" data-deck-box="80.42 2.04 8.61 22.96" data-deck-crop="0.4143 0.4163 0.4296 0.3771"><img src="../assets/img/deck/deck-ari-idle.gif" alt=""></figure>
+        <figure data-deck-page="8" data-deck-box="57.11 39.52 24.70 36.38"><img src="../assets/img/deck/deck-boss-entity.gif" alt=""></figure>
+        <figure data-deck-page="8" data-deck-box="80.16 33.37 23.74 37.86"><img src="../assets/img/deck/deck-boss-entity.gif" alt=""></figure>
+        <figure data-deck-page="8" data-deck-box="66.75 21.06 26.45 41.86"><img src="../assets/img/deck/deck-boss-skull.gif" alt=""></figure>
+        <figure data-deck-page="11" data-deck-box="12.58 85.52 8.47 15.33" data-deck-crop="0.4091 0.4021 0.3893 0.3809"><img src="../assets/img/deck/deck-icon-loop.gif" alt=""></figure>
+        <figure data-deck-page="11" data-deck-box="57.88 7.84 7.05 12.75" data-deck-crop="0.4091 0.4021 0.3893 0.3809"><img src="../assets/img/deck/deck-icon-loop.gif" alt=""></figure>
+        <figure data-deck-page="11" data-deck-box="91.91 1.46 7.05 12.75" data-deck-crop="0.4091 0.4021 0.3893 0.3809"><img src="../assets/img/deck/deck-icon-loop.gif" alt=""></figure>
+        <figure data-deck-page="11" data-deck-box="91.91 30.39 7.05 12.75" data-deck-crop="0.4091 0.4021 0.3893 0.3809"><img src="../assets/img/deck/deck-icon-loop.gif" alt=""></figure>
+        <figure data-deck-page="11" data-deck-box="73.64 0.00 21.36 36.77" data-deck-crop="0.0959 0.1236 0.0640 0.2917"><img src="../assets/img/deck/deck-boss-sigil.gif" alt=""></figure>
+        <figure data-deck-page="14" data-deck-box="87.29 1.48 9.38 19.26"><img src="../assets/img/deck/deck-drone.gif" alt=""></figure>
+      </template>
+      <figure class="clips__reel reveal" data-deck-page="3" data-deck-box="13.55 13.55 72.91 72.91">
         <!-- Starts muted like every copy of the reel; the player's own speaker turns the sound on. -->
         <video controls muted loop playsinline preload="metadata" poster="../assets/img/reel-poster.jpg" width="1280" height="720" disablepictureinpicture disableremoteplayback aria-label="Vídeo de gameplay de Singular: Ari abriéndose paso por el Nivel 1">
           <source src="../assets/video/singular-reel.mp4" type="video/mp4">
         </video>
-        <figcaption>Reel de gameplay <span>diapositiva 04</span></figcaption>
+        <figcaption>Reel de gameplay <span>diapositiva 03</span></figcaption>
       </figure>
     </div>
   </section>

@@ -44,9 +44,14 @@ async function boot(viewer) {
   var clamp = function (n, a, b) { return Math.max(a, Math.min(b, n)); };
   var dpr = function () { return Math.min(window.devicePixelRatio || 1, 2.5); };
 
-  // The clips, grouped by the slide they belong to.
+  // The clips, grouped by the slide they belong to: the figures of the clips section, plus the
+  // small ones (sprites, icons) kept in a <template data-deck-extra> so they never show as cards.
   var clips = {};
-  document.querySelectorAll('[data-deck-page][data-deck-box]').forEach(function (f) {
+  var pool = Array.prototype.slice.call(document.querySelectorAll('[data-deck-page][data-deck-box]'));
+  document.querySelectorAll('template[data-deck-extra]').forEach(function (t) {
+    pool = pool.concat(Array.prototype.slice.call(t.content.querySelectorAll('[data-deck-page][data-deck-box]')));
+  });
+  pool.forEach(function (f) {
     var n = +f.dataset.deckPage;
     (clips[n] = clips[n] || []).push(f);
   });
@@ -152,8 +157,22 @@ async function boot(viewer) {
         src.querySelectorAll('source').forEach(function (s) { var c = document.createElement('source'); c.src = s.src; if (s.type) c.type = s.type; el.appendChild(c); });
         if (reduce) el.controls = true; else el.autoplay = true;
       } else {
-        el = document.createElement('img');
-        el.src = src.currentSrc || src.src; el.alt = src.alt || ''; el.decoding = 'async';
+        // Stretched to the box like PowerPoint does; a crop from the deck (data-deck-crop, fractions
+        // cut off left/right/top/bottom) is reproduced by oversizing and offsetting the image.
+        el = document.createElement('div'); el.className = 'deck__clip';
+        var im = document.createElement('img');
+        im.src = new URL(src.getAttribute('src'), document.baseURI).href; im.alt = src.alt || ''; im.decoding = 'async';
+        var crop = (fig.dataset.deckCrop || '').trim().split(/[\s,]+/).map(Number);
+        if (crop.length === 4 && !crop.some(isNaN)) {
+          var sw = 100 / (1 - crop[0] - crop[1]), sh = 100 / (1 - crop[2] - crop[3]);
+          im.style.width = sw.toFixed(3) + '%'; im.style.height = sh.toFixed(3) + '%';
+          im.style.left = (-crop[0] * sw).toFixed(3) + '%'; im.style.top = (-crop[2] * sh).toFixed(3) + '%';
+        }
+        // "Crop to shape: rounded rectangle" and the outline, as the deck draws them (sized in dress()).
+        if (fig.dataset.deckRound) el.dataset.round = fig.dataset.deckRound;
+        if (fig.dataset.deckLine) el.dataset.line = fig.dataset.deckLine;
+        el.dataset.box = fig.dataset.deckBox;
+        el.appendChild(im);
       }
       var place = function (node) {
         node.style.setProperty('--x', box[0] + '%'); node.style.setProperty('--y', box[1] + '%');
@@ -161,6 +180,7 @@ async function boot(viewer) {
         media.appendChild(node);
       };
       place(el);
+      dress(el);
       if (el.tagName === 'VIDEO') {
         if (!reduce) {
           var p = el.play();
@@ -177,6 +197,26 @@ async function boot(viewer) {
       }
     });
   }
+
+  // Shape, in pixels for the stage's current size. PowerPoint's corner radius is adj / 100000 of
+  // the clip's shorter side. An outline is drawn centred on the edge, so the rendered slide already
+  // shows its outer half: the clip is pulled in by half the line width (a fraction of the slide
+  // width) and its corners tightened to match, and the whole outline stays visible around it.
+  function dress(el) {
+    var half = el.dataset.line ? (parseFloat(el.dataset.line) / 100) * stage.clientWidth / 2 : 0;
+    var box = el.dataset.box.split(/[\s,]+/).map(Number);
+    if (half) {
+      el.style.left = 'calc(' + box[0] + '% + ' + half.toFixed(2) + 'px)';
+      el.style.top = 'calc(' + box[1] + '% + ' + half.toFixed(2) + 'px)';
+      el.style.width = 'calc(' + box[2] + '% - ' + (2 * half).toFixed(2) + 'px)';
+      el.style.height = 'calc(' + box[3] + '% - ' + (2 * half).toFixed(2) + 'px)';
+    }
+    if (el.dataset.round) {
+      var r = (+el.dataset.round / 100000) * Math.min(el.offsetWidth + 2 * half, el.offsetHeight + 2 * half) - half;
+      el.style.borderRadius = Math.max(0, r).toFixed(2) + 'px';
+    }
+  }
+  function dressAll() { media.querySelectorAll('[data-round], [data-line]').forEach(dress); }
 
   // ---- Thumbnails, drawn as they scroll into view ----
   var thumbBtns = [];
@@ -341,7 +381,7 @@ async function boot(viewer) {
     rt = setTimeout(function () {
       var w = stage.clientWidth, n = cur;
       if (!w || w === cacheW || !n) return;
-      render(n, w).then(function (c) { if (n === cur) { place(c); prefetch(n); } }).catch(function () {});
+      render(n, w).then(function (c) { if (n === cur) { place(c); dressAll(); prefetch(n); } }).catch(function () {});
     }, 120);
   }
   addEventListener('resize', relayout);
