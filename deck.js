@@ -38,7 +38,11 @@ async function boot(viewer) {
   // Arrows over the slide (pointer devices) and step buttons in the bar (touch): same job.
   var prevBtns = viewer.querySelectorAll('[data-deck-prev]'), nextBtns = viewer.querySelectorAll('[data-deck-next]'), fsBtn = $('[data-deck-fs]');
   var thumbs = $('.deck__thumbs'), thumbTpl = $('[data-deck-thumb]'), volTpl = $('[data-deck-vol]');
-  var url = $('[data-deck-src]').href;   // the download link, already rewritten for /es/
+  // The PDF to draw: the viewer's own copy when there is one (data-deck-view: the deck without its
+  // transparent sprites, which the clips supply), else the download itself. Both are links in the
+  // page, so /es/ gets the rewritten paths for free.
+  var view = $('[data-deck-view]');
+  var url = (view && view.href) || $('[data-deck-src]').href;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var pad = function (n) { return String(n).padStart(2, '0'); };
   var clamp = function (n, a, b) { return Math.max(a, Math.min(b, n)); };

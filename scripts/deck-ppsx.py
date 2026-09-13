@@ -18,7 +18,10 @@ Two sources:
                                       installed), the gifs and videos come out of the .pptx with
                                       their geometry. Hidden slides are skipped. Videos over
                                       --video-max-mb are re-encoded to 720p/30 (needs ffmpeg:
-                                      `pip install imageio-ffmpeg`).
+                                      `pip install imageio-ffmpeg`). The same run also writes the
+                                      two PDFs the web page needs (--pdf-out for download, --view-out
+                                      for the viewer, with the transparent sprites left out so the
+                                      animated gifs laid over it have no still frame behind them).
   --pdf assets/pitch/void-singularcorp.pdf
                                       Fallback without PowerPoint: the PDF pages are rendered and
                                       the clips listed in pitch.html (data-deck-page / data-deck-box)
@@ -55,32 +58,64 @@ CUSTOM_XML = ('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n'
 # ---------------------------------------------------------------------------------------------
 # Source A: a .pptx, rendered by PowerPoint
 # ---------------------------------------------------------------------------------------------
-def render_with_powerpoint(pptx, outdir, width):
-    """Export every visible slide to PNG through PowerPoint (COM). Returns {slide_no: png_path}."""
-    try:
-        import win32com.client
-    except ImportError:
-        sys.exit("--pptx needs PowerPoint and pywin32: python -m pip install pywin32")
-    tl = subprocess.run(["tasklist"], capture_output=True, text=True).stdout.upper()
-    was_running = "POWERPNT.EXE" in tl          # then it is the user's PowerPoint: never quit it
-    app = win32com.client.Dispatch("PowerPoint.Application")
-    app.DisplayAlerts = 1                        # ppAlertsNone
-    pres = app.Presentations.Open(os.path.abspath(pptx), True, False, False)   # ReadOnly, Untitled, WithWindow
-    out = {}
-    try:
-        h = round(width * pres.PageSetup.SlideHeight / pres.PageSetup.SlideWidth)
-        for i in range(1, pres.Slides.Count + 1):
-            s = pres.Slides(i)
-            if s.SlideShowTransition.Hidden == -1:
-                continue
-            p = os.path.normpath(os.path.join(outdir, "slide%02d.png" % i))
-            s.Export(p, "PNG", width, h)
-            out[i] = p
-    finally:
-        pres.Close()
-        if not was_running:
-            app.Quit()
-    return out
+class PowerPoint:
+    """One PowerPoint (COM) for the whole run. A PowerPoint the user already had open is used and
+    left running; one started here is quit at the end. The deck is opened read-only for each job
+    and closed without saving: PowerPoint writes only the first PDF of an opened presentation, so
+    every export gets a fresh opening."""
+
+    def __init__(self):
+        try:
+            import win32com.client
+        except ImportError:
+            sys.exit("--pptx needs PowerPoint and pywin32: python -m pip install pywin32")
+        tl = subprocess.run(["tasklist"], capture_output=True, text=True).stdout.upper()
+        self.was_running = "POWERPNT.EXE" in tl
+        self.app = win32com.client.Dispatch("PowerPoint.Application")
+        self.app.DisplayAlerts = 1               # ppAlertsNone
+
+    def run(self, pptx, hide, job):
+        """Open the deck, make the shapes in `hide` ({slide_no: {shape_id}}) invisible in memory,
+        return job(pres), close."""
+        pres = self.app.Presentations.Open(os.path.abspath(pptx), True, False, False)   # ReadOnly, Untitled, WithWindow
+        try:
+            for i, ids in (hide or {}).items():
+                for shp in pres.Slides(i).Shapes:
+                    if shp.Id in ids:
+                        shp.Visible = 0          # msoFalse
+            return job(pres)
+        finally:
+            try:
+                pres.Saved = True                # nothing to keep: no "save changes?" on the way out
+            except Exception:
+                pass
+            pres.Close()
+
+    def done(self):
+        if not self.was_running:
+            self.app.Quit()
+
+    def export_pdf(self, pptx, path, hide=None):
+        path = os.path.abspath(path)
+        self.run(pptx, hide, lambda pres: pres.SaveCopyAs(path, 32))   # ppSaveAsPDF
+        if not os.path.exists(path):
+            sys.exit("PowerPoint did not write %s" % path)
+
+    def render(self, pptx, outdir, width, hide=None):
+        """Every visible slide to PNG, with the shapes in `hide` left out (the show's slide pictures:
+        the gifs and videos are put back on top afterwards). Returns {slide_no: png_path}."""
+        def job(pres):
+            out = {}
+            h = round(width * pres.PageSetup.SlideHeight / pres.PageSetup.SlideWidth)
+            for i in range(1, pres.Slides.Count + 1):
+                s = pres.Slides(i)
+                if s.SlideShowTransition.Hidden == -1:
+                    continue
+                p = os.path.normpath(os.path.join(outdir, "slide%02d.png" % i))
+                s.Export(p, "PNG", width, h)
+                out[i] = p
+            return out
+        return self.run(pptx, hide, job)
 
 
 def media_from_pptx(pptx):
@@ -108,7 +143,7 @@ def media_from_pptx(pptx):
                 except Exception:
                     pass
                 items.setdefault(i, []).append({"kind": "video", "blob": rel.target_part.blob, "box": box, "poster": poster,
-                                                "mime": getattr(rel.target_part, "content_type", "video/mp4")})
+                                                "mime": getattr(rel.target_part, "content_type", "video/mp4"), "id": sh.shape_id})
                 continue
             try:
                 img = sh.image
@@ -117,16 +152,18 @@ def media_from_pptx(pptx):
             if img.content_type != "image/gif":
                 continue
             try:
-                frames = getattr(Image.open(io.BytesIO(img.blob)), "n_frames", 1)
+                pil = Image.open(io.BytesIO(img.blob))
+                frames = getattr(pil, "n_frames", 1)
+                alpha = pil.convert("RGBA").getextrema()[3][0] < 255     # a sprite on a see-through ground
             except Exception:
-                frames = 1
+                frames, alpha = 1, False
             if frames < 2:
                 continue                          # a still gif is already in the render
             # The deck's own look for the picture: "crop to shape" (rounded corners…) and its outline.
             sp = sh._element.find(".//" + NS_P + "spPr")
             geom = sp.find(NS_A + "prstGeom") if sp is not None else None
             ln = sp.find(NS_A + "ln") if sp is not None else None
-            items.setdefault(i, []).append({"kind": "gif", "blob": img.blob, "box": box,
+            items.setdefault(i, []).append({"kind": "gif", "blob": img.blob, "box": box, "id": sh.shape_id, "alpha": alpha,
                                             "crop": (sh.crop_left, sh.crop_right, sh.crop_top, sh.crop_bottom),
                                             "geom": geom, "ln": ln})
     return prs.slide_width, prs.slide_height, items
@@ -303,6 +340,9 @@ def main():
     ap.add_argument("--last", type=int, default=None, help="stop after this slide")
     ap.add_argument("--width", type=int, default=1920, help="pixel width of the rendered slides")
     ap.add_argument("--video-max-mb", type=float, default=60, help="--pptx: videos bigger than this are re-encoded to 720p")
+    ap.add_argument("--pdf-out", default="assets/pitch/void-singularcorp.pdf", help="--pptx: the PDF for download (the deck as it is)")
+    ap.add_argument("--view-out", default="assets/pitch/void-singularcorp.view.pdf", help="--pptx: the PDF the web viewer draws (transparent sprites left out)")
+    ap.add_argument("--no-pdfs", action="store_true", help="--pptx: build the show only")
     a = ap.parse_args()
     if not a.pptx and not a.pdf:
         a.pdf = "assets/pitch/void-singularcorp.pdf"
@@ -312,9 +352,22 @@ def main():
     try:
         if a.pptx:
             pptx = os.path.abspath(a.pptx)
-            print("rendering %s with PowerPoint …" % os.path.basename(pptx))
-            renders = render_with_powerpoint(pptx, work, a.width)
             W, H, media = media_from_pptx(pptx)
+            hide = {n: {m["id"] for m in items} for n, items in media.items()}
+            hide_view = {n: {m["id"] for m in items if m.get("alpha")} for n, items in media.items()}
+            pp = PowerPoint()
+            try:
+                if not a.no_pdfs:
+                    pdf_full, pdf_view = os.path.join(ROOT, a.pdf_out), os.path.join(ROOT, a.view_out)
+                    print("exporting the PDFs with PowerPoint …")
+                    pp.export_pdf(pptx, pdf_full)
+                    pp.export_pdf(pptx, pdf_view, hide_view)
+                    print("wrote %s (%.1f MB) and %s (%.1f MB, %d sprite(s) left out)" % (
+                        a.pdf_out, os.path.getsize(pdf_full) / 1e6, a.view_out, os.path.getsize(pdf_view) / 1e6, sum(len(v) for v in hide_view.values())))
+                print("rendering %s with PowerPoint …" % os.path.basename(pptx))
+                renders = pp.render(pptx, work, a.width, hide)
+            finally:
+                pp.done()
             for items in media.values():
                 for m in items:
                     if m["kind"] == "video":
