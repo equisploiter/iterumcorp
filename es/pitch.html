@@ -140,7 +140,7 @@
       <div class="void__actions">
         <a class="btn btn--primary" href="#deck">Abrir el deck <span aria-hidden="true">↓</span></a>
         <a class="btn btn--ghost" href="../assets/pitch/void-singularcorp.pdf" download>Descargar PDF</a>
-        <a class="btn btn--ghost" href="../assets/pitch/void-singularcorp.ppsx" download>Descargar PPT</a>
+        <a class="btn btn--ghost" href="../assets/pitch/void-singularcorp.pptx" download>Descargar PPTX</a>
         <a class="btn btn--ghost" href="contacto.html">Ponte en contacto <span class="arr" aria-hidden="true">→</span></a>
       </div>
       <p class="meta hero__stamp">Iterum · expediente 0001 · pitch deck</p>
@@ -188,7 +188,9 @@
             <div class="deck__tools">
               <button class="btn btn--ghost" type="button" data-deck-fs aria-pressed="false"><span>Pantalla completa</span><span hidden>Salir de pantalla completa</span></button>
               <a class="btn btn--ghost" href="../assets/pitch/void-singularcorp.pdf" data-deck-src download>PDF</a>
-              <a class="btn btn--ghost" href="../assets/pitch/void-singularcorp.ppsx" download>PPT</a>
+              <!-- Same read-only deck twice: .pptx for every viewer (phones included), .ppsx opens straight as a show. -->
+              <a class="btn btn--ghost" href="../assets/pitch/void-singularcorp.pptx" download>PPTX</a>
+              <a class="btn btn--ghost" href="../assets/pitch/void-singularcorp.ppsx" download>PPSX</a>
               <!-- What the viewer draws: the same deck with its transparent sprites left out, so the animated
                    clips laid over it have no still frame showing behind them. Not a download. -->
               <a hidden href="../assets/pitch/void-singularcorp.view.pdf" data-deck-view></a>

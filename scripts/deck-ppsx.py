@@ -272,10 +272,31 @@ def cover_crop(pic, iw, ih):
         pic.crop_top = pic.crop_bottom = cut
 
 
+def set_background(slide, image_file):
+    """The slide picture as the slide's own background (a:blipFill) rather than a picture shape:
+    every viewer, phone ones included, paints a background first and under everything else, and
+    nothing can select or drag it."""
+    from pptx.oxml import parse_xml
+    from pptx.oxml.ns import nsdecls
+    _, rId = slide.part.get_or_add_image_part(image_file)
+    bg = parse_xml('<p:bg %s><p:bgPr><a:blipFill dpi="0" rotWithShape="1"><a:blip r:embed="%s"/><a:srcRect/>'
+                   '<a:stretch><a:fillRect/></a:stretch></a:blipFill><a:effectLst/></p:bgPr></p:bg>' % (nsdecls("p", "a", "r"), rId))
+    cSld = slide._element.find(NS_P + "cSld")
+    old = cSld.find(NS_P + "bg")
+    if old is not None:
+        cSld.remove(old)
+    cSld.insert(0, bg)
+
+
 def build(renders, W, H, media, last, workdir):
     prs = Presentation()
     prs.slide_width, prs.slide_height = Emu(W), Emu(H)
-    blank = prs.slide_layouts[6]
+    # One layout only. The default template carries ten more with 4:3 placeholders; nothing here
+    # uses them and a phone viewer has less to misread without them.
+    blank = next(l for l in prs.slide_layouts if l.name == "Blank")
+    for layout in list(prs.slide_layouts):
+        if layout is not blank:
+            prs.slide_layouts.remove(layout)
     n = 0
     for no in sorted(renders):
         if last and no > last:
@@ -283,7 +304,7 @@ def build(renders, W, H, media, last, workdir):
         img = Image.open(renders[no]).convert("RGB")
         buf = io.BytesIO(); img.save(buf, "JPEG", quality=86, optimize=True); buf.seek(0)
         slide = prs.slides.add_slide(blank)
-        slide.shapes.add_picture(buf, 0, 0, prs.slide_width, prs.slide_height)
+        set_background(slide, buf)
         for m in media.get(no, []):
             left, top, width, height = (Emu(v) for v in m["box"])
             if m["kind"] == "video":
@@ -315,7 +336,7 @@ def verifier(password):
             % (SPIN, base64.b64encode(salt).decode(), base64.b64encode(h).decode()))
 
 
-def finish(tmp, out, password):
+def finish(tmp, out, password, show=True):
     """Turn the saved .pptx into a read-only .ppsx: modify password, mark as final, show content type."""
     ver = verifier(password) if password else ""
     with zipfile.ZipFile(tmp) as zin, zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as zout:
@@ -327,7 +348,9 @@ def finish(tmp, out, password):
                 s = s.replace("<p:extLst", ver + "<p:extLst", 1) if "<p:extLst" in s else s.replace("</p:presentation>", ver + "</p:presentation>")
                 data = s.encode("utf-8")
             elif item.filename == "[Content_Types].xml":
-                s = data.decode("utf-8").replace("presentationml.presentation.main+xml", "presentationml.slideshow.main+xml")
+                s = data.decode("utf-8")
+                if show:                          # .ppsx opens straight into the slideshow; .pptx keeps the plain type
+                    s = s.replace("presentationml.presentation.main+xml", "presentationml.slideshow.main+xml")
                 if "docProps/custom.xml" not in names:
                     s = s.replace("</Types>", '<Override PartName="/docProps/custom.xml" ContentType="application/vnd.openxmlformats-officedocument.custom-properties+xml"/></Types>')
                 data = s.encode("utf-8")
@@ -346,6 +369,8 @@ def main():
     src.add_argument("--pdf", help="the PDF export plus the clips of pitch.html (default: assets/pitch/void-singularcorp.pdf)")
     ap.add_argument("--html", default="pitch.html", help="where the clips come from in --pdf mode")
     ap.add_argument("--out", default="assets/pitch/void-singularcorp.ppsx")
+    ap.add_argument("--pptx-out", default="assets/pitch/void-singularcorp.pptx", help="the same deck as a plain .pptx (--out with the extension swapped is a good choice for a private deck)")
+    ap.add_argument("--no-pptx", action="store_true", help="build the .ppsx only")
     ap.add_argument("--password", default=None, help="password to modify (a random one is made and printed if omitted)")
     ap.add_argument("--last", type=int, default=None, help="stop after this slide")
     ap.add_argument("--width", type=int, default=1920, help="pixel width of the rendered slides")
@@ -405,16 +430,23 @@ def main():
         prs.save(tmp)
         # Written beside the target and swapped in at the end, so a half-made file never replaces
         # the good one; if the old file is open in PowerPoint, say so instead of failing halfway.
-        part = out + ".part"
-        finish(tmp, part, password)
-        try:
-            os.replace(part, out)
-        except PermissionError:
-            os.remove(part)
-            sys.exit("cannot replace %s: it is open in PowerPoint (or another program). Close it and run again." % a.out)
+        # The show (.ppsx) and, unless --no-pptx, the same deck as a plain .pptx for the viewers that do
+        # not know what to do with a show (phones, mostly). Same pictures, same password, same "final".
+        targets = [(out, a.out, True)]
+        if not a.no_pptx:
+            targets.append((os.path.join(ROOT, a.pptx_out), a.pptx_out, False))
+        for path, label, show in targets:
+            part = path + ".part"
+            finish(tmp, part, password, show)
+            try:
+                os.replace(part, path)
+            except PermissionError:
+                os.remove(part)
+                sys.exit("cannot replace %s: it is open in PowerPoint (or another program). Close it and run again." % label)
+            print("wrote %s: %d slides, %.1f MB" % (label, n, os.path.getsize(path) / 1e6))
     finally:
         shutil.rmtree(work, ignore_errors=True)
-    print("wrote %s: %d slides, %.1f MB, password to modify: %s" % (a.out, n, os.path.getsize(out) / 1e6, password if password else "(none)"))
+    print("password to modify: %s" % (password if password else "(none)"))
 
 
 if __name__ == "__main__":

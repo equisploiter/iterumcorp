@@ -54,9 +54,9 @@ Everything else in the HTML is English and identical in both languages: section 
 
 - `void-singularcorp.pdf` — the deck as it is, for download;
 - `void-singularcorp.view.pdf` — what the viewer draws: the same export with the transparent sprites (Ari, the bosses, the icons) left out, so the animated gifs laid over it have no still frame showing through behind them. Linked from a hidden `data-deck-view` anchor; the viewer falls back to the download PDF when it is missing;
-- `void-singularcorp.ppsx` — the read-only show (below).
+- `void-singularcorp.ppsx` and `void-singularcorp.pptx` — the read-only deck (below), once as a show that opens straight into the slideshow and once as a plain .pptx for the viewers that do not handle shows (phones, mostly). Same pictures, same password, same "final" flag.
 
-**To update the deck, run that one command and the three files are replaced**; the page reads the paths from its links, so nothing else changes. To rename them, change the `assets/pitch/…` links in `pitch.html` and run `npm run build`.
+**To update the deck, run that one command and the four files are replaced**; the page reads the paths from its links, so nothing else changes. To rename them, change the `assets/pitch/…` links in `pitch.html` and run `npm run build`.
 
 PowerPoint exports an embedded video or gif as its first frame, so the PDF only carries stills. The figures in the *clips* section of `pitch.html` carry `data-deck-page` (the slide), `data-deck-box` (`left top width height`, in % of the slide) and, when the deck crops a gif, `data-deck-crop`; when the deck rounds its corners ("crop to shape") `data-deck-round` carries PowerPoint's radius, and `data-deck-line` the width of its outline (the clip is tucked inside the outline the render already shows). `deck.js` lays each clip over its still while that slide is on screen, stretched, cropped and rounded exactly as PowerPoint shows it. The big clips are the site's own gifs and the reel; the small sprites and icons the deck animates sit in a `<template data-deck-extra>` (no cards) and live in `assets/img/deck/`. After changing the deck:
 
@@ -70,7 +70,7 @@ On a phone the stage runs edge to edge and a tap on the slide opens the theatre:
 
 ### PowerPoint show (.ppsx)
 
-The PDF cannot carry the gifs, so the page also offers `assets/pitch/void-singularcorp.ppsx`, built by `scripts/deck-ppsx.py` from the deck itself (`Documents\Singular 26 Pitch.pptx`, kept outside the repo): PowerPoint renders every visible slide to a picture with the gifs and videos hidden (nothing can be retyped, and no still frame is left behind a sprite), then the animated gifs and the embedded reel are put back in their exact place, with the deck's own rounded corners and outlines (the reel re-encoded to 720p/30 with its audio, so the 650 MB original never ships), and the file is saved as a *show* (opens straight into the slideshow), marked as final, with a password to modify, so PowerPoint opens it read-only unless the password is typed. Rebuild it after every change to the deck:
+The PDF cannot carry the gifs, so the page also offers `assets/pitch/void-singularcorp.ppsx`, built by `scripts/deck-ppsx.py` from the deck itself (`Documents\Singular 26 Pitch.pptx`, kept outside the repo): PowerPoint renders every visible slide to a picture with the gifs and videos hidden (nothing can be retyped, and no still frame is left behind a sprite); that picture becomes the slide's background (not a shape: phone viewers paint it first and nothing can drag it) in a file with a single blank layout, then the animated gifs and the embedded reel are put back in their exact place, with the deck's own rounded corners and outlines (the reel re-encoded to 720p/30 with its audio, so the 650 MB original never ships), and the file is saved as a *show* (opens straight into the slideshow), marked as final, with a password to modify, so PowerPoint opens it read-only unless the password is typed. Rebuild it after every change to the deck:
 
 ```
 python -m pip install python-pptx pillow pywin32 imageio-ffmpeg      # once
