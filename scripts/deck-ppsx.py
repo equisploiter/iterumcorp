@@ -128,6 +128,14 @@ class PowerPoint:
         return self.run(pptx, hide, job)
 
 
+def look(sh):
+    """The deck's own look for a picture or video: "crop to shape" (rounded corners…) and its outline."""
+    sp = sh._element.find(".//" + NS_P + "spPr")
+    if sp is None:
+        return None, None
+    return sp.find(NS_A + "prstGeom"), sp.find(NS_A + "ln")
+
+
 def media_from_pptx(pptx):
     """The animated gifs and embedded videos of every slide: {slide_no: [item]} with EMU geometry."""
     prs = Presentation(pptx)
@@ -152,8 +160,10 @@ def media_from_pptx(pptx):
                     poster = pf.blob if pf is not None else None
                 except Exception:
                     pass
+                geom, ln = look(sh)
                 items.setdefault(i, []).append({"kind": "video", "blob": rel.target_part.blob, "box": box, "poster": poster,
-                                                "mime": getattr(rel.target_part, "content_type", "video/mp4"), "id": sh.shape_id})
+                                                "mime": getattr(rel.target_part, "content_type", "video/mp4"), "id": sh.shape_id,
+                                                "geom": geom, "ln": ln})
                 continue
             try:
                 img = sh.image
@@ -169,10 +179,7 @@ def media_from_pptx(pptx):
                 frames, alpha = 1, False
             if frames < 2:
                 continue                          # a still gif is already in the render
-            # The deck's own look for the picture: "crop to shape" (rounded corners…) and its outline.
-            sp = sh._element.find(".//" + NS_P + "spPr")
-            geom = sp.find(NS_A + "prstGeom") if sp is not None else None
-            ln = sp.find(NS_A + "ln") if sp is not None else None
+            geom, ln = look(sh)
             items.setdefault(i, []).append({"kind": "gif", "blob": img.blob, "box": box, "id": sh.shape_id, "alpha": alpha,
                                             "crop": (sh.crop_left, sh.crop_right, sh.crop_top, sh.crop_bottom),
                                             "geom": geom, "ln": ln})
@@ -309,7 +316,8 @@ def build(renders, W, H, media, last, workdir):
             left, top, width, height = (Emu(v) for v in m["box"])
             if m["kind"] == "video":
                 poster = io.BytesIO(m["poster"]) if m.get("poster") else None
-                slide.shapes.add_movie(m["path"], left, top, width, height, poster_frame_image=poster, mime_type=m.get("mime", "video/mp4"))
+                movie = slide.shapes.add_movie(m["path"], left, top, width, height, poster_frame_image=poster, mime_type=m.get("mime", "video/mp4"))
+                dress(movie, m.get("geom"), m.get("ln"))      # the reel's rounded frame and outline
             else:
                 pic = slide.shapes.add_picture(io.BytesIO(m["blob"]), left, top, width, height)
                 if "crop" in m:                               # the deck's own crop

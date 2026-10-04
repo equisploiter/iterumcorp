@@ -172,12 +172,12 @@ async function boot(viewer) {
           im.style.width = sw.toFixed(3) + '%'; im.style.height = sh.toFixed(3) + '%';
           im.style.left = (-crop[0] * sw).toFixed(3) + '%'; im.style.top = (-crop[2] * sh).toFixed(3) + '%';
         }
-        // "Crop to shape: rounded rectangle" and the outline, as the deck draws them (sized in dress()).
-        if (fig.dataset.deckRound) el.dataset.round = fig.dataset.deckRound;
-        if (fig.dataset.deckLine) el.dataset.line = fig.dataset.deckLine;
-        el.dataset.box = fig.dataset.deckBox;
         el.appendChild(im);
       }
+      // "Crop to shape: rounded rectangle" and the outline, as the deck draws them (sized in dress()).
+      if (fig.dataset.deckRound) el.dataset.round = fig.dataset.deckRound;
+      if (fig.dataset.deckLine) el.dataset.line = fig.dataset.deckLine;
+      el.dataset.box = fig.dataset.deckBox;
       var place = function (node) {
         node.style.setProperty('--x', box[0] + '%'); node.style.setProperty('--y', box[1] + '%');
         node.style.setProperty('--w', box[2] + '%'); node.style.setProperty('--h', box[3] + '%');
